@@ -1,0 +1,191 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+
+@font-face {
+  font-family: 'Nexa-bold';
+  src: url('./fonts/Web_Dark_Fonts/NexaTextDemo-Bold.eot'); 
+  src: 
+       url('./fonts/Web_Dark_Fonts/NexaTextDemo-Bold.woff2') format('woff2'), /* Modern Browsers */
+       url('./fonts/Web_Dark_Fonts/NexaTextDemo-Bold.woff') format('woff'); /* Modern Browsers */
+  /* Add other font properties */
+}
+
+@font-face {
+  font-family: 'Nexa-light';
+  src: url('./fonts/Web_Light_Fonts/NexaTextDemo-Light.eot'); /* IE9 Compat Modes */
+  src: 
+       url('./fonts/Web_Light_Fonts/NexaTextDemo-Light.woff2') format('woff2'), /* Modern Browsers */
+       url('./fonts/Web_Light_Fonts/NexaTextDemo-Light.woff') format('woff'); /* Modern Browsers */
+  /* Add other font properties */
+}
+
+.logo {
+  width: 144px;
+}
+
+/* .container {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  display: flex;
+
+
+  .box {
+    display: block;
+    min-width: 350px;
+    
+  }
+  -webkit-overflow-scrolling: touch;
+} */
+
+/* .container2 {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  display: flex;
+
+ 
+
+ 
+  -webkit-overflow-scrolling: touch;
+} */
+
+::-webkit-scrollbar-track {
+
+  background-color: transparent;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* ::-webkit-scrollbar {
+  width: 0.1px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: transparent;
+} */
+
+p {
+  font-family:  "Poppins", sans-serif;
+}
+
+.font {
+  font-size: 12px;
+}
+.small {
+  font-size: 10px;
+}
+
+
+
+
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  
+  
+}
+
+
+
+
+/* Disable scrolling on body when a modal is open */
+.no-scroll {
+  overflow: hidden;
+  
+}
+
+
+/* @keyframes bounceBack {
+  0% {
+    transform: scaleX(1);
+  }
+  50% {
+    transform: scaleX(1.2);
+  }
+  75% {
+    transform: scaleX(0.9);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+.group:hover .absolute {
+  animation: none;
+}
+
+.group:not(:hover) .absolute {
+  animation: bounceBack 0.5s ease-in-out;
+} */
+
+.list-alpha {
+  list-style-type: lower-alpha;
+}
+
+
+.box {
+  grid-template-columns: repeat(13, minmax(0, 1fr));
+}
+.container {  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr ;
+  grid-template-rows: 0.2fr .7fr 1fr;
+  gap: 11px 9px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "q q q q r r r r t t t t"
+    "w w w e e e ww ww t t t t"
+    "w w w e e e y y y y y y";
+}
+
+.q { grid-area: q; }
+
+.w { grid-area: w; }
+
+.e { grid-area: e; }
+
+.r { grid-area: r; }
+
+.t { grid-area: t; }
+
+.y { grid-area: y; }
+
+.ww { grid-area: ww; }
+
+#email:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px rgb(0, 0, 0) inset ;
+  box-shadow: 0 0 0px 1000px rgb(0, 0, 0) inset;
+  -webkit-text-fill-color: white !important;
+  border: black;
+}
+#name:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px rgb(0, 0, 0) inset ;
+  box-shadow: 0 0 0px 1000px rgb(0, 0, 0) inset;
+  -webkit-text-fill-color: white !important;
+  border: black;
+}
+#name2:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px rgb(0, 0, 0) inset ;
+  box-shadow: 0 0 0px 1000px rgb(0, 0, 0) inset;
+  -webkit-text-fill-color: white !important;
+  border: black;
+}
+
+
+
+
+.class ol {
+  gap: 106px; /* Adjust to the desired gap */
+  background-color: green;
+}
+
