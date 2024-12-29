@@ -1,5 +1,5 @@
 import { useState } from "react";
-import back from '../assets/Images/frame278.jpg';
+import back from '../assets/Images/Frame278.jpg';
 import back2 from '../assets/Images/Frame278(1).jpg';
 import send from '../assets/Images/send.svg';
 
