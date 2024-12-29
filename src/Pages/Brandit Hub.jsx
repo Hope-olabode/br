@@ -3,20 +3,20 @@ import fuelm from '../assets/Images/fuelmobile.jpg'
 import fueld from '../assets/Images/fueldesktop.jpg'
 import Blog from '../Components/Post'
 import up from '../assets/Images/up.svg';
-import post1 from '../assets/Images/Post-img/Cover Image.jpg';
-import post2 from '../assets/Images/Post-img/Cover Image 1.jpg';
-import post3 from '../assets/Images/Post-img/Cover Image 2.jpg';
+import post1 from '../assets/Images/Post-img/CoverImage.jpg';
+import post2 from '../assets/Images/Post-img/CoverImage1.jpg';
+import post3 from '../assets/Images/Post-img/CoverImage2.jpg';
 import down from '../assets/Images/down.svg';
 import search from '../assets/Images/search.svg';
 import one from '../assets/Images/frame273.jpg';
 import two from '../assets/Images/frame273(1).jpg';
 import three from '../assets/Images/frame273(2).jpg';
-import img1 from '../assets/Images/Links/Icon Button (1).png';
-import img2 from '../assets/Images/Links/Icon Button (2).png';
-import img3 from '../assets/Images/Links/Icon Button (3).png';
-import img4 from '../assets/Images/Links/Icon Button (4).png';
-import img5 from '../assets/Images/Links/Icon Button (5).png';
-import img6 from '../assets/Images/Links/Icon Button (6).png';
+import img1 from '../assets/Images/Links/IconButton(1).png';
+import img2 from '../assets/Images/Links/IconButton(2).png';
+import img3 from '../assets/Images/Links/IconButton(3).png';
+import img4 from '../assets/Images/Links/IconButton(4).png';
+import img5 from '../assets/Images/Links/IconButton(5).png';
+import img6 from '../assets/Images/Links/IconButton(6).png';
 import Touch from '../Components/Touch.jsx'
 
 

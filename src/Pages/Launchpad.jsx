@@ -4,9 +4,9 @@ import i2 from "../assets/Images/i2.png"
 import i3 from "../assets/Images/i3.png"
 import i4 from "../assets/Images/i4.png"
 import i5 from "../assets/Images/i5.png"
-import post1 from '../assets/Images/Post-img/Cover Image.jpg';
-import post2 from '../assets/Images/Post-img/Cover Image 1.jpg';
-import post3 from '../assets/Images/Post-img/Cover Image 2.jpg';
+import post1 from '../assets/Images/Post-img/CoverImage.jpg';
+import post2 from '../assets/Images/Post-img/CoverImage1.jpg';
+import post3 from '../assets/Images/Post-img/CoverImage2.jpg';
 import img from "../assets/Images/image 9.jpg"
 import img2 from "../assets/Images/image 92.png"
 import kk from "../assets/Images/kk.svg"

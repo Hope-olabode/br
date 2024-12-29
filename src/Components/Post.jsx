@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import post from '../assets/Images/Post-img/Cover Image.jpg';
-import post1 from '../assets/Images/Post-img/Cover Image 1.jpg';
-import post2 from '../assets/Images/Post-img/Cover Image 2.jpg';
-import post3 from '../assets/Images/Post-img/Cover Image 3.jpg';
-import post4 from '../assets/Images/Post-img/Cover Image 4.jpg';
-import post5 from '../assets/Images/Post-img/Cover Image 5.jpg';
-import post6 from '../assets/Images/Post-img/Cover Image 6.jpg';
+import post from '../assets/Images/Post-img/CoverImage.jpg';
+import post1 from '../assets/Images/Post-img/CoverImage1.jpg';
+import post2 from '../assets/Images/Post-img/CoverImage2.jpg';
+import post3 from '../assets/Images/Post-img/CoverImage3.jpg';
+import post4 from '../assets/Images/Post-img/CoverImage4.jpg';
+import post5 from '../assets/Images/Post-img/CoverImage5.jpg';
+import post6 from '../assets/Images/Post-img/CoverImage6.jpg';
 import right from '../assets/Images/arrow-right.svg';
 import left from '../assets/Images/arrow-left.svg';
 import up from '../assets/Images/up.svg';
