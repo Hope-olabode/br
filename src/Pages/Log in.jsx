@@ -44,7 +44,7 @@ export default function Login() {
 
   const onSubmit = (data) => {
     console.log(data)
-    axios.post("http://localhost:3001/auth/login", data)
+    axios.post("https://br-s.onrender.com/auth/login", data)
     .then(result => {
       if(result.data === "Success"){
         navigate("/")

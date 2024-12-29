@@ -34,7 +34,7 @@ function ProductDetail() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/products");
+        const response = await fetch("https://br-s.onrender.com/api/products");
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }

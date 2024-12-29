@@ -48,7 +48,7 @@ export default function Signup() {
     console.log(data.password2)
     if (data.password = data.password2) {
       console.log(data)
-      axios.post("http://localhost:3001/auth/signup", data)
+      axios.post("https://br-s.onrender.com/auth/signup", data)
       .then(result=>{
         if(result.status==201) {
           console.log("user created successfully")
