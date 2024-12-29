@@ -8,7 +8,7 @@ import post2 from '../assets/Images/Post-img/CoverImage1.jpg';
 import post3 from '../assets/Images/Post-img/CoverImage2.jpg';
 import down from '../assets/Images/down.svg';
 import search from '../assets/Images/search.svg';
-import one from '../assets/Images/frame273.jpg';
+import one from '../assets/Images/framee.jpg';
 import two from '../assets/Images/frame273(1).jpg';
 import three from '../assets/Images/frame273(2).jpg';
 import img1 from '../assets/Images/Links/IconButton(1).png';
