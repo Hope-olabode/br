@@ -1,6 +1,5 @@
 import Cap from "../assets/Images/Cap.svg";
-import Top from "../assets/Images/Top.svg";
-import Hoodie from "../assets/Images/Hoodie.svg";
+
 import Heart from "../assets/Images/Heart.svg";
 import plus from "../assets/Images/Icon Button.svg";
 import plus2 from "../assets/Images/plus2.svg";
@@ -109,8 +108,10 @@ import dust from "../assets/Images/dust.svg";
 } */
 
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ProductList = () => {
+  const [data, setData] = useState([]);
   const [cart, setCart] = useState(() => {
     // Retrieve the initial value from localStorage or default to false
     return JSON.parse(localStorage.getItem("cart")) || [];
@@ -120,6 +121,23 @@ const ProductList = () => {
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/api/products");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        let result = await response.json();
+        setData(result); // Correctly setting the fetched data to state
+        console.log(result); // Debugging: Log the fetched data
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   const products = [
     {
@@ -159,6 +177,12 @@ const ProductList = () => {
     },
     { id: 6, title: "LED Desk Lamp", price: 24.99, category: "home", img: Cap },
   ];
+
+  const navigate = useNavigate();
+
+  const handleProductClick = (id) => {
+    navigate(`/product/${id}`);
+  };
 
   const handleAddToCart = (productId) => {
     setCart((prevCart) => {
@@ -249,14 +273,23 @@ const ProductList = () => {
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredProducts.map((product) => (
-            <div key={product.id} className="">
-              <div className="border-8 bg-white border-white hover:border-[#E6E6E6] rounded-t-full max-w-[312px] md:min-w-[312px]">
+            <div
+              key={product.id}
+              className="" /* onClick={() => handleProductClick(product.id)} */
+            >
+              <div
+                className={`border-8 bg-white border-white hover:border-[#E6E6E6] rounded-t-full max-w-[312px] md:min-w-[312px] ${
+                  cart.some((item) => item.id === product.id)
+                    ? "shadow-2xl"
+                    : ""
+                }`}
+              >
                 <img className="rounded-full" src={Cap} alt="" />
-                <div className="pt-[16px] rounded-full pb-[11.6px] pl-[8px] relative">
+                <div className="pt-[16px] rounded-full pb-[11.6px] px-[8px] relative">
                   <p className="font-poopins  text-[12px] leading-[18px] md:text-[20px] md:leading-[32px]">
                     {product.title}
                   </p>
-                  <div className="lg:w-[72px] w-[48px] h-[48px] lg:h-[72px] rounded-full flex items-center justify-center absolute bg-white top-[-60px] right-[16px] ">
+                  <div className="lg:w-[72px] w-[48px] h-[48px] lg:h-[72px] rounded-full flex items-center justify-center absolute bg-white lg:top-[-60px] top-[-35px] md:top-[-70px]   right-[16px] ">
                     <img className=" bg-white" src={Heart} alt="" />
                   </div>
                   <div className="flex flex-row justify-between items-center mt-[20px] w-full">
@@ -268,7 +301,7 @@ const ProductList = () => {
                         Out of stock
                       </p>
                     </div>
-                    {cart.some(item => item.id === product.id) ? (
+                    {cart.some((item) => item.id === product.id) ? (
                       ""
                     ) : (
                       <img
@@ -278,64 +311,67 @@ const ProductList = () => {
                       />
                     )}
                   </div>
-                  <div className="flex items-center space-x-2">
-                      {cart.find((item) => item.id === product.id) ? (
-                        <button
-                          onClick={() =>
-                            cart.find((item) => item.id === product.id)
-                              .quantity > 20
-                              ? handleDecreaseQuantity(product.id)
-                              : handleRemoveFromCart(product.id)
-                          }
-                          className={` py-1 rounded ${
-                            cart.find((item) => item.id === product.id)
-                              .quantity > 20
-                              ? "bg-yellow-500 text-black"
-                              : "bg-red-500 text-white"
-                          }`}
-                        >
-                          {cart.find((item) => item.id === product.id)
-                            .quantity > 20
-                            ? <img src={minus} className="" />
-                            : <img src={dust} className="" />}
-                        </button>
-                      ): ""}
+                  <div className="flex items-center mt-[12px] justify-center space-x-2">
+                    {cart.find((item) => item.id === product.id) ? (
+                      <button
+                        onClick={() =>
+                          cart.find((item) => item.id === product.id).quantity >
+                          20
+                            ? handleDecreaseQuantity(product.id)
+                            : handleRemoveFromCart(product.id)
+                        }
+                      >
+                        {cart.find((item) => item.id === product.id).quantity >
+                        20 ? (
+                          <img src={minus} className="" />
+                        ) : (
+                          <img src={dust} className="" />
+                        )}
+                      </button>
+                    ) : (
+                      ""
+                    )}
 
-                      {cart.find((item) => item.id === product.id) ? (
-                        <input
-                          type="number"
-                          value={
-                            cart.find((item) => item.id === product.id).quantity
-                          }
-                          onChange={(e) =>
-                            handleQuantityChange(
-                              product.id,
-                              Number(e.target.value)
-                            )
-                          }
-                          className="border p-1 rounded w-16 text-center"
-                        />
-                      ) : ""}
+                    {cart.find((item) => item.id === product.id) ? (
+                      <input
+                        type="number"
+                        value={
+                          cart.find((item) => item.id === product.id).quantity
+                        }
+                        onChange={(e) =>
+                          handleQuantityChange(
+                            product.id,
+                            Number(e.target.value)
+                          )
+                        }
+                        className=" p-1 rounded w-16 text-center"
+                      />
+                    ) : (
+                      ""
+                    )}
 
-                      {cart.find((item) => item.id === product.id) ? (
-                        <button
-                          onClick={() => handleAddToCart(product.id)}
-                          className="bg-blue-500 text-white px-3 py-1 rounded"
-                        >
-                          <img src={plus2} className="" />
-                        </button>): ""}
-                    </div>
+                    {cart.find((item) => item.id === product.id) ? (
+                      <button
+                        onClick={() => handleAddToCart(product.id)}
+                        className=" text-white  rounded"
+                      >
+                        <img src={plus2} className="" />
+                      </button>
+                    ) : (
+                      ""
+                    )}
+                  </div>
                 </div>
               </div>
-              <h2 className="text-lg font-semibold mb-2">{product.title}</h2>
+              {/* <h2 className="text-lg font-semibold mb-2">{product.title}</h2>
               <p className="text-green-600 font-bold mb-2">
                 ${product.price.toFixed(2)}
               </p>
               <p className="text-gray-500 text-sm mb-2">
                 Category: {product.category}
-              </p>
+              </p> */}
 
-              <div className="flex items-center space-x-2">
+              {/* <div className="flex items-center space-x-2">
                 {cart.find((item) => item.id === product.id) && (
                   <button
                     onClick={() =>
@@ -374,7 +410,7 @@ const ProductList = () => {
                 >
                   +
                 </button>
-              </div>
+              </div> */}
             </div>
           ))}
         </div>

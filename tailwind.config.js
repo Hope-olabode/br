@@ -14,7 +14,10 @@ export default {
       backgroundImage: {
         'hero-pattern': "url('../assets/Images/hero-pattern.svg')",
         
-      }
+      },
+      boxShadow: {
+        custom: '0 0 10px 0 rgba(0, 0, 0, 0.1)',
+      },
     },
   },
   variants: {

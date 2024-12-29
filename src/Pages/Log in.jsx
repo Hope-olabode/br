@@ -46,20 +46,16 @@ export default function Login() {
     console.log(data)
     axios.post("http://localhost:3001/auth/login", data)
     .then(result => {
-      if(result.data==="Success"){
+      if(result.data === "Success"){
         navigate("/")
         setIsLogin(true)
         localStorage.setItem('isLogin', true); 
-      }
-      else{
-        alert("login failed: User Does not exist")
+
+      }else{
+        console.log("login failed: User Does not exist")
       }
 
-      if (isLogin === "false") {
-        console.log("j")
-      }else {
-        console.log("I")
-      }
+      
     })
     .catch(err => console.log(err)) 
   }

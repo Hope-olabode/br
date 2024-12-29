@@ -18,6 +18,7 @@ import Privacypolicy from "./Pages/Privacy Policy.jsx";
 import Terms from "./Pages/Terms and Conditions.jsx";
 import ScroolToTop from "./Components/ScrollToTop.jsx";
 import Education from "./Pages/Education.jsx";
+import ProductDetail from "./Pages/products.jsx";
 
 export const Context = createContext();
 
@@ -25,6 +26,11 @@ export const Context = createContext();
 export default function App() {
 
 const [isLogin, setIsLogin] = useState(false); 
+
+const [cart, setCart] = useState(() => {
+    // Retrieve the initial value from localStorage or default to false
+    return JSON.parse(localStorage.getItem("cart")) || [];
+  })
 
  
 
@@ -39,7 +45,7 @@ useEffect(() => {
 
   return(
     
-      <Context.Provider value={[isLogin, setIsLogin]}>
+      <Context.Provider value={{isLogin, setIsLogin, cart ,setCart}}>
       <ScroolToTop />
         <Routes>
           <Route path="/" element={<Header />} >
@@ -61,6 +67,7 @@ useEffect(() => {
             <Route path="/Sign up" element={<Signup />} />
             <Route path="/Log in" element={<Login />} />
             <Route path="/Cart" element={<Cart />} />
+            <Route path="/Product/:id" element={<ProductDetail />} />
           </Route>
           
         </Routes>
