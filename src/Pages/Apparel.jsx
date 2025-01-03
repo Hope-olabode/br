@@ -16,18 +16,13 @@ import five from "../assets/Images/Apparel-img/5.png";
 import six from "../assets/Images/Apparel-img/6.png";
 import seven from "../assets/Images/Apparel-img/7.png";
 import eight from "../assets/Images/Apparel-img/8.png";
-import ho from "../assets/Images/ho.svg";
-import sho from "../assets/Images/sho.svg";
-import shi from "../assets/Images/shi.svg";
-import ja from "../assets/Images/ja.svg";
-import jea from "../assets/Images/jea.svg";
-import jer from "../assets/Images/jer.svg";
-import sw from "../assets/Images/sw.svg";
-import ca from "../assets/Images/ca.svg";
+import MOQ from "../Components/MOQ.jsx"
+import Store from "../Components/Store.jsx";
 import CustomCheckbox from "../Components/jjj.jsx";
 import Cap from "../assets/Images/Cap.svg";
 import filter from "../assets/Images/filter.svg";
 import sort from "../assets/Images/sort.svg";
+import Back from "../assets/Images/back.svg";
 
 import Heart from "../assets/Images/Heart.svg";
 import plus from "../assets/Images/Icon Button.svg";
@@ -39,7 +34,10 @@ import { Context } from "../App";
 import up from "../assets/Images/up.svg";
 import down from "../assets/Images/down.svg";
 
+import Loader from "../Components/Loader";
+
 export default function Apparel() {
+  const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
 
   const { cart, setCart } = useContext(Context);
@@ -47,16 +45,18 @@ export default function Apparel() {
     // Retrieve the initial value from localStorage or default to false
     return JSON.parse(localStorage.getItem("category")) || "";
   });
-  const [selected, setSelected] = useState("Hoodie");
+  const [selected, setSelected] = useState("");
 
   // State to keep track of the active button (initially null or a specific index)
   const [activeIndex, setActiveIndex] = useState(() => {
-    // Retrieve the initial value from localStorage or default to false
-    return Number(localStorage.getItem("index")) ?? -1;
+    // Retrieve the initial value from localStorage or default to -1 if not set or invalid
+    const storedValue = localStorage.getItem("index");
+    const parsedValue = storedValue !== null ? Number(storedValue) : -1;
+    return isNaN(parsedValue) ? -1 : parsedValue;
   });
 
   const [filteredProducts, setFilteredProducts] = useState([]);
-
+  console.log(activeIndex);
   useEffect(() => {
     const pro =
       filterCategory === ""
@@ -125,6 +125,9 @@ export default function Apparel() {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true); // Start loading and add no-scroll
+      document.body.classList.add("no-scroll");
+
       try {
         const response = await fetch("https://br-s.onrender.com/api/products");
         if (!response.ok) {
@@ -135,10 +138,14 @@ export default function Apparel() {
         console.log(result); // Debugging: Log the fetched data
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false); // Stop loading and remove no-scroll
+        document.body.classList.remove("no-scroll");
       }
     };
+
     fetchData();
-  }, []);
+  }, []); // Empty dependency array ensures this runs once when the component mounts.
 
   const navigate = useNavigate();
 
@@ -213,23 +220,11 @@ export default function Apparel() {
     localStorage.setItem("category", JSON.stringify(category));
   };
 
-  const handleSizeChange = (size) => {
-    setSelectedSize(size);
-  };
-
-  const handleMaterialChange = (material) => {
-    setSelectedMaterial((prev) =>
-      prev.includes(material)
-        ? prev.filter((m) => m !== material)
-        : [...prev, material]
-    );
-  };
-
+ 
   const [accordionOpen, setAccordionOpen] = useState(true);
   const [accordionOpen2, setAccordionOpen2] = useState(true);
-  const [filterSort, SetFilterSort] = useState(true)
-  const [mFilterSort, SetMFilterSort] = useState(false)
-
+  const [filterSort, SetFilterSort] = useState(true);
+  const [mFilterSort, SetMFilterSort] = useState(false);
 
   const [hoverDisabled, setHoverDisabled] = useState(false);
 
@@ -247,200 +242,215 @@ export default function Apparel() {
     } else {
       document.body.style.overflow = "auto";
     }
-  
+
     return () => {
       document.body.style.overflow = "auto"; // Cleanup
     };
   }, [mFilterSort]);
 
   const mobile = (data) => {
-    SetMFilterSort(true)
+    SetMFilterSort(true);
     if (data === "Filter") {
-      SetFilterSort(true)
+      SetFilterSort(true);
     } else {
-      SetFilterSort(false)
+      SetFilterSort(false);
     }
-  }
+  };
+
+  
+
+  loading ? document.body.classList.add("no-scroll") : "";
 
   return (
     <div className="mt-[96px]">
-      {mFilterSort ? <div className="fixed inset-0 bg-black bg-opacity-40  justify-center items-center z-50 overflow-scroll">
-        <div className="p-4 lg:hidden block mt-8 bg-white rounded-lg  w-full">
-              {/* Header */}
-              <div className="flex justify-between gap-2 items-center mb-4">
-                <button onClick={()=>{SetFilterSort(true)}} className={`w-[50%] font-nexa-bold text-[14px] leading-[22px] rounded-full h-[48px] ${filterSort ? "border-2 border-black": ""}`}>
-                  Filter
-                </button>
-                <button onClick={()=>{SetFilterSort(false)}} className={`w-[50%] font-nexa-bold text-[14px] leading-[22px] rounded-full h-[48px] ${filterSort ? "": "border-2 border-black"}`}>Sort</button>
-              </div>
-
-              {/* Category Section */}
-
-              <div
-                className={` transform ease-out flex items-center  duration-[400ms] rounded-2xl ${
-                  accordionOpen &&
-                  "flex items-center duration-[400ms] lg:h-[auto] h-[auto] "
+      {loading ? <Loader /> : ""}
+      {mFilterSort ? (
+        <div className="fixed inset-0 bg-black bg-opacity-40  justify-center items-center z-50 overflow-scroll">
+          <div className="p-4 lg:hidden block mt-8 bg-white rounded-lg  w-full">
+            {/* Header */}
+            <div className="flex justify-between gap-2 items-center lg:hidden mb-4">
+              <button
+                onClick={() => {
+                  SetFilterSort(true);
+                }}
+                className={`w-[50%] font-nexa-bold text-[14px] leading-[22px] rounded-full h-[48px] ${
+                  filterSort ? "border-2 border-black" : ""
                 }`}
               >
-                <div
-                  className={` ${accordionOpen && " "} group`}
-                  onClick={toggleAccordion}
-                >
-                  <button className="flex h-[74px] items-center  gap-5 w-full ">
-                    <p
-                      className={`font-poopins leading-[22px] text-[14px] lg:ml-6 `}
-                    >
-                      Category
-                    </p>
-                    {accordionOpen ? (
-                      <img src={down} alt="" />
-                    ) : (
-                      <img src={up} alt="" />
-                    )}
-                  </button>
-                  <div
-                    className={`grid overflow-hidden transition duration-500 ease-in-out text-white text-sm ${
-                      accordionOpen
-                        ? "grid-rows-[2fr] opacity-100 mt-2 "
-                        : "grid-rows-[0fr] opacity-0 mt-2"
-                    }`}
-                  >
-                    <div className="leading-[22px] text-[14px] md:font-nexa-bold lg:text-[20px] lg:leading-[35px] overflow-hidden ">
-                      <div
-                        className="flex flex-wrap gap-4"
-                        onClick={(e) => Stop(e)}
-                      >
-                        {itemss.map((item, index) => (
-                          <button
-                            key={index}
-                            className={`${
-                              filterCategory === item
-                                ? "bg-black text-white "
-                                : "bg-white text-black "
-                            } flex items-center px-4 py-2 rounded-full font-poopins text-[14px] leading-[22px] transition`}
-                            onClick={() => handleCategoryChange(item)}
-                          >
-                            <span
-                              className={`w-4 h-4 mr-2 flex items-center justify-center rounded-full ${
-                                filterCategory === item
-                                  ? "bg-[#E2063A]"
-                                  : "border-2 border-[#9A9A9A]"
-                              }`}
-                            >
-                              {filterCategory === item && (
-                                <svg
-                                  className="w-3 h-3 text-white"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  viewBox="0 0 20 20"
-                                  fill="currentColor"
-                                >
-                                  <path
-                                    fillRule="evenodd"
-                                    d="M16.707 5.293a1 1 0 010 1.414l-7.5 7.5a1 1 0 01-1.414 0l-3.5-3.5a1 1 0 011.414-1.414l3.086 3.086 6.793-6.793a1 1 0 011.414 0z"
-                                    clipRule="evenodd"
-                                  />
-                                </svg>
-                              )}
-                            </span>
-                            {item}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="h-[1px] bg-[#DDDDDD] mx-4 my-4"></div>
-              {/* Price Section */}
-              <div
-                className={` transform ease-out flex items-center  duration-[400ms] rounded-2xl ${
-                  accordionOpen2 &&
-                  "flex items-center duration-[400ms] lg:h-[auto] h-[auto] "
+                Filter
+              </button>
+              <button
+                onClick={() => {
+                  SetFilterSort(false);
+                }}
+                className={`w-[50%] font-nexa-bold text-[14px] leading-[22px] rounded-full h-[48px] ${
+                  filterSort ? "" : "border-2 border-black"
                 }`}
               >
-                <div
-                  className={` ${accordionOpen2 && " "} group`}
-                  onClick={toggleAccordion2}
-                >
-                  <button className="flex h-[74px] items-center  gap-5 w-full ">
-                    <p
-                      className={`font-poopins leading-[22px] text-[14px] lg:ml-6`}
-                    >
-                      Price
-                    </p>
-                    {accordionOpen2 ? (
-                      <img src={down} alt="" />
-                    ) : (
-                      <img src={up} alt="" />
-                    )}
-                  </button>
-                  <div
-                    className={`grid overflow-hidden transition duration-500 ease-in-out text-white text-sm ${
-                      accordionOpen2
-                        ? "grid-rows-[2fr] opacity-100 mt-2 "
-                        : "grid-rows-[0fr] opacity-0 mt-2"
-                    }`}
+                Sort
+              </button>
+            </div>
+
+            {/* Category Section */}
+
+            <div
+              className={` transform ease-out flex items-center  duration-[400ms] rounded-2xl ${
+                accordionOpen &&
+                "flex items-center duration-[400ms] lg:h-[auto] h-[auto] "
+              }`}
+            >
+              <div
+                className={` ${accordionOpen && " "} group`}
+                onClick={toggleAccordion}
+              >
+                <button className="flex h-[74px] items-center  gap-5 w-full ">
+                  <p
+                    className={`font-poopins leading-[22px] text-[14px] lg:ml-6 `}
                   >
-                    <div className="leading-[22px] text-[14px] md:font-nexa-bold lg:text-[20px] lg:leading-[35px] overflow-hidden ">
-                      <div className="flex items-center gap-2">
-                        <input
-                          type="number"
-                          placeholder="From"
-                          value={priceRange.from}
-                          onChange={(e) =>
-                            setPriceRange({
-                              ...priceRange,
-                              from: e.target.value,
-                            })
-                          }
-                          className="border w-full rounded-full h-[72px] pl-6"
-                        />
-                        <input
-                          type="number"
-                          placeholder="To"
-                          value={priceRange.to}
-                          onChange={(e) =>
-                            setPriceRange({ ...priceRange, to: e.target.value })
-                          }
-                          className="border w-full rounded-full h-[72px] pl-6"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="h-[1px] bg-[#DDDDDD] mx-4 my-4"></div>
-
-
-              {/* Material Section */}
-              <div className="mb-4">
-                <h3 className="font-bold mb-2">Material</h3>
-                <div className="grid grid-cols-2 gap-2">
-                  {["Cotton", "Polyester", "Blend", "Print-On"].map(
-                    (material) => (
-                      <label key={material} className="flex items-center">
-                        <input
-                          type="checkbox"
-                          value={material}
-                          checked={selectedMaterial.includes(material)}
-                          onChange={() => handleMaterialChange(material)}
-                          className="mr-2"
-                        />
-                        {material}
-                      </label>
-                    )
+                    Category
+                  </p>
+                  {accordionOpen ? (
+                    <img src={down} alt="" />
+                  ) : (
+                    <img src={up} alt="" />
                   )}
+                </button>
+                <div
+                  className={`grid overflow-hidden transition duration-500 ease-in-out text-white text-sm ${
+                    accordionOpen
+                      ? "grid-rows-[2fr] opacity-100 mt-2 "
+                      : "grid-rows-[0fr] opacity-0 mt-2"
+                  }`}
+                >
+                  <div className="leading-[22px] text-[14px] md:font-nexa-bold lg:text-[20px] lg:leading-[35px] overflow-hidden ">
+                    <div
+                      className="flex flex-wrap gap-4"
+                      onClick={(e) => Stop(e)}
+                    >
+                      {itemss.map((item, index) => (
+                        <button
+                          key={index}
+                          className={`${
+                            filterCategory === item
+                              ? "bg-black text-white "
+                              : "bg-white text-black "
+                          } flex items-center px-4 py-2 rounded-full font-poopins text-[14px] leading-[22px] transition`}
+                          onClick={() => handleCategoryChange(item)}
+                        >
+                          <span
+                            className={`w-4 h-4 mr-2 flex items-center justify-center rounded-full ${
+                              filterCategory === item
+                                ? "bg-[#E2063A]"
+                                : "border-2 border-[#9A9A9A]"
+                            }`}
+                          >
+                            {filterCategory === item && (
+                              <svg
+                                className="w-3 h-3 text-white"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                              >
+                                <path
+                                  fillRule="evenodd"
+                                  d="M16.707 5.293a1 1 0 010 1.414l-7.5 7.5a1 1 0 01-1.414 0l-3.5-3.5a1 1 0 011.414-1.414l3.086 3.086 6.793-6.793a1 1 0 011.414 0z"
+                                  clipRule="evenodd"
+                                />
+                              </svg>
+                            )}
+                          </span>
+                          {item}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="h-[1px] bg-[#DDDDDD] mx-4 my-4"></div>
-              <div className=" flex justify-between">
-                <button className="font-nexa-light text-[14px] leading-[22px] w-[50%] h-12 rounded-full text-center"
-                onClick={()=> {SetMFilterSort(false)}}>Cancel</button>
-                <button className="font-nexa-light text-[14px] leading-[22px] bg-[#E2063A] w-[50%] h-12 rounded-full text-center text-white"
-                onClick={()=> {SetMFilterSort(false)}}>Apply</button>
               </div>
             </div>
-        </div>: ""}
+            <div className="h-[1px] bg-[#DDDDDD] mx-4 my-4"></div>
+            {/* Price Section */}
+            <div
+              className={` transform ease-out flex items-center  duration-[400ms] rounded-2xl ${
+                accordionOpen2 &&
+                "flex items-center duration-[400ms] lg:h-[auto] h-[auto] "
+              }`}
+            >
+              <div
+                className={` ${accordionOpen2 && " "} group`}
+                onClick={toggleAccordion2}
+              >
+                <button className="flex h-[74px] items-center  gap-5 w-full ">
+                  <p
+                    className={`font-poopins leading-[22px] text-[14px] lg:ml-6`}
+                  >
+                    Price
+                  </p>
+                  {accordionOpen2 ? (
+                    <img src={down} alt="" />
+                  ) : (
+                    <img src={up} alt="" />
+                  )}
+                </button>
+                <div
+                  className={`grid overflow-hidden transition duration-500 ease-in-out text-white text-sm ${
+                    accordionOpen2
+                      ? "grid-rows-[2fr] opacity-100 mt-2 "
+                      : "grid-rows-[0fr] opacity-0 mt-2"
+                  }`}
+                >
+                  <div className="leading-[22px] text-[14px] md:font-nexa-bold lg:text-[20px] lg:leading-[35px] overflow-hidden ">
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="number"
+                        placeholder="From"
+                        value={priceRange.from}
+                        onChange={(e) =>
+                          setPriceRange({
+                            ...priceRange,
+                            from: e.target.value,
+                          })
+                        }
+                        className="border w-full rounded-full h-[72px] pl-6"
+                      />
+                      <input
+                        type="number"
+                        placeholder="To"
+                        value={priceRange.to}
+                        onChange={(e) =>
+                          setPriceRange({ ...priceRange, to: e.target.value })
+                        }
+                        className="border w-full rounded-full h-[72px] pl-6"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="h-[1px] bg-[#DDDDDD] mx-4 my-4"></div>
+            <div className="h-[1px] bg-[#DDDDDD] mx-4 my-4"></div>
+            <div className=" flex justify-between">
+              <button
+                className="font-nexa-light text-[14px] leading-[22px] w-[50%] h-12 rounded-full text-center"
+                onClick={() => {
+                  SetMFilterSort(false);
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                className="font-nexa-light text-[14px] leading-[22px] bg-[#E2063A] w-[50%] h-12 rounded-full text-center text-white"
+                onClick={() => {
+                  SetMFilterSort(false);
+                }}
+              >
+                Apply
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       <div className="top_quality pt-[120px] ">
         <h1 className="text-[36px] leading-[48px] text-center font-nexa-bold lg:text-[56px] lg:leading-[78px]">
           Experience Top{" "}
@@ -479,7 +489,7 @@ export default function Apparel() {
             className={`${
               activeIndex === -1
                 ? "px-4 py-2 grid grid-cols-6 grid-rows-3 gap-x-2  gap-y-2"
-                : "w-[100%] h-[200px] lg:h-[500px] rounded-full  overflow-hidden"
+                : "w-[100%] h-[200px] sm:h-[350px] lg:h-[500px] rounded-full  overflow-hidden"
             }    `}
           >
             {/* <div className={` w-full h-[500px] rounded-full  overflow-hidden`}>
@@ -505,428 +515,16 @@ export default function Apparel() {
       {/* {filterCategory === "" ? "" : } */}
 
       {filteredProducts.length === 0 ? (
-        <div className="px-[40px] py-[72px] md:px-[80] lg:px-[120px] xl:px-[160px] 2xl:px-[180px] bg-black text-white xl:flex gap-20 lg:py-[135px]">
-          <h3 className="font-nexa-bold text-[24px] leading-[35px] lg:text-[56px] lg:leading-[78px] mb-11">
-            Our Products <span className="xl:block">Minimum Order</span>{" "}
-            Quantity {"{MOQ}"}
-          </h3>
-          <div className="border-2 border-[#DDDDDD] p-6 rounded-[32px] xl:w-[50%]">
-            <div className="flex justify-between items-center">
-              <div className="flex gap-5 items-center">
-                <img className="lg:w-[56px]" src={ho} alt="" />
-                <p className="font-poopins font-medium text-[16px] leading-[26px] lg:font-nexa-bold lg:text-[32px] lg:leading-[42px]">
-                  Hoodie
-                </p>
-              </div>
-              <p className="font-poopins font-medium text-[16px] leading-[26px] lg:font-nexa-bold lg:text-[32px] lg:leading-[42px]">
-                20
-              </p>
-            </div>
-            <div className="flex justify-between items-center mt-10">
-              <div className="flex gap-5 items-center">
-                <img className="lg:w-[56px]" src={sho} alt="" />
-                <p className="font-poopins font-medium text-[16px] leading-[26px] lg:font-nexa-bold lg:text-[32px] lg:leading-[42px]">
-                  Shorts
-                </p>
-              </div>
-              <p className="font-poopins font-medium text-[16px] leading-[26px] lg:font-nexa-bold lg:text-[32px] lg:leading-[42px]">
-                20
-              </p>
-            </div>
-            <div className="flex justify-between items-center mt-10">
-              <div className="flex gap-5 items-center">
-                <img className="lg:w-[56px]" src={shi} alt="" />
-                <p className="font-poopins font-medium text-[16px] leading-[26px] lg:font-nexa-bold lg:text-[32px] lg:leading-[42px]">
-                  Shirts
-                </p>
-              </div>
-              <p className="font-poopins font-medium text-[16px] leading-[26px] lg:font-nexa-bold lg:text-[32px] lg:leading-[42px]">
-                20
-              </p>
-            </div>
-            <div className="flex justify-between items-center mt-10">
-              <div className="flex gap-5 items-center">
-                <img className="lg:w-[56px]" src={ja} alt="" />
-                <p className="font-poopins font-medium text-[16px] leading-[26px] lg:font-nexa-bold lg:text-[32px] lg:leading-[42px]">
-                  Jacket
-                </p>
-              </div>
-              <p className="font-poopins font-medium text-[16px] leading-[26px] lg:font-nexa-bold lg:text-[32px] lg:leading-[42px]">
-                20
-              </p>
-            </div>
-            <div className="flex justify-between items-center mt-10">
-              <div className="flex gap-5 items-center">
-                <img className="lg:w-[56px]" src={jea} alt="" />
-                <p className="font-poopins font-medium text-[16px] leading-[26px] lg:font-nexa-bold lg:text-[32px] lg:leading-[42px]">
-                  Jeans
-                </p>
-              </div>
-              <p className="font-poopins font-medium text-[16px] leading-[26px] lg:font-nexa-bold lg:text-[32px] lg:leading-[42px]">
-                20
-              </p>
-            </div>
-            <div className="flex justify-between items-center mt-10">
-              <div className="flex gap-5 items-center">
-                <img className="lg:w-[56px]" src={jer} alt="" />
-                <p className="font-poopins font-medium text-[16px] leading-[26px] lg:font-nexa-bold lg:text-[32px] lg:leading-[42px]">
-                  Jersey
-                </p>
-              </div>
-              <p className="font-poopins font-medium text-[16px] leading-[26px] lg:font-nexa-bold lg:text-[32px] lg:leading-[42px]">
-                20
-              </p>
-            </div>
-            <div className="flex justify-between items-center mt-10">
-              <div className="flex gap-5 items-center">
-                <img className="lg:w-[56px]" src={sw} alt="" />
-                <p className="font-poopins font-medium text-[16px] leading-[26px] lg:font-nexa-bold lg:text-[32px] lg:leading-[42px]">
-                  Sweatshirt
-                </p>
-              </div>
-              <p className="font-poopins font-medium text-[16px] leading-[26px] lg:font-nexa-bold lg:text-[32px] lg:leading-[42px]">
-                20
-              </p>
-            </div>
-            <div className="flex justify-between items-center mt-10">
-              <div className="flex gap-5 items-center">
-                <img className="lg:w-[56px]" src={ca} alt="" />
-                <p className="font-poopins font-medium text-[16px] leading-[26px] lg:font-nexa-bold lg:text-[32px] lg:leading-[42px]">
-                  cap
-                </p>
-              </div>
-              <p className="font-poopins font-medium text-[16px] leading-[26px] lg:font-nexa-bold lg:text-[32px] lg:leading-[42px]">
-                20
-              </p>
-            </div>
-          </div>
-        </div>
+        <MOQ />
       ) : (
-        <div className="px-4 md:px-[40px] lg:px-[60px] xl:px-[80px] 2xl:px-[120px] pt-[56px]">
-          <div className="flex h-16 p-2 gap-8 w-full rounded-full shadow-custom mb-[32px]">
-            <div className="flex items-center w-[50%] gap-3 pl-2 font-nexa-light text-[14px] leading-[22px]">
-              <img src={filter} onClick={()=>mobile("Filter")} alt="" />
-              filter
-            </div>
-            <div className="flex items-center w-[50%] gap-3 pl-2 font-nexa-light text-[14px] leading-[22px]">
-              <img src={sort} onClick={()=>mobile("Sort")} alt="" />
-              sort
-            </div>
-          </div>
-          <div className="flex gap-4">
-            <div className="p-4 hidden lg:block bg-white rounded-lg shadow-lg w-80">
-              {/* Header */}
-              <div className="flex justify-between gap-2 items-center mb-4">
-                <button onClick={()=>{SetFilterSort(true)}} className={`w-[50%] font-nexa-bold text-[16px] leading-[26px] rounded-full h-[72px] ${filterSort ? "border-2 border-black": ""}`}>
-                  Filter
-                </button>
-                <button onClick={()=>{SetFilterSort(false)}} className={`w-[50%] font-nexa-bold text-[16px] leading-[26px] rounded-full h-[72px] ${filterSort ? "": "border-2 border-black"}`}>Sort</button>
-              </div>
-
-              {/* Category Section */}
-
-              <div
-                className={` transform ease-out flex items-center  duration-[400ms] rounded-2xl ${
-                  accordionOpen &&
-                  "flex items-center duration-[400ms] lg:h-[auto] h-[auto] "
-                }`}
-              >
-                <div
-                  className={` ${accordionOpen && " "} group`}
-                  onClick={toggleAccordion}
-                >
-                  <button className="flex h-[74px] items-center  gap-5 w-full ">
-                    <p
-                      className={`font-poopins leading-[12px] text-[14px] lg:ml-6 lg:text-[16px] lg:leading-[26px]`}
-                    >
-                      Category
-                    </p>
-                    {accordionOpen ? (
-                      <img src={down} alt="" />
-                    ) : (
-                      <img src={up} alt="" />
-                    )}
-                  </button>
-                  <div
-                    className={`grid overflow-hidden transition duration-500 ease-in-out text-white text-sm ${
-                      accordionOpen
-                        ? "grid-rows-[2fr] opacity-100 mt-2 "
-                        : "grid-rows-[0fr] opacity-0 mt-2"
-                    }`}
-                  >
-                    <div className="leading-[22px] text-[14px] md:font-nexa-bold lg:text-[20px] lg:leading-[35px] overflow-hidden ">
-                      <div
-                        className="flex flex-wrap gap-4"
-                        onClick={(e) => Stop(e)}
-                      >
-                        {itemss.map((item, index) => (
-                          <button
-                            key={index}
-                            className={`${
-                              filterCategory === item
-                                ? "bg-black text-white "
-                                : "bg-white text-black "
-                            } flex items-center px-4 py-2 rounded-full  transition`}
-                            onClick={() => handleCategoryChange(item)}
-                          >
-                            <span
-                              className={`w-4 h-4 mr-2 flex items-center justify-center rounded-full ${
-                                filterCategory === item
-                                  ? "bg-[#E2063A]"
-                                  : "border-2 border-[#9A9A9A]"
-                              }`}
-                            >
-                              {filterCategory === item && (
-                                <svg
-                                  className="w-3 h-3 text-white"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  viewBox="0 0 20 20"
-                                  fill="currentColor"
-                                >
-                                  <path
-                                    fillRule="evenodd"
-                                    d="M16.707 5.293a1 1 0 010 1.414l-7.5 7.5a1 1 0 01-1.414 0l-3.5-3.5a1 1 0 011.414-1.414l3.086 3.086 6.793-6.793a1 1 0 011.414 0z"
-                                    clipRule="evenodd"
-                                  />
-                                </svg>
-                              )}
-                            </span>
-                            {item}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="h-[1px] bg-[#DDDDDD] mx-4 my-4"></div>
-              {/* Price Section */}
-              <div
-                className={` transform ease-out flex items-center  duration-[400ms] rounded-2xl ${
-                  accordionOpen2 &&
-                  "flex items-center duration-[400ms] lg:h-[auto] h-[auto] "
-                }`}
-              >
-                <div
-                  className={` ${accordionOpen2 && " "} group`}
-                  onClick={toggleAccordion2}
-                >
-                  <button className="flex h-[74px] items-center  gap-5 w-full ">
-                    <p
-                      className={`font-poopins leading-[12px] text-[14px] lg:ml-6 lg:text-[16px] lg:leading-[26px]`}
-                    >
-                      Price
-                    </p>
-                    {accordionOpen2 ? (
-                      <img src={down} alt="" />
-                    ) : (
-                      <img src={up} alt="" />
-                    )}
-                  </button>
-                  <div
-                    className={`grid overflow-hidden transition duration-500 ease-in-out text-white text-sm ${
-                      accordionOpen2
-                        ? "grid-rows-[2fr] opacity-100 mt-2 "
-                        : "grid-rows-[0fr] opacity-0 mt-2"
-                    }`}
-                  >
-                    <div className="leading-[22px] text-[14px] md:font-nexa-bold lg:text-[20px] lg:leading-[35px] overflow-hidden ">
-                      <div className="flex items-center gap-2">
-                        <input
-                          type="number"
-                          placeholder="From"
-                          value={priceRange.from}
-                          onChange={(e) =>
-                            setPriceRange({
-                              ...priceRange,
-                              from: e.target.value,
-                            })
-                          }
-                          className="border w-full rounded-full h-[72px] pl-6"
-                        />
-                        <input
-                          type="number"
-                          placeholder="To"
-                          value={priceRange.to}
-                          onChange={(e) =>
-                            setPriceRange({ ...priceRange, to: e.target.value })
-                          }
-                          className="border w-full rounded-full h-[72px] pl-6"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="h-[1px] bg-[#DDDDDD] mx-4 my-4"></div>
-
-              <div className="mb-4">
-                <h3 className="font-bold mb-2">Price</h3>
-                <div className="flex items-center gap-2">
-                  <input
-                    type="number"
-                    placeholder="From"
-                    value={priceRange.from}
-                    onChange={(e) =>
-                      setPriceRange({ ...priceRange, from: e.target.value })
-                    }
-                    className="border w-full rounded-full h-[72px] pl-6"
-                  />
-                  <input
-                    type="number"
-                    placeholder="To"
-                    value={priceRange.to}
-                    onChange={(e) =>
-                      setPriceRange({ ...priceRange, to: e.target.value })
-                    }
-                    className="border w-full rounded-full h-[72px] pl-6"
-                  />
-                </div>
-              </div>
-
-              {/* Material Section */}
-              <div className="mb-4">
-                <h3 className="font-bold mb-2">Material</h3>
-                <div className="grid grid-cols-2 gap-2">
-                  {["Cotton", "Polyester", "Blend", "Print-On"].map(
-                    (material) => (
-                      <label key={material} className="flex items-center">
-                        <input
-                          type="checkbox"
-                          value={material}
-                          checked={selectedMaterial.includes(material)}
-                          onChange={() => handleMaterialChange(material)}
-                          className="mr-2"
-                        />
-                        {material}
-                      </label>
-                    )
-                  )}
-                </div>
-              </div>
-            </div>
-            <div className="grid h-auto grid-cols-2 lg:flex lg:grid-cols-3 lg:grid-rows-4 gap-4">
-              {filteredProducts.map((product) => (
-                <div
-                  key={product._id}
-                  className=""
-                  
-                >
-                  <div
-                    className={`border-8 bg-white border-white hover:border-[#E6E6E6] rounded-t-full max-w-[312px] md:min-w-[312px] ${
-                      cart.some((item) => item._id === product._id)
-                        ? "shadow-custom"
-                        : ""
-                    }`}
-                    onClick={() => handleProductClick(product._id)}
-                  >
-                    <img className="rounded-full" src={Cap} alt="" />
-                    <div className="pt-[16px] rounded-full pb-[11.6px] px-[8px] relative">
-                      <p className="font-poopins  text-[12px] leading-[18px] md:text-[20px] md:leading-[32px]">
-                        {product.name}
-                      </p>
-                      <div className="lg:w-[72px] w-[48px] h-[48px] lg:h-[72px] rounded-full flex items-center justify-center absolute bg-white lg:top-[-60px] top-[-35px] md:top-[-70px]   right-[16px] ">
-                        <img className=" bg-white" src={Heart} alt="" />
-                      </div>
-                      <div className="md:flex items-center md:mt-[20px]">
-                        <div
-                          className={`flex flex-row justify-between items-center mt-[20px] md:mt-0 w-full ${
-                            cart.some((item) => item._id === product._id)
-                              ? "md:w-[50%]"
-                              : ""
-                          } `}
-                        >
-                          <div className="price">
-                            <p className="font-nexa-bold text-[16px] leading-[26px] font-bold md:text-[24px] md:leading-[38px]">
-                              ${product.price /* .toFixed(2) */}
-                            </p>
-                            <p className="font-poopins text-[10px] leading-[16px] md:text-[16px] md:leading-[26px]">
-                              Out of stock
-                            </p>
-                          </div>
-                          {cart.some((item) => item._id === product._id) ? (
-                            ""
-                          ) : (
-                            <div className="div" onClick={(e) => Stop(e)}>
-                              <img
-                                src={plus}
-                                alt=""
-                                onClick={() => handleAddToCart(product._id)}
-                              />
-                            </div>
-                          )}
-                        </div>
-                        <div
-                          className={`flex items-center mt-[12px] justify-center space-x-2 ${
-                            cart.some((item) => item._id === product._id)
-                              ? "md:w-[50%]"
-                              : ""
-                          } md:mt-0`}
-                          onClick={(e) => Stop(e)}
-                        >
-                          {cart.find((item) => item._id === product._id) ? (
-                            <button
-                              onClick={() =>
-                                cart.find((item) => item._id === product._id)
-                                  .quantity > 20
-                                  ? handleDecreaseQuantity(product._id)
-                                  : handleRemoveFromCart(product._id)
-                              }
-                            >
-                              {cart.find((item) => item._id === product._id)
-                                .quantity > 20 ? (
-                                <img src={minus} className="" />
-                              ) : (
-                                <img src={dust} className="" />
-                              )}
-                            </button>
-                          ) : (
-                            ""
-                          )}
-
-                          {cart.find((item) => item._id === product._id) ? (
-                            <input
-                              type="number"
-                              value={
-                                cart.find((item) => item._id === product._id)
-                                  .quantity
-                              }
-                              onChange={(e) =>
-                                handleQuantityChange(
-                                  product._id,
-                                  Number(e.target.value)
-                                )
-                              }
-                              className=" p-1 rounded w-16 text-center"
-                            />
-                          ) : (
-                            ""
-                          )}
-
-                          {cart.find((item) => item._id === product._id) ? (
-                            <button
-                              onClick={() => handleAddToCart(product._id)}
-                              className=" text-white  rounded"
-                            >
-                              <img src={plus2} className="" />
-                            </button>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        <Store handleCategoryChange={handleCategoryChange} filteredProducts={filteredProducts} filterCategory={filterCategory}/>
       )}
       {/* <Feature /> */}
       {/* <QuoteCalc checkboxes1={checkboxes1} handleCheckboxChange={handleCheckboxChange}  checkboxData1={checkboxData1}/> */}
       <FAQ />
-      <Testimonials />
+      <div className=" bg-[url('./assets/Images/hero-pattern.svg')] bg-cover bg-no-repeat">
+            <Testimonials />
+          </div>
       <Touch />
     </div>
   );

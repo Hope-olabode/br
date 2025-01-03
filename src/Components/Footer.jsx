@@ -16,6 +16,8 @@ import hold1 from '../assets/Images/hold1.svg';
 import hold2 from '../assets/Images/hold2.svg';
 import farrow1 from '../assets/Images/farrow1.svg';
 import farrow2 from '../assets/Images/farrow2.svg';
+import sub from '../assets/Images/sub.svg';
+import sub2 from '../assets/Images/sub2.svg';
 
 
 
@@ -81,10 +83,7 @@ export default function Footer() {
                   isFocused ? 'bg-black text-white border-2 ':''}`}
               />
               <button className={`p-2 ml-2  rounded-full `}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M7.39999 6.32015L15.89 3.49015C19.7 2.22015 21.77 4.30015 20.51 8.11015L17.68 16.6002C15.78 22.3102 12.66 22.3102 10.76 16.6002L9.91999 14.0802L7.39999 13.2402C1.68999 11.3402 1.68999 8.23015 7.39999 6.32015Z" stroke={`${isFocused ? '#FFFFFF':'#1F1F1F'}`} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M10.11 13.6501L13.69 10.0601" stroke={`${isFocused ? '#FFFFFF':'#1F1F1F'}`} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              {isFocused ? <img src={sub} alt="" />: <img src={sub2} alt="" /> }
               </button>
             </div>
           </div>

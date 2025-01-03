@@ -81,28 +81,28 @@ export default function HomePage() {
         
         <Slider className="w-full" {...settings}>
           <div className="w-full">
-            <img className="h-[460px] w-[460px] mx-auto" src={one} alt="" />
+            <img className="h-[460px] lg:h-[700px] mx-auto" src={one} alt="" />
           </div>
           <div className="w-full">
-            <img className="h-[460px] w-[460px] mx-auto" src={two} alt="" />
+            <img className="h-[460px] lg:h-[700px] mx-auto" src={two} alt="" />
           </div>
           <div className="w-full">
-            <img className="h-[460px] w-[460px] mx-auto" src={three} alt="" />
+            <img className="h-[460px] lg:h-[700px] mx-auto" src={three} alt="" />
           </div>
           <div className="w-full">
-            <img className="h-[460px] w-[460px] mx-auto" src={four} alt="" />
+            <img className="h-[460px] lg:h-[700px] mx-auto" src={four} alt="" />
           </div>
           <div className="w-full">
-            <img className="h-[460px] w-[460px] mx-auto" src={five} alt="" />
+            <img className="h-[460px] lg:h-[700px] mx-auto" src={five} alt="" />
           </div>
           <div className="w-full">
-            <img className="h-[460px] w-[460px] mx-auto" src={six} alt="" />
+            <img className="h-[460px] lg:h-[700px] mx-auto" src={six} alt="" />
           </div>
           <div className="w-full">
-            <img className="h-[460px] w-[460px] mx-auto" src={seven} alt="" />
+            <img className="h-[460px] lg:h-[700px] mx-auto" src={seven} alt="" />
           </div>
           <div className="w-full">
-            <img className="h-[460px] w-[460px] mx-auto" src={eight} alt="" />
+            <img className="h-[460px] lg:h-[700px] mx-auto" src={eight} alt="" />
           </div>
         </Slider>
 
@@ -115,17 +115,17 @@ export default function HomePage() {
           </h1>
           <p className="text-[14] leading-[22px] mt-4 font-poopins md:text-[16px] md:leading-[26px] lg:mt-[24px]">Launch Your Clothing Brand with Confidence</p>
           <div className="buttons flex flex-col items-center w-full mt-10 lg:mt-[48px]">
-            <button className="bg-[#E2063A]  text-white w-[233px] px-4 py-[13px] rounded-full relative overflow-hidden group lg:w-[311px] lg:h-[72px] lg:py-4 lg:pl-[40px]">
-              <span class="relative z-10 "><p className="font-nexa-bold text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px]">Start your brand with us</p></span>
-              <span class="absolute right-[10px] top-[50%]  translate-y-[-50%] h-8 w-8 bg-black transition-all duration-[1s] ease-in-out group-hover:translate-y-[-50%] group-hover:w-full group-hover:h-full group-hover:scale-[5]  rounded-full lg:right-4 lg:h-10 lg:w-10"></span>
+            <button className="bg-[#E2063A] h-12 text-white w-[196px] px-4  rounded-full relative overflow-hidden group lg:w-[262px] lg:h-[72px]  lg:pl-[40px]">
+              <span className="relative z-10 "><p className="font-nexa-bold text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px]">Get Custom Quote</p></span>
+              <span className="absolute right-[10px] top-[50%]  translate-y-[-50%] h-8 w-8 bg-black transition-all duration-[1s] ease-in-out group-hover:translate-y-[-50%] group-hover:w-full group-hover:h-full group-hover:scale-[5]  rounded-full lg:right-4 lg:h-10 lg:w-10"></span>
+              <img className="absolute right-[16px] top-[50%]  translate-y-[-50%]" src={but} alt="" />
             </button>
-            <button className="bg-white font-nexa-light px-4 py-[13px] w-[233px] rounded-full mt-3 border-2 border-white hover:border-[#DDDDDD]  lg:w-[311px] ">
-              <p className="font-nexa-bold text-[14px] leading-[22px] lg:text-[16px] lg:leading-[26px]">Get a Free Production Quote</p>
+            <button className="bg-white font-nexa-light px-4 h-12 w-[122px]  rounded-full mt-3 border-2 border-white hover:border-[#DDDDDD] lg:h-[72px] lg:w-[165px] ">
+              <p className="font-nexa-bold text-center text-[14px] leading-[22px] lg:text-[16px] lg:leading-[26px]">Get Blanks</p>
             </button>
           </div>
           
         </div>
-        <button className="content-center "><img src={but} alt="" /></button>
       </div>
     
     <Wrangler /> 
@@ -143,8 +143,8 @@ export default function HomePage() {
             Brandit empowers you to turn your creative vision into a thriving online store. We provide everything you need to get started, from design tools to production expertise.
           </p>
           <button className="bg-[#E2063A]  text-white w-[293px] px-4 py-[13px] rounded-full relative overflow-hidden group mt-[40px] lg:mt-[46px] xl:mt-[56px] lg:w-[375px] lg:h-[72px] lg:py-4 lg:pl-[40px]">
-            <span class="relative z-10 "><p className="font-nexa-light text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px]">Start Your Clothing Line Journey!</p></span>
-            <span class="absolute right-[10px] top-[50%]  translate-y-[-50%] h-8 w-8 bg-black transition-all duration-[1s] ease-in-out group-hover:translate-y-[-50%] group-hover:w-full group-hover:h-full group-hover:scale-[5]  rounded-full lg:right-4 lg:h-10 lg:w-10"></span>
+            <span className="relative z-10 "><p className="font-nexa-light text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px]">Start Your Clothing Line Journey!</p></span>
+            <span className="absolute right-[10px] top-[50%]  translate-y-[-50%] h-8 w-8 bg-black transition-all duration-[1s] ease-in-out group-hover:translate-y-[-50%] group-hover:w-full group-hover:h-full group-hover:scale-[5]  rounded-full lg:right-4 lg:h-10 lg:w-10"></span>
           </button>
         </div>
       </div>
@@ -158,8 +158,8 @@ export default function HomePage() {
             Brandit is your partner in growth. We offer high-quality production solutions, from bespoke garment creation to seamless import options.
           </p>
           <button className="bg-[#E2063A]  text-white w-[263px] px-4 py-[13px] rounded-full relative overflow-hidden group mt-[40px] lg:mt-[56px] lg:w-[344px] lg:h-[72px] lg:py-4 lg:pl-[40px]">
-            <span class="relative z-10 "><p className="font-nexa-light text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px]">Get a Free Production Quote!</p></span>
-            <span class="absolute right-[10px] top-[50%]  translate-y-[-50%] h-8 w-8 bg-black transition-all duration-[1s] ease-in-out group-hover:translate-y-[-50%] group-hover:w-full group-hover:h-full group-hover:scale-[5]  rounded-full lg:right-4 lg:h-10 lg:w-10"></span>
+            <span className="relative z-10 "><p className="font-nexa-light text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px]">Get a Free Production Quote!</p></span>
+            <span className="absolute right-[10px] top-[50%]  translate-y-[-50%] h-8 w-8 bg-black transition-all duration-[1s] ease-in-out group-hover:translate-y-[-50%] group-hover:w-full group-hover:h-full group-hover:scale-[5]  rounded-full lg:right-4 lg:h-10 lg:w-10"></span>
           </button>
         </div>
         <div className="pb-[40px] lg:pb-0">

@@ -20,15 +20,14 @@ const schema =z.object({
   email: z.string()/* .email("Incorrect email") */,
   password:  z.string()/* .min(8, "Password doesn’t meet requirement").regex(/[A-Z]/, "Password must contain at least one uppercase letter")
   .regex(/[@$!%*?&]/, "Password must contain at least one special character (e.g., @, $, !, %, *, ?, &)") */,
-  password2:  z.string()/* .min(8, "Password doesn’t meet requirement").regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-  .regex(/[@$!%*?&]/, "Password must contain at least one special character (e.g., @, $, !, %, *, ?, &)") */,
 })
 
-export default function Signup() {
+export default function Next() {
   const [loading, setLoading] = useState(false)
   const [isFocused, setIsFocused] = useState(false);
   const [isFocused2, setIsFocused2] = useState(false);
-  const [isFocused5, setIsFocused5] = useState(false);
+  const [isFocused3, setIsFocused3] = useState(false);
+  const [isFocused4, setIsFocused4] = useState(false);
   const [hidden, setHidden] = useState(true)
   const [hidden2, setHidden2] = useState(true)
   const navigate = useNavigate()
@@ -81,22 +80,26 @@ export default function Signup() {
       document.body.classList.remove("no-scroll");
     }
   }
-  const email = watch("email"); // watch input value
-  const password = watch("password"); // watch input value
-  const password2 = watch("password2"); // watch input value
-
+  const Phone_No = watch("Phone_No"); // watch input value
+  const Full_Name = watch("Full_Name"); // watch input value
+  const Brand_Name = watch("Brand_Name"); // watch input value
+  const Location = watch("Location"); // watch input value
 
   useEffect(() => {
-    setIsFocused2(email && email.trim().length > 0);
-  }, [email]);
+    setIsFocused3(Full_Name && Full_Name.trim().length > 0);
+  }, [Full_Name]);
+  useEffect(() => {
+    setIsFocused4(Brand_Name && Brand_Name.trim().length > 0);
+  }, [Brand_Name]);
+
+  useEffect(() => {
+    setIsFocused2(Phone_No && Phone_No.trim().length > 0);
+  }, [Phone_No]);
   
   useEffect(() => {
-    setIsFocused(password && password.trim().length > 0);
-  }, [password]);
+    setIsFocused(Location && Location.trim().length > 0);
+  }, [Location]);
 
-  useEffect(() => {
-    setIsFocused5(password2 && password2.trim().length > 0);
-  }, [password2]);
 
   
 
@@ -135,46 +138,48 @@ loading ? document.body.classList.add("no-scroll") : ""
         <form className="mt-10 lg:mt-14" onSubmit={handleSubmit(onSubmit)}>
           {/* register your input into the hook by invoking the "register" function */}
           <input
-            className={`w-full mt-4 h-12 border-2 border-[#DDDDDD] rounded-full active:border-none focus:outline-none pl-6 pr-2 font-poopins text-[14px] leading-[22px] lg:h-[72px] lg:text-[16px] lg:leading-[26px] ${isFocused2 ? "bg-black text-white placeholder:text-white border-black border-2":""}`}
-            {...register("email")}
-            placeholder="Email Address"
+            spellCheck="false"
+            className={`w-full h-12 border-2 border-[#DDDDDD] rounded-full active:border-none focus:outline-none pl-6 pr-2 font-poopins text-[14px] leading-[22px] lg:h-[72px] lg:text-[16px] lg:leading-[26px] ${isFocused3 ? "bg-black text-white placeholder:text-white border-black border-2":""}`}
+            {...register("Full_Name")}
+            placeholder="Full Name"
             type="string"
-            id="email"
+            id="Full_Name"
           />
-          {/* include validation with required or other standard HTML validation rules */}
-          <div className={`flex items-center content-center h-[52px] border-2 border-[#DDDDDD] rounded-full mt-4  pr-2 font-poopins text-[14px] leading-[22px] lg:h-[72px] lg:text-[16px] lg:leading-[26px] ${isFocused ? "bg-black text-white border-black border-2":""}`}>
-            <input
-              className={`w-full email h-12 active:border-none pl-6 rounded-l-full focus:outline-none ${isFocused ? "bg-black text-white placeholder:text-white":""}`}
-              
-              {...register("password")}
-              placeholder="Password"
-              type={hidden ? "password" : "text"}
-            />
-            {hidden ? <img className="w-12" onClick={() => setHidden(!hidden)} src={isFocused ? hpas2 : hpas} alt="" /> : <img className="w-12" onClick={() => setHidden(!hidden)} src={isFocused ? hpas4 : hpas3} alt="" />}
-          </div>
+          <input
+            spellCheck="false"
+            className={`w-full mt-4 h-12 border-2 border-[#DDDDDD] rounded-full active:border-none focus:outline-none pl-6 pr-2 font-poopins text-[14px] leading-[22px] lg:h-[72px] lg:text-[16px] lg:leading-[26px] ${isFocused4 ? "bg-black text-white placeholder:text-white border-black border-2":""}`}
+            {...register("Brand_Name")}
+            placeholder="Brand Name"
+            type="string"
+            id="Bramd_Name"
+          />
+          <input
+            className={`w-full mt-4 h-12 border-2 border-[#DDDDDD] rounded-full active:border-none focus:outline-none pl-6 pr-2 font-poopins text-[14px] leading-[22px] lg:h-[72px] lg:text-[16px] lg:leading-[26px] ${isFocused2 ? "bg-black text-white placeholder:text-white border-black border-2":""}`}
+            {...register("Phone_No")}
+            placeholder="Phone Number"
+            type="tel"
+            id="Phone_No"
+          />
 
-          <div className={`flex items-center content-center h-[52px] border-2 border-[#DDDDDD] rounded-full mt-4  pr-2 font-poopins text-[14px] leading-[22px] lg:h-[72px] lg:text-[16px] lg:leading-[26px] ${isFocused5 ? "bg-black text-white border-black border-2":""}`}>
-            <input
-              className={`w-full email h-12 active:border-none pl-6 rounded-l-full focus:outline-none ${isFocused5 ? "bg-black text-white placeholder:text-white":""}`}
-              
-              {...register("password2")}
-              placeholder="Password2"
-              type={hidden2 ? "password" : "text"}
-            />
-            {hidden2 ? <img className="w-12" onClick={() => setHidden2(!hidden2)} src={isFocused5 ? hpas2 : hpas} alt="" /> : <img className="w-12" onClick={() => setHidden2(!hidden2)} src={isFocused5 ? hpas4 : hpas3} alt="" />}
-          </div>
-          <p className="font-poopins text-[14px] leading-[18px] pl-2 pt-0.5 text-[#9A9A9A]">8 characters including a letter and a number</p>
+          <input
+            className={`w-full mt-4 h-12 border-2 border-[#DDDDDD] rounded-full active:border-none focus:outline-none pl-6 pr-2 font-poopins text-[14px] leading-[22px] lg:h-[72px] lg:text-[16px] lg:leading-[26px] ${isFocused2 ? "bg-black text-white placeholder:text-white border-black border-2":""}`}
+            {...register("Location")}
+            placeholder="Location"
+            type="text"
+            id="Location"
+          />
           
+
           {/* errors will return when field validation fails  */}
           {/* {errors.password && toast.error('Event has not been created')} */}
           {/* <input className="mt-4 h-12 bg"   disabled={password?.trim()?.length === 0 && email?.trim()?.length === 0}/> */}
           
-          <button type="submit" className="bg-[#E2063A] mt-4 text-white  rounded-full relative overflow-hidden group lg:h-[72px] lg:w-full  w-[100%]" disabled={password?.trim()?.length === 0 || email?.trim()?.length === 0 || password2?.trim()?.length === 0}>
-            <div className={`${password?.trim()?.length === 0 || email?.trim()?.length === 0 || password2?.trim()?.length === 0 ? "inset-0 bg-[#ffffffd0] z-10 absolute w-100%" : ""} relative  px-4 py-[13px] lg:py-[23px] lg:px-0  `}>
+          <button type="submit" className="bg-[#E2063A] mt-4 text-white  rounded-full relative overflow-hidden group lg:h-[72px] lg:w-full  w-[100%]" disabled={Location?.trim()?.length === 0 || Phone_No?.trim()?.length === 0 || Full_Name?.trim()?.length === 0 || Brand_Name?.trim()?.length === 0}>
+            <div className={`${Location?.trim()?.length === 0 || Phone_No?.trim()?.length === 0 || Full_Name?.trim()?.length === 0 || Brand_Name?.trim()?.length === 0 ? "inset-0 bg-[#ffffffd0] z-10 absolute w-100%" : ""} relative  px-4 py-[13px] lg:py-[23px] lg:px-0  `}>
               <span className="relative z-10 "><p className="font-nexa-bold text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px] lg:pl-[40px]">Create Account</p></span>
               <div className="absolute right-[10px] top-[50%] translate-y-[-50%] lg:right-[25px]">
-                <img src={wc} className={`${password?.trim()?.length === 0 || email?.trim()?.length === 0 || password2?.trim()?.length === 0  ? "hi" : "hidden"} lg:h-10`}/>
-                <img src={ba} className={`${password?.trim()?.length === 0 || email?.trim()?.length === 0 || password2?.trim()?.length === 0 ? "hidden" : "block"} lg:h-10`}/>
+                <img src={wc} className={`${Location?.trim()?.length === 0 || Phone_No?.trim()?.length === 0 || Full_Name?.trim()?.length === 0 || Brand_Name?.trim()?.length === 0 ? "hi" : "hidden"} lg:h-10`}/>
+                <img src={ba} className={`${Location?.trim()?.length === 0 || Phone_No?.trim()?.length === 0 || Full_Name?.trim()?.length === 0 || Brand_Name?.trim()?.length === 0 ? "hidden" : "block"} lg:h-10`}/>
               </div>
             </div>
           </button>

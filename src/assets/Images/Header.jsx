@@ -82,9 +82,9 @@ const num = cart.length
                 Log In
               </NavLink>
               <NavLink className={({isActive})=> isActive ? "bg-[#E2063A] border-[4px] border-[#E2063A] text-white w-[178px] px-4 py-[13px] rounded-full relative overflow-hidden group lg:w-[178px] lg:h-[72px] lg:py-4 lg:pl-[40px]  flex items-center content-center" : "bg-[#E2063A] text-white w-[178px] px-4 py-[13px] rounded-full relative overflow-hidden group lg:w-[178px] lg:h-[72px] lg:py-4 lg:pl-[40px]  flex items-center content-center"} to='Sign up'>
-                  <span class="relative z-10 "><p className="font-nexa-bold text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px]">Sign Up</p></span>
+                  <span className="relative z-10 "><p className="font-nexa-bold text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px]">Sign Up</p></span>
                   <img src={ar} alt="" className="absolute right-[25px] top-[50%] z-50 translate-y-[-50%]" />
-                  <span class="absolute right-[10px] top-[50%]  translate-y-[-50%] h-8 w-8 bg-black transition-all duration-[1s] ease-in-out group-hover:translate-y-[-50%] group-hover:w-full group-hover:h-full group-hover:scale-[5]  rounded-full lg:right-4 lg:h-10 lg:w-10"></span>
+                  <span className="absolute right-[10px] top-[50%]  translate-y-[-50%] h-8 w-8 bg-black transition-all duration-[1s] ease-in-out group-hover:translate-y-[-50%] group-hover:w-full group-hover:h-full group-hover:scale-[5]  rounded-full lg:right-4 lg:h-10 lg:w-10"></span>
               </NavLink>
             </div>}
             {/* <div className="div flex gap flex-row ml-4">
@@ -92,9 +92,9 @@ const num = cart.length
                 Log In
               </NavLink>
               <NavLink className={({isActive})=> isActive ? "bg-[#E2063A] border-[4px] border-[#E2063A] text-white w-[178px] px-4 py-[13px] rounded-full relative overflow-hidden group lg:w-[178px] lg:h-[72px] lg:py-4 lg:pl-[40px]  flex items-center content-center" : "bg-[#E2063A] text-white w-[178px] px-4 py-[13px] rounded-full relative overflow-hidden group lg:w-[178px] lg:h-[72px] lg:py-4 lg:pl-[40px]  flex items-center content-center"} to='Sign up'>
-                  <span class="relative z-10 "><p className="font-nexa-bold text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px]">Sign Up</p></span>
+                  <span className="relative z-10 "><p className="font-nexa-bold text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px]">Sign Up</p></span>
                   <img src={ar} alt="" className="absolute right-[25px] top-[50%] z-50 translate-y-[-50%]" />
-                  <span class="absolute right-[10px] top-[50%]  translate-y-[-50%] h-8 w-8 bg-black transition-all duration-[1s] ease-in-out group-hover:translate-y-[-50%] group-hover:w-full group-hover:h-full group-hover:scale-[5]  rounded-full lg:right-4 lg:h-10 lg:w-10"></span>
+                  <span className="absolute right-[10px] top-[50%]  translate-y-[-50%] h-8 w-8 bg-black transition-all duration-[1s] ease-in-out group-hover:translate-y-[-50%] group-hover:w-full group-hover:h-full group-hover:scale-[5]  rounded-full lg:right-4 lg:h-10 lg:w-10"></span>
               </NavLink>
             </div> */}
           </nav>

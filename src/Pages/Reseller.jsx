@@ -23,8 +23,8 @@ export default function Reseller() {
         <h2 className="font-nexa-bold text-[36px] leading-[48px] mt-4 mb-6 lg:text-[56px] lg:leading-[78px]">Empower Others & Build Your Business Dreams</h2>
         <p className="font-poopins text-[14px] leading-[22px] lg:text-[20px] lg:leading-[32px]">Sell fashion you love, earn on your own terms. Join our thriving reseller community.</p>
         <button className="bg-[#E2063A] my-10 text-white w-[233px] px-4 py-[13px] rounded-full relative overflow-hidden group lg:w-[311px] lg:h-[72px] lg:py-4 lg:pl-[40px]">
-          <span class="relative z-10 "><p className="font-nexa-bold text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px]">Become a Reseller Today</p></span>
-          <span class="absolute right-[10px] top-[50%]  translate-y-[-50%] h-8 w-8 bg-black transition-all duration-[1s] ease-in-out group-hover:translate-y-[-50%] group-hover:w-full group-hover:h-full group-hover:scale-[5]  rounded-full lg:right-4 lg:h-10 lg:w-10 "></span>
+          <span className="relative z-10 "><p className="font-nexa-bold text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px]">Become a Reseller Today</p></span>
+          <span className="absolute right-[10px] top-[50%]  translate-y-[-50%] h-8 w-8 bg-black transition-all duration-[1s] ease-in-out group-hover:translate-y-[-50%] group-hover:w-full group-hover:h-full group-hover:scale-[5]  rounded-full lg:right-4 lg:h-10 lg:w-10 "></span>
           <div className="absolute right-[15px] top-[50%] translate-y-[-50%] lg:right-[25px]">
             <div className="group-hover:hidden">
               <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -161,8 +161,8 @@ export default function Reseller() {
       <div className=" py-[40px] p px-4 bg-black text-white text-center">
         <h3 className="font-nexa-bold pb-[24px] text-[24px] leading-[38px]">Ready to Join the Brandit Reseller Revolution?</h3>
         <button className="bg-[#E2063A]  text-white w-[233px] px-4 py-[13px] rounded-full relative overflow-hidden group lg:w-[311px] lg:h-[72px] lg:py-4 lg:pl-[40px]">
-          <span class="relative z-10 "><p className="font-nexa-bold text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px]">Become a Reseller Today</p></span>
-          <span class="absolute right-[10px] top-[50%]  translate-y-[-50%] h-8 w-8 bg-black transition-all duration-[1s] ease-in-out group-hover:translate-y-[-50%] group-hover:w-full group-hover:h-full group-hover:scale-[5]  rounded-full lg:right-4 lg:h-10 lg:w-10 "></span>
+          <span className="relative z-10 "><p className="font-nexa-bold text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px]">Become a Reseller Today</p></span>
+          <span className="absolute right-[10px] top-[50%]  translate-y-[-50%] h-8 w-8 bg-black transition-all duration-[1s] ease-in-out group-hover:translate-y-[-50%] group-hover:w-full group-hover:h-full group-hover:scale-[5]  rounded-full lg:right-4 lg:h-10 lg:w-10 "></span>
           <div className="absolute right-[15px] top-[50%] translate-y-[-50%] lg:right-[25px]">
             <div className="group-hover:hidden">
               <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -201,8 +201,8 @@ export default function Reseller() {
           <div className="mt-6 lg:mt-12">
             <h3 className="font-nexa-bold text-[16px] leading-[22px] hover:text-[#E2063A] hover:cursor-pointer lg:text-[16px] lg:leading-[26px]">Terms and Conditions</h3>
             <button className="bg-[#E2063A]  text-white w-[233px] px-4 py-[13px] rounded-full relative overflow-hidden mt-4 group lg:w-[311px] lg:h-[72px] lg:py-4 lg:pl-[40px]">
-              <span class="relative -z-10 "><p className="font-nexa-light text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px]">Submit Application</p></span>
-              <span class="absolute right-[10px] top-[50%]  translate-y-[-50%] h-8 w-8 bg-black transition-all duration-[1s] ease-in-out group-hover:translate-y-[-50%] group-hover:w-full group-hover:h-full group-hover:scale-[5]  rounded-full lg:right-4 lg:h-10 lg:w-10"></span>
+              <span className="relative -z-10 "><p className="font-nexa-light text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px]">Submit Application</p></span>
+              <span className="absolute right-[10px] top-[50%]  translate-y-[-50%] h-8 w-8 bg-black transition-all duration-[1s] ease-in-out group-hover:translate-y-[-50%] group-hover:w-full group-hover:h-full group-hover:scale-[5]  rounded-full lg:right-4 lg:h-10 lg:w-10"></span>
             </button>
           </div>
         </div>

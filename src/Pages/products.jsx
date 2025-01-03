@@ -7,9 +7,11 @@ import minus from "../assets/Images/minus.svg";
 import dust from "../assets/Images/dust.svg";
 import Touch from "../Components/Touch";
 import { Context } from "../App"; 
+import Loader from "../Components/Loader"
 
 function ProductDetail() {
   const { id } = useParams();
+  const [loading, setLoading] = useState(false)
   const [products, setProducts] = useState([]);
 
   const {
@@ -33,6 +35,9 @@ function ProductDetail() {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true); // Start loading and add no-scroll
+      document.body.classList.add("no-scroll");
+      
       try {
         const response = await fetch("https://br-s.onrender.com/api/products");
         if (!response.ok) {
@@ -43,10 +48,14 @@ function ProductDetail() {
         console.log(result); // Debugging: Log the fetched data
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false); // Stop loading and remove no-scroll
+        document.body.classList.remove("no-scroll");
       }
     };
+  
     fetchData();
-  }, []);
+  }, []); // Empty dependency array ensures this runs once when the component mounts.
 
   const product = products.find((p) => p._id === String(id));
   console.log(id);
@@ -105,8 +114,11 @@ function ProductDetail() {
     );
   };
 
+  loading ? document.body.classList.add("no-scroll") : ""
+
   return (
     <div className="div">
+      {loading ? <Loader />:""}
       <div className="mt-[96px] py-14  px-4 md:px-[40px] lg:px-[60px] xl:px-[80px] 2xl:px-[120px]  lg:mt-[176px]">
         <div className="flex flex-col md:items-start md:flex-row md:gap-10">
           <div className="md:w-[50%] md:flex h-full gap-4">
@@ -213,7 +225,7 @@ function ProductDetail() {
                   XS
                 </p>
                 <p
-                  className={`font-nexa-bold text-[14px] leading-[24px] lg:text-[16px] lg:leading-[26px] rounded-full border-2 px-[20px] py-[13px] lg:px-[28px] lg:py-[25px] ${
+                  className={`font-nexa-bold text-[14px] leading-[24px]lg:text-[16px] lg:leading-[26px] rounded-full border-2 px-[20px] py-[13px] text-center lg:w-[80px] lg:px-[28px] lg:py-[25px] ${
                     size === "S" ? "border-black" : ""
                   }`}
                   onClick={() => setsize("S", product._id)}
@@ -221,7 +233,7 @@ function ProductDetail() {
                   S
                 </p>
                 <p
-                  className={`font-nexa-bold text-[14px] leading-[24px] lg:text-[16px] lg:leading-[26px] rounded-full border-2 px-[20px] py-[13px] lg:px-[28px] lg:py-[25px] ${
+                  className={`font-nexa-bold text-[14px] leading-[24px] lg:text-[16px] lg:leading-[26px] rounded-full border-2 px-[20px] py-[13px] text-center lg:w-[80px] lg:px-[28px] lg:py-[25px] ${
                     size === "M" ? "border-black" : ""
                   }`}
                   onClick={() => setsize("M", product._id)}
@@ -229,7 +241,7 @@ function ProductDetail() {
                   M
                 </p>
                 <p
-                  className={`font-nexa-bold text-[14px] leading-[24px] lg:text-[16px] lg:leading-[26px] rounded-full border-2 px-[20px] py-[13px] lg:px-[28px] lg:py-[25px] ${
+                  className={`font-nexa-bold text-[14px] leading-[24px] lg:text-[16px] lg:leading-[26px] rounded-full border-2 px-[20px] py-[13px] text-center lg:w-[80px] lg:px-[28px] lg:py-[25px] ${
                     size === "L" ? "border-black" : ""
                   }`}
                   onClick={() => setsize("L", product._id)}
