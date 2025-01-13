@@ -4,8 +4,9 @@ import Cap from "../assets/Images/Cap.svg";
 import filter from "../assets/Images/filter.svg";
 import sort from "../assets/Images/sort.svg";
 import Back from "../assets/Images/back.svg";
-
+import axios from "axios";
 import Heart from "../assets/Images/Heart.svg";
+import Heart2 from "../assets/Images/Heart2.svg";
 import plus from "../assets/Images/Icon Button.svg";
 import plus2 from "../assets/Images/plus2.svg";
 import minus from "../assets/Images/minus.svg";
@@ -19,9 +20,10 @@ export default function Store({
   handleCategoryChange,
   filteredProducts,
   filterCategory,
+  products,
 }) {
   const [loading, setLoading] = useState(false);
-  const [products, setProducts] = useState([]);
+  const [likedProducts, setLikedProducts] = useState("");
 
   const { cart, setCart } = useContext(Context);
 
@@ -44,8 +46,43 @@ export default function Store({
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/api/products/liked", {
+        withCredentials: true,
+      })
+      .then((response) => setLikedProducts(response.data.likedProducts))
+      
+      .catch((error) => console.error(error));
+  }, []);
+  console.log(likedProducts)
+  const likeProduct = (productId) => {
+    axios
+      .post(
+        "http://localhost:3001/api/products/like",
+        { productId },
+        { withCredentials: true }
+      )
+      .then(() => {
+        setLikedProducts((prev) => [...prev, productId]);
+      })
+      .catch((error) => console.error(error));
+  };
 
+  const unlikeProduct = (productId) => {
+    axios
+      .post(
+        "http://localhost:3001/api/products/unlike",
+        { productId },
+        { withCredentials: true }
+      )
+      .then(() => {
+        setLikedProducts((prev) => prev.filter((id) => id !== productId));
+      })
+      .catch((error) => console.error(error));
+  };
+
+  const navigate = useNavigate();
   const handleProductClick = (id) => {
     navigate(`/product/${id}`);
     console.log(id);
@@ -94,7 +131,6 @@ export default function Store({
 
   const Stop = (e, id) => {
     e.stopPropagation(); // Prevent navigation
-    console.log(`Liked product with id: ${id}`);
   };
 
   const [priceRange, setPriceRange] = useState({ from: "", to: "" });
@@ -342,7 +378,7 @@ export default function Store({
           {paginatedProducts.map((product) => (
             <div key={product._id} className="mx-auto">
               <div
-                className={`border-8 bg-white border-white hover:border-[#E6E6E6] rounded-t-full  ${
+                className={`border-8 bg-white border-white hover:border-[#E6E6E6] rounded-t-full rounded-b-[900px]  ${
                   cart.some((item) => item._id === product._id)
                     ? "shadow-custom"
                     : ""
@@ -354,9 +390,27 @@ export default function Store({
                   <p className="font-poopins  text-[12px] leading-[18px] md:text-[20px] md:leading-[32px]">
                     {product.name}
                   </p>
-                  <div className="lg:w-[72px] w-[48px] h-[48px] lg:h-[72px] rounded-full flex items-center justify-center absolute bg-white lg:top-[-60px] top-[-35px] md:top-[-70px]   right-[16px] ">
-                    <img className=" bg-white" src={Heart} alt="" />
+                  <div onClick={(e) => Stop(e)} className="div">
+                    <div
+                      onClick={() => {
+                        if (likedProducts.includes(product._id)) {
+                          unlikeProduct(product._id);
+                        } else {
+                          likeProduct(product._id);
+                        }
+                      }}
+                      className="lg:w-[72px] w-[48px] h-[48px] lg:h-[72px] rounded-full flex items-center justify-center absolute bg-white lg:top-[-60px] top-[-35px] md:top-[-70px]   right-[16px] "
+                    >
+                      <img
+                        className=" bg-white"
+                        src={
+                          likedProducts.includes(product._id) ? Heart2 : Heart
+                        }
+                        alt=""
+                      />
+                    </div>
                   </div>
+
                   <div className="md:flex items-center md:mt-[20px]">
                     <div
                       className={`flex flex-row justify-between items-center mt-[20px] md:mt-0 w-full ${

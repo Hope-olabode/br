@@ -4,7 +4,7 @@ import Cap from "../assets/Images/Cap.svg";
 import plus2 from "../assets/Images/plus2.svg";
 import minus from "../assets/Images/minus.svg";
 import dust from "../assets/Images/dust.svg";
-import ar from '../assets/Images/arrow-left-w.svg'
+import ar from "../assets/Images/arrow-left-w.svg";
 export default function Cart() {
   const { cart, setCart } = useContext(Context);
 
@@ -52,7 +52,7 @@ export default function Cart() {
     <div className="mt-[96px] py-6">
       <div className="pt-8 px-4 md:px-[40px] lg:px-[60px] xl:px-[80px] 2xl:px-[120px]">
         <h2 className="font-nexa-bold text-[24px] leading-[35px] mb-8">Cart</h2>
-        <div className="div lg:flex">
+        <div className="div lg:flex w-full">
           {cart.length > 0 ? (
             <ul className="lg:w-[60%] mb-10 lg:mb-0">
               {cart.map((item) => (
@@ -134,7 +134,10 @@ export default function Cart() {
               ))}
             </ul>
           ) : (
-            <p className="mb-10 lg:mb-0">Your cart is empty.</p>
+            <div className="div lg:w-[60%]">
+              <p className="mb-10 lg:mb-0 ">Your cart is empty.</p>
+              <div className="h-[1px] w-full bg-[#DDDDDD] mb-6"></div>
+            </div>
           )}
           <div className="w-[1px] hidden lg:block bg-[#DDDDDD] xl:mx-16 lg:mx-8"></div>
           <div className=" lg:w-[40%]">
@@ -173,13 +176,10 @@ export default function Cart() {
             <p className="font-poopins text-[16px] leading-[26px] text-[#9A9A9A]">
               Delivery fees not included yet
             </p>
-            <button
-              className="bg-[#E2063A] mt-6 text-white w-[100%] px-4 py-[13px] rounded-full relative overflow-hidden group  lg:h-[72px] lg:py-4 lg:pl-[40px]  flex items-center content-center"
-             
-            >
+            <button className="bg-[#E2063A] mt-6 text-white w-[100%] px-4 py-[13px] rounded-full relative overflow-hidden group  lg:h-[72px] lg:py-4 lg:pl-[40px]  flex items-center content-center">
               <span className="relative z-10 w-[100%]">
                 <p className="font-nexa-bold text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px]">
-                Checkout
+                  Checkout
                 </p>
               </span>
               <img

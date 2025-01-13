@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Toaster, toast } from "sonner";
 import { z } from "zod";
 import hpas from "../assets/Images/hpas.svg";
 import hpas2 from "../assets/Images/hpas2.svg";
@@ -14,10 +13,11 @@ import { Navigate, useNavigate } from "react-router-dom";
 
 import { Context } from "../App";
 import Loader from "../Components/Loader";
+import { toast, ToastContainer } from "react-toastify";
 
 const schema = z.object({
-  email: z.string() /* .email("Incorrect email") */,
-  password:
+  Email: z.string() /* .email("Incorrect email") */,
+  Password:
     z.string() /* .min(8, "Password doesn’t meet requirement").regex(/[A-Z]/, "Password must contain at least one uppercase letter")
   .regex(/[@$!%*?&]/, "Password must contain at least one special character (e.g., @, $, !, %, *, ?, &)"), */,
 });
@@ -39,41 +39,58 @@ export default function Login() {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (data) => {
-    setLoading(true);
+  const onSubmit = async (data) => {
     console.log(data);
-    axios
-      .post("https://br-s.onrender.com/auth/login", data)
-      .then((result) => {
-        if (result.data === "Success") {
-          navigate("/");
-          setIsLogin(true);
-          localStorage.setItem("isLogin", true);
-        } else {
-          console.log("login failed: User Does not exist");
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/auth/login",
+        data,
+        {
+          withCredentials: true, // Include cookies in the request
         }
-      })
-      .catch((err) => console.log(err))
-      .finally(() => {
-        setLoading(false);
-        document.body.classList.remove("no-scroll");
-      });
+      );
+
+      alert(response.data.message); // Show a success message
+      navigate("/"); // Redirect to the details page
+    } catch (error) {
+      alert(error.response?.data?.message || "An error occurred");
+      const message = error.response?.data?.message || "An error occurred";
+      displayMsg(message);
+    }
   };
-  const email = watch("email"); // watch input value
-  const password = watch("password"); // watch input value
+
+  const displayMsg = (message) => {
+    console.log(message);
+    toast(
+      <h1 className="text-center font-nexa-bold text-[16px] leading-[26px] text-[#E2063A]">
+        {message}
+      </h1>,
+      {
+        autoClose: 3000, // Close after 3 seconds
+        closeButton: false,
+        className:
+          "bg-[#DDDDDD] h-[84px] rounded-[32px] flex justify-center border-dashed border-[#E2063A] border-[2px]",
+        hideProgressBar: true,
+      }
+    );
+    // toast(<Msg />) would also work
+  };
+
+  const Email = watch("Email"); // watch input value
+  const Password = watch("Password"); // watch input value
 
   useEffect(() => {
-    setIsFocused2(email && email.trim().length > 0);
-  }, [email]);
+    setIsFocused2(Email && Email.trim().length > 0);
+  }, [Email]);
 
   useEffect(() => {
-    setIsFocused(password && password.trim().length > 0);
-  }, [password]);
+    setIsFocused(Password && Password.trim().length > 0);
+  }, [Password]);
 
   useEffect(() => {
     if (Object.keys(errors).length > 0) {
       Object.values(errors).forEach((error) => {
-        toast(
+        /* toast(
           <div className="h-[84px] w-[357px] mx-auto text-[#E2063A] text-center bg-[#DDDDDD] border-2 border-dashed border-[#E2063A]  flex flex-col rounded-[32px] justify-center items-center]">
             {error.message}
           </div>,
@@ -84,15 +101,22 @@ export default function Login() {
             },
             duration: 5000,
           }
-        );
+        ); */
       });
     }
   }, [errors]);
-  loading ? document.body.classList.add("no-scroll") : "";
 
   return (
     <div className="mt-[96px] py-32 px-4 flex flex-col content-center items-center">
       {loading ? <Loader /> : ""}
+      <ToastContainer 
+      position="top-center"
+      autoClose={3000} // Automatically closes after 3 seconds
+      closeOnClick
+      pauseOnHover
+      draggable
+      theme="light"
+    />
       <div className="max-w-[482px]">
         <p className="text-center mb-2 text-[#9A9A9A] font-poopins font-medium text-[16px] leading-[26px] lg:font-nexa-bold lg:text-[36px] lg:leading-[48px] lg:mb-4">
           Login
@@ -103,24 +127,16 @@ export default function Login() {
         <p className="text-center mt-2 font-poopins text-[14px] leading-[22px] lg:text-[20px] lg:leading-[32px]">
           Glad to have you working with us
         </p>
-        <Toaster
-          expand
-          visibleToasts={2}
-          toastOptions={{
-            unstyled: true,
-            className: "class",
-          }}
-        />
         <form className="mt-10 lg:mt-14" onSubmit={handleSubmit(onSubmit)}>
           {/* register your input into the hook by invoking the "register" function */}
           <input
-            name="email"
+            name="Email"
             className={`w-full h-12 border-2 border-[#DDDDDD] rounded-full active:border-none focus:outline-none pl-6 pr-2 font-poopins text-[14px] leading-[22px] lg:h-[72px] lg:text-[16px] lg:leading-[26px] ${
               isFocused2
                 ? "bg-black text-white placeholder:text-white border-black border-2"
                 : ""
             }`}
-            {...register("email")}
+            {...register("Email")}
             placeholder="Email Address"
             type="string"
             id="email"
@@ -132,11 +148,11 @@ export default function Login() {
             }`}
           >
             <input
-              name="password"
+              name="Password"
               className={`w-full pl-6 email rounded-l-full h-full active:border-none focus:outline-none ${
                 isFocused ? "bg-black text-white placeholder:text-white" : ""
               }`}
-              {...register("password")}
+              {...register("Password")}
               placeholder="Password"
               type={hidden ? "password" : "text"}
             />
@@ -168,12 +184,12 @@ export default function Login() {
             type="submit"
             className="bg-[#E2063A] mt-4 text-white  rounded-full relative overflow-hidden group lg:h-[72px] lg:w-full  w-[100%]"
             disabled={
-              password?.trim()?.length === 0 && email?.trim()?.length === 0
+              Password?.trim()?.length === 0 && Email?.trim()?.length === 0
             }
           >
             <div
               className={`${
-                password?.trim()?.length === 0 && email?.trim()?.length === 0
+                Password?.trim()?.length === 0 && Email?.trim()?.length === 0
                   ? "inset-0 bg-[#ffffffd0] z-10 absolute w-100%"
                   : ""
               } relative  px-4 py-[13px] lg:py-[23px] lg:px-0  `}
@@ -187,8 +203,8 @@ export default function Login() {
                 <img
                   src={wc}
                   className={`${
-                    password?.trim()?.length === 0 &&
-                    email?.trim()?.length === 0
+                    Password?.trim()?.length === 0 &&
+                    Email?.trim()?.length === 0
                       ? "hi"
                       : "hidden"
                   } lg:h-10`}
@@ -196,8 +212,8 @@ export default function Login() {
                 <img
                   src={ba}
                   className={`${
-                    password?.trim()?.length === 0 &&
-                    email?.trim()?.length === 0
+                    Password?.trim()?.length === 0 &&
+                    Email?.trim()?.length === 0
                       ? "hidden"
                       : "block"
                   } lg:h-10`}
@@ -205,8 +221,8 @@ export default function Login() {
 
                 <div
                   className={`${
-                    password?.trim()?.length === 0 &&
-                    email?.trim()?.length === 0
+                    Password?.trim()?.length === 0 &&
+                    Email?.trim()?.length === 0
                       ? ""
                       : " "
                   }`}

@@ -18,6 +18,8 @@ import farrow1 from '../assets/Images/farrow1.svg';
 import farrow2 from '../assets/Images/farrow2.svg';
 import sub from '../assets/Images/sub.svg';
 import sub2 from '../assets/Images/sub2.svg';
+import sub3 from '../assets/Images/sub3.svg';
+import sub4 from '../assets/Images/sub2.svg';
 
 
 
@@ -83,7 +85,7 @@ export default function Footer() {
                   isFocused ? 'bg-black text-white border-2 ':''}`}
               />
               <button className={`p-2 ml-2  rounded-full `}>
-              {isFocused ? <img src={sub} alt="" />: <img src={sub2} alt="" /> }
+              {isFocused ? <><img className="mr-6 lg:hidden" src={sub} alt="" /> <img className="mr-6 hidden lg:block" src={sub3} alt="" /></>: <><img className="mr-6 lg:hidden" src={sub2} alt="" /> <img className="mr-6 hidden lg:block" src={sub4} alt="" /></> }
               </button>
             </div>
           </div>

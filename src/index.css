@@ -27,6 +27,15 @@
   /* Add other font properties */
 }
 
+.App {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.App.hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
 .logo {
   width: 144px;
 }
@@ -167,6 +176,7 @@ p {
   box-shadow: 0 0 0px 1000px rgb(0, 0, 0) inset;
   -webkit-text-fill-color: white !important;
   border: black;
+  border: 0px;
 }
 #name:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px rgb(0, 0, 0) inset ;
@@ -188,4 +198,3 @@ p {
   gap: 106px; /* Adjust to the desired gap */
   background-color: green;
 }
-

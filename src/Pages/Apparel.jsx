@@ -1,10 +1,5 @@
 import React, { useState, useEffect, useContext, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import Footer from "../Components/Footer.jsx";
-import Feature from "../Components/Feature.jsx";
-import temp_product from "../assets/Images/temp product.svg";
-import QuoteCal from "../Components/Quote_Cal.jsx";
-import QuoteCalc from "../Components/Quote_Cal copy.jsx";
 import FAQ from "../Components/FAQ.jsx";
 import Testimonials from "../Components/Testimonials.jsx";
 import Touch from "../Components/Touch.jsx";
@@ -17,18 +12,8 @@ import six from "../assets/Images/Apparel-img/6.png";
 import seven from "../assets/Images/Apparel-img/7.png";
 import eight from "../assets/Images/Apparel-img/8.png";
 import MOQ from "../Components/MOQ.jsx"
+import axios from "axios";
 import Store from "../Components/Store.jsx";
-import CustomCheckbox from "../Components/jjj.jsx";
-import Cap from "../assets/Images/Cap.svg";
-import filter from "../assets/Images/filter.svg";
-import sort from "../assets/Images/sort.svg";
-import Back from "../assets/Images/back.svg";
-
-import Heart from "../assets/Images/Heart.svg";
-import plus from "../assets/Images/Icon Button.svg";
-import plus2 from "../assets/Images/plus2.svg";
-import minus from "../assets/Images/minus.svg";
-import dust from "../assets/Images/dust.svg";
 import { Context } from "../App";
 
 import up from "../assets/Images/up.svg";
@@ -45,7 +30,7 @@ export default function Apparel() {
     // Retrieve the initial value from localStorage or default to false
     return JSON.parse(localStorage.getItem("category")) || "";
   });
-  const [selected, setSelected] = useState("");
+  
 
   // State to keep track of the active button (initially null or a specific index)
   const [activeIndex, setActiveIndex] = useState(() => {
@@ -127,15 +112,15 @@ export default function Apparel() {
     const fetchData = async () => {
       setLoading(true); // Start loading and add no-scroll
       document.body.classList.add("no-scroll");
-
+  
       try {
-        const response = await fetch("https://br-s.onrender.com/api/products");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        let result = await response.json();
-        setProducts(result); // Correctly setting the fetched data to state
-        console.log(result); // Debugging: Log the fetched data
+        const response = await axios.get("http://localhost:3001/api/products", {
+          withCredentials: true, // Include cookies in the request
+        });
+  
+        // The data is already parsed into JSON
+        setProducts(response.data); 
+        console.log(response.data); // Debugging: Log the fetched data
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -143,57 +128,10 @@ export default function Apparel() {
         document.body.classList.remove("no-scroll");
       }
     };
-
+  
     fetchData();
-  }, []); // Empty dependency array ensures this runs once when the component mounts.
+  }, []);
 
-  const navigate = useNavigate();
-
-  const handleProductClick = (id) => {
-    navigate(`/product/${id}`);
-    console.log(id);
-  };
-
-  const handleAddToCart = (productId) => {
-    setCart((prevCart) => {
-      const existingProduct = prevCart.find((item) => item._id === productId);
-      if (existingProduct) {
-        return prevCart.map((item) =>
-          item._id === productId
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      } else {
-        const product = products.find((p) => p._id === productId);
-        return [...prevCart, { ...product, quantity: 20 }];
-      }
-    });
-  };
-
-  const handleQuantityChange = (productId, newQuantity) => {
-    if (newQuantity < 20) return;
-    setCart((prevCart) =>
-      prevCart.map((item) =>
-        item._id === productId ? { ...item, quantity: newQuantity } : item
-      )
-    );
-  };
-
-  const handleRemoveFromCart = (productId) => {
-    setCart((prevCart) => prevCart.filter((item) => item._id !== productId));
-  };
-
-  const handleDecreaseQuantity = (productId) => {
-    setCart((prevCart) =>
-      prevCart
-        .map((item) =>
-          item._id === productId
-            ? { ...item, quantity: item.quantity - 1 }
-            : item
-        )
-        .filter((item) => item.quantity >= 20)
-    );
-  };
 
   const Stop = (e, id) => {
     e.stopPropagation(); // Prevent navigation
@@ -210,10 +148,8 @@ export default function Apparel() {
 
   const img = [one, two, three, four, five, six, seven, eight];
 
-  const [selectedCategory, setSelectedCategory] = useState("Hoodie");
-  const [selectedSize, setSelectedSize] = useState("");
   const [priceRange, setPriceRange] = useState({ from: "", to: "" });
-  const [selectedMaterial, setSelectedMaterial] = useState([]);
+  
 
   const handleCategoryChange = (category) => {
     setFilterCategory(category);
@@ -517,7 +453,7 @@ export default function Apparel() {
       {filteredProducts.length === 0 ? (
         <MOQ />
       ) : (
-        <Store handleCategoryChange={handleCategoryChange} filteredProducts={filteredProducts} filterCategory={filterCategory}/>
+        <Store handleCategoryChange={handleCategoryChange} filteredProducts={filteredProducts} filterCategory={filterCategory} products={products}/>
       )}
       {/* <Feature /> */}
       {/* <QuoteCalc checkboxes1={checkboxes1} handleCheckboxChange={handleCheckboxChange}  checkboxData1={checkboxData1}/> */}

@@ -6,21 +6,16 @@ import plus2 from "../assets/Images/plus2.svg";
 import minus from "../assets/Images/minus.svg";
 import dust from "../assets/Images/dust.svg";
 import Touch from "../Components/Touch";
-import { Context } from "../App"; 
-import Loader from "../Components/Loader"
+import { Context } from "../App";
+import Loader from "../Components/Loader";
+import axios from "axios";
 
 function ProductDetail() {
   const { id } = useParams();
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
 
-  const {
-      
-      
-      cart,
-      setCart
-      
-    } = useContext(Context);
+  const { cart, setCart } = useContext(Context);
 
   const [size, setSize] = useState("L");
 
@@ -37,15 +32,15 @@ function ProductDetail() {
     const fetchData = async () => {
       setLoading(true); // Start loading and add no-scroll
       document.body.classList.add("no-scroll");
-      
+  
       try {
-        const response = await fetch("https://br-s.onrender.com/api/products");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        let result = await response.json();
-        setProducts(result); // Correctly setting the fetched data to state
-        console.log(result); // Debugging: Log the fetched data
+        const response = await axios.get("http://localhost:3001/api/products", {
+          withCredentials: true, // Include cookies in the request
+        });
+  
+        // The data is already parsed into JSON
+        setProducts(response.data); 
+        console.log(response.data); // Debugging: Log the fetched data
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -114,11 +109,11 @@ function ProductDetail() {
     );
   };
 
-  loading ? document.body.classList.add("no-scroll") : ""
+  loading ? document.body.classList.add("no-scroll") : "";
 
   return (
     <div className="div">
-      {loading ? <Loader />:""}
+      {loading ? <Loader /> : ""}
       <div className="mt-[96px] py-14  px-4 md:px-[40px] lg:px-[60px] xl:px-[80px] 2xl:px-[120px]  lg:mt-[176px]">
         <div className="flex flex-col md:items-start md:flex-row md:gap-10">
           <div className="md:w-[50%] md:flex h-full gap-4">
