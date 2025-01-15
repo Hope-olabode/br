@@ -41,7 +41,7 @@ export default function App() {
 
   useEffect(() => {
     // Check login status on app load
-    axios.get("http://localhost:3001/auth/isLogin", { withCredentials: true })
+    axios.get("https://bserver-b2ue.onrender.com/auth/isLogin", { withCredentials: true })
       .then((res) => {
         console.log(res); // Log the full response for debugging
         setIsLogin(res.data.loggedIn); // Set login status

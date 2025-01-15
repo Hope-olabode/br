@@ -43,7 +43,7 @@ export default function Login() {
     console.log(data);
     try {
       const response = await axios.post(
-        "http://localhost:3001/auth/login",
+        "https://bserver-b2ue.onrender.com/auth/login",
         data,
         {
           withCredentials: true, // Include cookies in the request

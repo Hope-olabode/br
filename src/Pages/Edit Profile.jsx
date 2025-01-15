@@ -144,7 +144,7 @@ const ProfilePage = () => {
     setUploading(true);
     try {
       const res = await axios.post(
-        "http://localhost:3001/api/profilePic",
+        "https://bserver-b2ue.onrender.com/api/profilePic",
         formData,
         {
           headers: {

@@ -23,7 +23,7 @@ export default function likedProducts() {
       document.body.classList.add("no-scroll");
 
       try {
-        const response = await fetch("http://localhost:3001/api/products");
+        const response = await fetch("https://bserver-b2ue.onrender.com/api/products");
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -42,7 +42,7 @@ export default function likedProducts() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/api/products/liked", {
+      .get("https://bserver-b2ue.onrender.com/api/products/liked", {
         withCredentials: true,
       })
       .then((response) => setLikedProducts(response.data.likedProducts))
@@ -53,7 +53,7 @@ export default function likedProducts() {
   const likeProduct = (productId) => {
     axios
       .post(
-        "http://localhost:3001/api/products/like",
+        "https://bserver-b2ue.onrender.com/api/products/like",
         { productId },
         { withCredentials: true }
       )
@@ -66,7 +66,7 @@ export default function likedProducts() {
   const unlikeProduct = (productId) => {
     axios
       .post(
-        "http://localhost:3001/api/products/unlike",
+        "https://bserver-b2ue.onrender.com/api/products/unlike",
         { productId },
         { withCredentials: true }
       )

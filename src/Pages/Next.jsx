@@ -55,7 +55,7 @@ export default function Next() {
 
     try {
       // Send data to the backend API
-      await axios.post("http://localhost:3001/auth/next", data, {
+      await axios.post("https://bserver-b2ue.onrender.com/auth/next", data, {
         withCredentials: true, // Ensure cookies (token) are sent with the request
       });
 
@@ -97,7 +97,7 @@ export default function Next() {
   useEffect(() => {
     // Check if details are already filled
     axios
-      .get("http://localhost:3001/auth/isDetailsFilled", {
+      .get("https://bserver-b2ue.onrender.com/auth/isDetailsFilled", {
         withCredentials: true,
       })
       .then((res) => {

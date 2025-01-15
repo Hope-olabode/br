@@ -44,7 +44,7 @@ export default function Signup() {
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      await axios.post("http://localhost:3001/auth/signup", data, {
+      await axios.post("https://bserver-b2ue.onrender.com/auth/signup", data, {
         withCredentials: true,
       });
       navigate("/Next");

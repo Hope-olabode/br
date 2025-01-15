@@ -114,7 +114,7 @@ export default function Apparel() {
       document.body.classList.add("no-scroll");
   
       try {
-        const response = await axios.get("http://localhost:3001/api/products", {
+        const response = await axios.get("https://bserver-b2ue.onrender.com/api/products", {
           withCredentials: true, // Include cookies in the request
         });
   
