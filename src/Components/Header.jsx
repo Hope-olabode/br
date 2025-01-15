@@ -96,7 +96,7 @@ export default function Header() {
                     ? "text-[#E2063A] font-nexa-light font-bold xl:text-sm 2xl:text-base"
                     : "font-nexa-light font-bold xl:text-sm 2xl:text-base hover:text-black active:text-[#E2063A] focus:text-[#E2063A]"
                 }
-                to="/Apparel"
+                to="/Store"
               >
                 Store
               </NavLink>
@@ -258,7 +258,7 @@ export default function Header() {
                     ? "text-[#E2063A] font-nexa-light font-bold leading-[22px] h-12 flex flex-row gap-3 items-center pl-4 pr-2"
                     : "font-nexa-light font-bold leading-[22px] hover:text-black active:text-[#E2063A] focus:text-[#E2063A] h-12 flex flex-row gap-3 items-center pl-4 pr-2"
                 }
-                to="/Apparel"
+                to="/Store"
                 onClick={toggleMenu}
               >
                 {({ isActive }) => (

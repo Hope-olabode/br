@@ -242,7 +242,7 @@ const ProfilePage = () => {
           {hasChanges || preview ? (
             <button
               type="submit"
-              className="bg-[#E2063A] h-12 text-white w-full px-4  rounded-full relative overflow-hidden group lg:w-[262px] mt-4 lg:h-[72px]  lg:pl-[40px]"
+              className="bg-[#E2063A] h-12 text-white w-full px-4  rounded-full relative overflow-hidden group  mt-4 lg:h-[72px]  lg:pl-[40px]"
             >
               <span className="relative z-10 ">
                 <p className="font-nexa-bold text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px]">

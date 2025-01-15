@@ -23,29 +23,7 @@ import React, { Component } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { ToastContainer, toast } from "react-toastify";
-
-function SampleNextArrow(props) {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{ ...style, display: "block", background: "red" }}
-      onClick={onClick}
-    />
-  );
-}
-
-function SamplePrevArrow(props) {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{ ...style, display: "block", background: "green" }}
-      onClick={onClick}
-    />
-  );
-}
+import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
   const settings = {
@@ -61,52 +39,10 @@ export default function HomePage() {
     arrows: false,
     nextArrow: false,
   };
-  const notify = () => {
-    toast.error(CustomNotification, {
-      data: {
-        title: "Oh Snap!",
-        content: "Something went wrong",
-      },
-      ariaLabel: "Something went wrong",
-      autoClose: false,
-      progress: 0.3,
-      icon: false,
-      theme: "colored",
-    });
-  };
-
-  function CustomNotification({ closeToast, data, toastProps }) {
-    const isColored = toastProps.theme === "colored";
-
-    return (
-      <div className="flex flex-col w-full ">
-        <h3
-          className={
-            ("text-sm font-semibold",
-            isColored ? "text-white" : "text-zinc-800")
-          }
-        >
-          {data.title}
-        </h3>
-        <div className="flex items-center justify-between">
-          <p className="text-sm">{data.content}</p>
-          <button
-            onClick={closeToast}
-            className={
-              ("ml-auto transition-all text-xs  border rounded-md px-4 py-2 text-white active:scale-[.95]",
-              isColored ? "bg-transparent" : "bg-zinc-900")
-            }
-          >
-            Try again
-          </button>
-        </div>
-      </div>
-    );
-  }
+  const navigate = useNavigate();
 
   return (
     <div className="mt-[96px]">
-      <ToastContainer className="border-2 border-black rounded-lg" />
       <div className="relative flex flex-col items-center pt-[96px]">
         <Slider className="w-full" {...settings}>
           <div className="w-full">
@@ -158,7 +94,7 @@ export default function HomePage() {
           </p>
           <div className="buttons flex flex-col items-center w-full mt-10 lg:mt-[48px]">
             <button
-              onClick={notify}
+              onClick={() => navigate("/Custom")}
               className="bg-[#E2063A] h-12 text-white w-[196px] pl-4 pr-2  rounded-full relative overflow-hidden group lg:w-[262px] lg:h-[72px]  lg:pl-[40px]"
             >
               <span className="relative z-10 ">
@@ -173,7 +109,10 @@ export default function HomePage() {
                 alt=""
               />
             </button>
-            <button className="bg-white font-nexa-light px-4 h-12 w-[122px]  rounded-full mt-3 border-2 border-white hover:border-[#DDDDDD] lg:h-[72px] lg:w-[165px] ">
+            <button
+              onClick={() => navigate("/Store")}
+              className="bg-white font-nexa-light px-4 h-12 w-[122px]  rounded-full mt-3 border-2 border-white hover:border-[#DDDDDD] lg:h-[72px] lg:w-[165px] "
+            >
               <p className="font-nexa-bold text-center text-[14px] leading-[22px] lg:text-[16px] lg:leading-[26px]">
                 Get Blanks
               </p>
@@ -243,13 +182,12 @@ export default function HomePage() {
 
       <div className="px-4 pb-[72px] flex flex-col items-center lg:flex-row md:px-[40px] lg:pl-0 lg:pr-[60px] xl:pr-[80px] 2xl:pr-[120px]">
         {/* Image Container */}
-        
-          <img
-            className=" lg:w-[45%] w-[400px]  h-full  object-cover"
-            src={it}
-            alt=""
-          />
-        
+
+        <img
+          className=" lg:w-[45%] w-[400px]  h-full  object-cover"
+          src={it}
+          alt=""
+        />
 
         {/* Text Container */}
         <div className="lg:w-[55%] md:flex md:flex-col md:justify-center lg:relative h-full lg:mt-[196px]">

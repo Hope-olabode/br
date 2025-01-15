@@ -3,7 +3,15 @@ import styled from 'styled-components';
 
 const Loader = () => {
   return (
-    <div className="fixed inset-0 bg-white  flex justify-center items-center z-50">
+    
+    <div className="flex items-center justify-center fixed inset-0 bg-white z-50">
+      <div className="relative flex items-center justify-center w-24 h-24 bg-[#E2063A] rounded-full animate-outer">
+        <div className="absolute w-20 h-20 bg-[#000000] rounded-full animate-inner"></div>
+      </div>
+    </div>
+  );
+}
+{/* <div className="fixed inset-0 bg-white  flex justify-center items-center z-50">
       <StyledWrapper>
       <div className="loader">
         <div className="box1" />
@@ -11,11 +19,8 @@ const Loader = () => {
         <div className="box3" />
       </div>
     </StyledWrapper>
-    </div>
-  );
-}
-
-const StyledWrapper = styled.div`
+    </div> */}
+/* const StyledWrapper = styled.div`
   .loader {
     width: 112px;
     height: 112px;
@@ -247,6 +252,6 @@ const StyledWrapper = styled.div`
       margin-top: 64px;
       margin-left: 0px;
     }
-  }`;
+  }`; */
 
 export default Loader;

@@ -49,9 +49,11 @@ export default function AssistCentre() {
           <div className="flex gap-4 justify-between md:h-[400px]">
             <div className="relative">
               <img className="w-[100%] h-[100%]" src={ww} alt="" />
-              <div className="text-center absolute top-[50%] right-[50%] translate-x-[50%] translate-y-[-50%] text-white px-6 py-10 w-[173px]">
+              <div className="text-center absolute fl top-[50%] right-[50%] translate-x-[50%] translate-y-[-50%] text-white px-6 py-10 w-[173px]">
                 <h3 className="font-nexa-bold text-[24px] leading-[38px]">Frequently Asked Questions</h3>
+                <div className="flex w-full justify-center items-center">
                 <img className="mt-4" src={rd} alt="" />
+                </div>
               </div>
             </div>
             <div className="rounded-tr-full rounded-br-full bg-black h-100% relative w-[172px] md:w-[250px]">

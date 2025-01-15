@@ -76,7 +76,7 @@ export default function App() {
           <Route path="/" element={<Header />}>
             <Route exact path="/" element={<HomePage />} />
             <Route path="/About" element={<About />} />
-            <Route path="/Apparel" element={<Apparel />} />
+            <Route path="/Store" element={<Apparel />} />
             <Route path="/Brandit Hub" element={<BranditHub />} />
             <Route path="/Assist Centre" element={<AssistCentre />} />
             <Route path="/Launchpad" element={<Launchpad />} />
@@ -94,6 +94,7 @@ export default function App() {
             <Route path="/Order" element={<OrderHistory />} />
             <Route path="/Liked" element={<LikedProducts />} />
             <Route path="/Custom" element={<CustomQuote />} />
+            <Route path="/l" element={<Loader />} />
 
             
           </Route>
