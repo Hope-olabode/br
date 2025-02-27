@@ -83,7 +83,11 @@ export default function App() {
         }
       } catch (error) {
         console.error("Unexpected error:", error);
-      }}
+        setLoading(false)
+      } finally {
+        setLoading(false); // End loading and remove no-scroll
+      }
+    }
 
     initializeApp();
   }, []);
