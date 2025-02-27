@@ -12,20 +12,27 @@ import plus2 from "../assets/Images/plus2.svg";
 import minus from "../assets/Images/minus.svg";
 import dust from "../assets/Images/dust.svg";
 import { Context } from "../App";
-
+/* import { toast, ToastContainer } from "react-toastify"; */
+import { Toaster } from 'sonner';
 import up from "../assets/Images/up.svg";
 import down from "../assets/Images/down.svg";
+import { CartFunctions } from "./Cart_Functions";
+import Toast from "../Pages/Toast";
+
 
 export default function Store({
-  handleCategoryChange,
+  handleClick,
   filteredProducts,
   filterCategory,
-  products,
+  
 }) {
   const [loading, setLoading] = useState(false);
-  const [likedProducts, setLikedProducts] = useState("");
+  
+  const { cart, handleAddToCart, handleRemoveFromCart, handleDecreaseQuantity, handleQuantityChange, likeProduct, unlikeProduct } = CartFunctions();
+  const {  setCart, likedProducts, setLikedProducts, products } = useContext(Context);
 
-  const { cart, setCart } = useContext(Context);
+
+  console.log("this is:");
 
   // State to keep track of the active button (initially null or a specific index)
 
@@ -42,45 +49,58 @@ export default function Store({
     "Jackets",
   ];
 
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
+  
+  
 
-  useEffect(() => {
-    axios
-      .get("https://bserver-b2ue.onrender.com/api/products/liked", {
-        withCredentials: true,
-      })
-      .then((response) => setLikedProducts(response.data.likedProducts))
-      
-      .catch((error) => console.error(error));
-  }, []);
-  console.log(likedProducts)
-  const likeProduct = (productId) => {
-    axios
-      .post(
-        "https://bserver-b2ue.onrender.com/api/products/like",
-        { productId },
-        { withCredentials: true }
-      )
-      .then(() => {
-        setLikedProducts((prev) => [...prev, productId]);
-      })
-      .catch((error) => console.error(error));
+  
+ 
+  // const likeProduct = async (productId) => {
+  //   try {
+  //     const response = await axios.post(
+  //       "   https://bserver-b2ue.onrender.com/api/products/like",
+  //       { productId },
+  //       { withCredentials: true }
+  //     );
+
+  //     // Update the liked products state if the request is successful
+  //     setLikedProducts((prev) => [...prev, productId]);
+  //   } catch (error) {
+  //     console.error("Error liking product:", error);
+  //     const message = error.response?.data?.message || "An error occurred";
+  //     // displayMsg(message);
+  //   }
+  // };
+
+  const displayMsg = () => {
+    // console.log(message);
+    // toast(
+    //   <h1 className="text-center font-nexa-bold text-[16px] leading-[26px] text-[#E2063A]">
+    //     {message}
+    //   </h1>,
+    //   {
+    //     autoClose: 3000, // Close after 3 seconds
+    //     closeButton: false,
+    //     className:
+    //       "bg-[#DDDDDD] h-[84px] rounded-[32px] flex justify-center border-dashed border-[#E2063A] border-[2px]",
+    //     hideProgressBar: true,
+    //   }
+    // );
+    // // toast(<Msg />) would also work
+    
   };
 
-  const unlikeProduct = (productId) => {
-    axios
-      .post(
-        "https://bserver-b2ue.onrender.com/api/products/unlike",
-        { productId },
-        { withCredentials: true }
-      )
-      .then(() => {
-        setLikedProducts((prev) => prev.filter((id) => id !== productId));
-      })
-      .catch((error) => console.error(error));
-  };
+  // const unlikeProduct = (productId) => {
+  //   axios
+  //     .post(
+  //       "   https://bserver-b2ue.onrender.com/api/products/unlike",
+  //       { productId },
+  //       { withCredentials: true }
+  //     )
+  //     .then(() => {
+  //       setLikedProducts((prev) => prev.filter((id) => id !== productId));
+  //     })
+  //     .catch((error) => console.error(error));
+  // };
 
   const navigate = useNavigate();
   const handleProductClick = (id) => {
@@ -88,46 +108,100 @@ export default function Store({
     console.log(id);
   };
 
-  const handleAddToCart = (productId) => {
-    setCart((prevCart) => {
-      const existingProduct = prevCart.find((item) => item._id === productId);
-      if (existingProduct) {
-        return prevCart.map((item) =>
-          item._id === productId
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      } else {
-        const product = products.find((p) => p._id === productId);
-        return [...prevCart, { ...product, quantity: 20 }];
-      }
-    });
-  };
+  // const handleAddToCart = async (productId) => {
+  //   try {
+  //     console.log(cart);
+  //     const existingProduct =
+  //       cart.length > 0 && cart.some((item) => item._id === productId);
+  //     console.log(existingProduct);
+  //     if (existingProduct) {
+  //       const product = products.find((p) => p._id === productId);
+  //       const newCart = { ...product, quantity: 1 };
+  //       const updatedCart = cart.map((item) =>
+  //         item._id === productId
+  //           ? { ...item, quantity: item.quantity + 1 }
+  //           : item
+  //       );
+  //       /* console.log(updatedCart) */
+  //       await axios.post(`   https://bserver-b2ue.onrender.com/cart/`, newCart, {
+  //         withCredentials: true,
+  //       }); // Added credentials
+  //       setCart(updatedCart);
+       
+  //       displayMsg()
+      
+        
+  //       localStorage.setItem("cart", JSON.stringify(updatedCart));
+  //       } else {
+  //         const product = products.find((p) => p._id === productId);
+  //         const newCart1 = { ...product, quantity: 20 };
+  //         const newCart = [...cart, { ...product, quantity: 20 }];
+  //         console.log(newCart)
+  //         await axios.post("   https://bserver-b2ue.onrender.com/cart", newCart1, { withCredentials: true }); // Added credentials
+  //         setCart(newCart);
+          
+  //         localStorage.setItem("cart", JSON.stringify(newCart));
+  //         toast.success("Product added to cart");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error adding to cart:", error);
+  //     const message = error.response?.data?.message || "An error occurred";
+  //     // displayMsg(message);
+  //   }
+  // };
 
-  const handleQuantityChange = (productId, newQuantity) => {
-    if (newQuantity < 20) return;
-    setCart((prevCart) =>
-      prevCart.map((item) =>
-        item._id === productId ? { ...item, quantity: newQuantity } : item
-      )
-    );
-  };
+  // const handleQuantityChange = async (productId, newQuantity) => {
+  //   setCart((prevCart) =>
+  //     prevCart.map((item) =>
+  //       item._id === productId ? { ...item, quantity: newQuantity } : item
+  //     )
+  //   );
+    
+  //   if (newQuantity < 20) return; 
+  //   try {
+  //     const updatedCart = cart.map((item) =>
+  //       item._id === productId ? { ...item, quantity: newQuantity } : item
+  //     );
+  //     console.log(updatedCart)
+  //     await axios.put(`   https://bserver-b2ue.onrender.com/cart/${productId}`, { quantity: newQuantity }, {
+  //       withCredentials: true,
+  //     }); // Added credentials
+  //     localStorage.setItem("cart", JSON.stringify(updatedCart));
+  //   } catch (error) {
+  //     console.error("Error updating quantity:", error);
+  //   } 
+  // };
 
-  const handleRemoveFromCart = (productId) => {
-    setCart((prevCart) => prevCart.filter((item) => item._id !== productId));
-  };
+  // const handleRemoveFromCart = async (productId) => {
+  //   try {
+  //     const updatedCart = cart.filter((item) => item._id !== productId);
+  //     await axios.delete(`   https://bserver-b2ue.onrender.com/cart/${productId}`, {
+  //       withCredentials: true,
+  //     }); // Added credentials
+  //     setCart(updatedCart);
+  //     localStorage.setItem("cart", JSON.stringify(updatedCart));
+  //   } catch (error) {
+  //     console.error("Error removing from cart:", error);
+  //   }
+  // };
 
-  const handleDecreaseQuantity = (productId) => {
-    setCart((prevCart) =>
-      prevCart
-        .map((item) =>
-          item._id === productId
-            ? { ...item, quantity: item.quantity - 1 }
-            : item
-        )
-        .filter((item) => item.quantity >= 20)
-    );
-  };
+  // const handleDecreaseQuantity = async (productId) => {
+  //   try {
+  //     const product = products.find((p) => p._id === productId);
+  //     const newCart = { ...product, quantity: -1 };
+  //     const updatedCart = cart.map((item) =>
+  //       item._id === productId ? { ...item, quantity: item.quantity - 1 } : item
+  //     );
+  //     /* console.log(updatedCart) */
+  //     await axios.post(`   https://bserver-b2ue.onrender.com/cart/`, newCart, {
+  //       withCredentials: true,
+  //     }); // Added credentials
+  //     setCart(updatedCart);
+  //     localStorage.setItem("cart", JSON.stringify(updatedCart));
+  //   } catch (error) {
+  //     console.error("Error decreasing quantity:", error);
+  //   }
+  // };
 
   const Stop = (e, id) => {
     e.stopPropagation(); // Prevent navigation
@@ -201,7 +275,19 @@ export default function Store({
       className="px-4 md:px-[40px] lg:px-[60px] xl:px-[80px] 2xl:px-[120px] pt-[56px] bg-cover bg-center"
       style={{ backgroundImage: `url(${Back})` }}
     >
-      <div className="flex lg:hidden h-16 p-2 gap-8 w-full rounded-full shadow-custom mb-[32px]">
+      
+      {/* <ToastContainer
+        position="top-center"
+        autoClose={3000} // Automatically closes after 3 seconds
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="light"
+      /> */}
+      <Toaster 
+        position = "top-center"
+      />
+      <div className="flex lg:hidden h-16 p-2 gap-8 w-full rounded-full shadow-custom bg-white mb-[32px]">
         <div className="flex items-center w-[50%] gap-3 pl-2 font-nexa-light text-[14px] leading-[22px]">
           <img src={filter} onClick={() => mobile("Filter")} alt="" />
           filter
@@ -281,7 +367,7 @@ export default function Store({
                             ? "bg-black text-white "
                             : "bg-white text-black "
                         } flex items-center px-4 py-2 rounded-full  transition`}
-                        onClick={() => handleCategoryChange(item)}
+                        onClick={() => handleClick(item , index)}
                       >
                         <span
                           className={`w-4 h-4 mr-2 flex items-center justify-center rounded-full ${
@@ -374,9 +460,9 @@ export default function Store({
           </div>
           <div className="h-[1px] bg-[#DDDDDD] mx-4 my-4"></div>
         </div>
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 p-4">
+        <div className="lg:grid flex flex-row flex-wrap items-center lg:items-start justify-center grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 p-4">
           {paginatedProducts.map((product) => (
-            <div key={product._id} className="mx-auto">
+            <div key={product._id} className="mx-auto w-[250px] lg:w-auto">
               <div
                 className={`border-8 bg-white border-white hover:border-[#E6E6E6] rounded-t-full rounded-b-[900px]  ${
                   cart.some((item) => item._id === product._id)
@@ -471,8 +557,7 @@ export default function Store({
                         <input
                           type="number"
                           value={
-                            cart.find((item) => item._id === product._id)
-                              .quantity
+                            cart.find((item) => item._id === product._id).quantity
                           }
                           onChange={(e) =>
                             handleQuantityChange(

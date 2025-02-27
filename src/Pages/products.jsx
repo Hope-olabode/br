@@ -9,13 +9,14 @@ import Touch from "../Components/Touch";
 import { Context } from "../App";
 import Loader from "../Components/Loader";
 import axios from "axios";
+import { CartFunctions } from "../Components/Cart_Functions";
 
 function ProductDetail() {
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
-  const [products, setProducts] = useState([]);
-
-  const { cart, setCart } = useContext(Context);
+  
+  const { cart, handleAddToCart, handleRemoveFromCart, likeProduct, unlikeProduct } = CartFunctions();
+  const {  setCart, products } = useContext(Context);
 
   const [size, setSize] = useState("L");
 
@@ -24,63 +25,108 @@ function ProductDetail() {
   //   { id: 2, name: 'Product B', description: 'Description for Product B' },
   // ];
 
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
+  
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true); // Start loading and add no-scroll
-      document.body.classList.add("no-scroll");
   
-      try {
-        const response = await axios.get("https://bserver-b2ue.onrender.com/api/products", {
-          withCredentials: true, // Include cookies in the request
-        });
-  
-        // The data is already parsed into JSON
-        setProducts(response.data); 
-        console.log(response.data); // Debugging: Log the fetched data
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false); // Stop loading and remove no-scroll
-        document.body.classList.remove("no-scroll");
-      }
-    };
-  
-    fetchData();
-  }, []); // Empty dependency array ensures this runs once when the component mounts.
 
   const product = products.find((p) => p._id === String(id));
+  console.log(product)
+  console.log(products)
   console.log(id);
 
   if (!product) return <p className="mt-[96px]">Product not found</p>;
 
-  const handleAddToCart = (productId) => {
-    setCart((prevCart) => {
-      const existingProduct = prevCart.find((item) => item._id === productId);
-      if (existingProduct) {
-        return prevCart.map((item) =>
-          item._id === productId
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      } else {
-        const product = products.find((p) => p._id === productId);
-        return [...prevCart, { ...product, quantity: 20 }];
-      }
-    });
-  };
+  // const handleAddToCart = async (productId) => {
+  //   try {
+  //     console.log(cart);
+  //     const existingProduct =
+  //       cart.length > 0 && cart.some((item) => item._id === productId);
+  //     console.log(existingProduct);
+  //     if (existingProduct) {
+  //       const product = products.find((p) => p._id === productId);
+  //       const newCart = { ...product, quantity: 1 };
+  //       const updatedCart = cart.map((item) =>
+  //         item._id === productId
+  //           ? { ...item, quantity: item.quantity + 1 }
+  //           : item
+  //       );
+  //       /* console.log(updatedCart) */
+  //       await axios.post(`   https://bserver-b2ue.onrender.com/cart/`, newCart, {
+  //         withCredentials: true,
+  //       }); // Added credentials
+  //       setCart(updatedCart);
+        
+  //       localStorage.setItem("cart", JSON.stringify(updatedCart));
+  //       } else {
+  //         const product = products.find((p) => p._id === productId);
+  //         const newCart1 = { ...product, quantity: 20 };
+  //         const newCart = [...cart, { ...product, quantity: 20 }];
+  //         console.log(newCart)
+  //         await axios.post("   https://bserver-b2ue.onrender.com/cart", newCart1, { withCredentials: true }); // Added credentials
+  //         setCart(newCart);
+          
+  //         localStorage.setItem("cart", JSON.stringify(newCart));
+  //     }
+  //   } catch (error) {
+  //     console.error("Error adding to cart:", error);
+  //     const message = error.response?.data?.message || "An error occurred";
+  //     displayMsg(message);
+  //   }
+  // };
 
-  const handleQuantityChange = (productId, newQuantity) => {
-    if (newQuantity < 20) return;
-    setCart((prevCart) =>
-      prevCart.map((item) =>
-        item._id === productId ? { ...item, quantity: newQuantity } : item
-      )
-    );
-  };
+  // const handleQuantityChange = async (productId, newQuantity) => {
+  //   setCart((prevCart) =>
+  //     prevCart.map((item) =>
+  //       item._id === productId ? { ...item, quantity: newQuantity } : item
+  //     )
+  //   );
+    
+  //   if (newQuantity < 20) return; 
+  //   try {
+  //     const updatedCart = cart.map((item) =>
+  //       item._id === productId ? { ...item, quantity: newQuantity } : item
+  //     );
+  //     console.log(updatedCart)
+  //     await axios.put(`   https://bserver-b2ue.onrender.com/cart/${productId}`, { quantity: newQuantity }, {
+  //       withCredentials: true,
+  //     }); // Added credentials
+  //     localStorage.setItem("cart", JSON.stringify(updatedCart));
+  //   } catch (error) {
+  //     console.error("Error updating quantity:", error);
+  //   } 
+  // };
+
+  // const handleRemoveFromCart = async (productId) => {
+  //   try {
+  //     const updatedCart = cart.filter((item) => item._id !== productId);
+  //     await axios.delete(`   https://bserver-b2ue.onrender.com/cart/${productId}`, {
+  //       withCredentials: true,
+  //     }); // Added credentials
+  //     setCart(updatedCart);
+  //     localStorage.setItem("cart", JSON.stringify(updatedCart));
+  //   } catch (error) {
+  //     console.error("Error removing from cart:", error);
+  //   }
+  // };
+
+  // const handleDecreaseQuantity = async (productId) => {
+  //   try {
+  //     const product = products.find((p) => p._id === productId);
+  //     const newCart = { ...product, quantity: -1 };
+  //     const updatedCart = cart.map((item) =>
+  //       item._id === productId ? { ...item, quantity: item.quantity - 1 } : item
+  //     );
+  //     /* console.log(updatedCart) */
+  //     await axios.post(`   https://bserver-b2ue.onrender.com/cart/`, newCart, {
+  //       withCredentials: true,
+  //     }); // Added credentials
+  //     setCart(updatedCart);
+  //     setCart2(updatedCart);
+  //     localStorage.setItem("cart", JSON.stringify(updatedCart));
+  //   } catch (error) {
+  //     console.error("Error decreasing quantity:", error);
+  //   }
+  // };
 
   const setsize = (s, productId) => {
     console.log(s);
@@ -93,23 +139,9 @@ function ProductDetail() {
     );
   };
 
-  const handleRemoveFromCart = (productId) => {
-    setCart((prevCart) => prevCart.filter((item) => item._id !== productId));
-  };
+  
 
-  const handleDecreaseQuantity = (productId) => {
-    setCart((prevCart) =>
-      prevCart
-        .map((item) =>
-          item._id === productId
-            ? { ...item, quantity: item.quantity - 1 }
-            : item
-        )
-        .filter((item) => item.quantity >= 20)
-    );
-  };
-
-  loading ? document.body.classList.add("no-scroll") : "";
+  
 
   return (
     <div className="div">

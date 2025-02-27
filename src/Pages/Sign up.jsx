@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -10,12 +10,17 @@ import wc from "../assets/Images/wcircle.svg";
 import ba from "../assets/Images/barrow.svg";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import Loader from "../Components/Loader";
+import Loader from "../Components/Loader2";
 import Error from "../Components/Error";
 import { toast, ToastContainer } from "react-toastify";
+import { Context } from "../App";
+import { toast as sonnerToast, Toaster } from "sonner";
+import Toast from "./Toast";
+
+import Gauth from "../Components/Gauth";
 
 const schema = z.object({
-  Email: z.string()/* .email("Incorrect email") */,
+  Email: z.string() /* .email("Incorrect email") */,
   Password:
     z.string() /* .min(8, "Password doesn’t meet requirement").regex(/[A-Z]/, "Password must contain at least one uppercase letter")
   .regex(/[@$!%*?&]/, "Password must contain at least one special character (e.g., @, $, !, %, *, ?, &)") */,
@@ -25,13 +30,16 @@ const schema = z.object({
 });
 
 export default function Signup() {
-  const [loading, setLoading] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [isFocused2, setIsFocused2] = useState(false);
   const [isFocused5, setIsFocused5] = useState(false);
   const [hidden, setHidden] = useState(true);
   const [hidden2, setHidden2] = useState(true);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const { setIsLogin } = useContext(Context);
+
   const {
     register,
     handleSubmit,
@@ -43,35 +51,55 @@ export default function Signup() {
 
   const onSubmit = async (data) => {
     console.log(data);
+    setLoading(true)
     try {
-      await axios.post("https://bserver-b2ue.onrender.com/auth/signup", data, {
+      // Wait for the POST request to complete successfully
+      const res = await axios.post("   https://bserver-b2ue.onrender.com/auth/signup", data, {
         withCredentials: true,
       });
-      navigate("/Next");
+      console.log(res);
+
+      // Once the POST is successful, execute the GET request
+      const loginResponse = await axios.get(
+        "   https://bserver-b2ue.onrender.com/auth/isLogin",
+        {
+          withCredentials: true,
+        }
+      );
+      setIsLogin(loginResponse.data.loggedIn);
+
+      // Navigate after successful GET
+      customToast({
+        color: "#000000",
+        message: res.data.message,
+      });
+
+      setTimeout(() => {
+        navigate("/Next");
+      }, 2000);
     } catch (error) {
-      const message = error.response.data.message;
-      displayMsg(message);
+      console.error("Error during submission:", error);
+      const message = error.response?.data?.message || "An error occurred";
+      console.log(message);
+      customToast({
+        color: "#E2063A",
+        message: message,
+      });
+      setLoading(false)
+    } finally {
+      setLoading(false)
     }
   };
+
   const Email = watch("Email"); // watch input value
   const Password = watch("Password"); // watch input value
   const confirmPassword = watch("confirmPassword"); // watch input value
 
-  const displayMsg = (message) => {
-    console.log(message);
-    toast(
-      <h1 className="text-center font-nexa-bold text-[16px] leading-[26px] text-[#E2063A]">
-        {message}
-      </h1>,
-      {
-        autoClose: 3000, // Close after 3 seconds
-        closeButton: false,
-        className: "bg-[#DDDDDD] h-[84px] rounded-[32px] flex justify-center border-dashed border-[#E2063A] border-[2px]",
-        hideProgressBar: true,
-      }
-    );
-    // toast(<Msg />) would also work
-  };
+  function customToast(toastProps) {
+    return sonnerToast.custom(() => (
+      <Toast color={toastProps.color} message={toastProps.message} />
+    ));
+  }
 
   useEffect(() => {
     setIsFocused2(Email && Email.trim().length > 0);
@@ -88,7 +116,7 @@ export default function Signup() {
   useEffect(() => {
     if (Object.keys(errors).length > 0) {
       Object.values(errors).forEach((error) => {
-        console.log(error.message)
+        console.log(error.message);
         displayMsg(error.message);
       });
     }
@@ -96,15 +124,7 @@ export default function Signup() {
 
   return (
     <div className="mt-[96px] py-32 px-4 flex flex-col content-center items-center">
-      {loading ? <Loader /> : ""}
-      <ToastContainer 
-      position="top-center"
-      autoClose={3000} // Automatically closes after 3 seconds
-      closeOnClick
-      pauseOnHover
-      draggable
-      theme="light"
-    />
+      <Toaster position="top-center" />
       <div className="max-w-[482px]">
         <p className="text-center mb-2 text-[#9A9A9A] font-poopins font-medium text-[16px] leading-[26px] lg:font-nexa-bold lg:text-[36px] lg:leading-[48px] lg:mb-4">
           Create Account
@@ -129,6 +149,7 @@ export default function Signup() {
             placeholder="Email Address"
             type="string"
             id="Email"
+            autoComplete="off"
           />
           {/* include validation with required or other standard HTML validation rules */}
           <div
@@ -144,6 +165,7 @@ export default function Signup() {
               {...register("Password")}
               placeholder="Password"
               type={hidden ? "password" : "text"}
+              autoComplete="off"
             />
             {hidden ? (
               <img
@@ -174,6 +196,7 @@ export default function Signup() {
               {...register("confirmPassword")}
               placeholder="Confirm Password"
               type={hidden2 ? "password" : "text"}
+              autoComplete="off"
             />
             {hidden2 ? (
               <img
@@ -201,7 +224,7 @@ export default function Signup() {
 
           <button
             type="submit"
-            className="bg-[#E2063A] mt-4 text-white  rounded-full relative overflow-hidden group lg:h-[72px] lg:w-full  w-[100%]"
+            className="bg-[#E2063A] my-4 text-white  rounded-full relative overflow-hidden group lg:h-[72px] lg:w-full  w-[100%]"
             disabled={
               Password?.trim()?.length === 0 ||
               Email?.trim()?.length === 0 ||
@@ -210,42 +233,56 @@ export default function Signup() {
           >
             <div
               className={`${
-                Password?.trim()?.length === 0 ||
-                Email?.trim()?.length === 0 ||
-                confirmPassword?.trim()?.length === 0
-                  ? "inset-0 bg-[#ffffffd0] z-10 absolute w-100%"
-                  : ""
-              } relative  px-4 py-[13px] lg:py-[23px] lg:px-0  `}
+                loading ? "hidden" : "block"
+              } justify-center items-center`}
             >
-              <span className="relative z-10 ">
-                <p className="font-nexa-bold text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px] lg:pl-[40px]">
-                  Create Account
-                </p>
-              </span>
-              <div className="absolute right-[10px] top-[50%] translate-y-[-50%] lg:right-[25px]">
-                <img
-                  src={wc}
-                  className={`${
-                    Password?.trim()?.length === 0 ||
-                    Email?.trim()?.length === 0 ||
-                    confirmPassword?.trim()?.length === 0
-                      ? "hi"
-                      : "hidden"
-                  } lg:h-10`}
-                />
-                <img
-                  src={ba}
-                  className={`${
-                    Password?.trim()?.length === 0 ||
-                    Email?.trim()?.length === 0 ||
-                    confirmPassword?.trim()?.length === 0
-                      ? "hidden"
-                      : "block"
-                  } lg:h-10`}
-                />
+              <div
+                className={`${
+                  Password?.trim()?.length === 0 ||
+                  Email?.trim()?.length === 0 ||
+                  confirmPassword?.trim()?.length === 0
+                    ? "inset-0 bg-[#ffffffd0] z-10 absolute w-100%"
+                    : ""
+                } relative  px-4 py-[13px] lg:py-[23px] lg:px-0  `}
+              >
+                <span className="relative z-10 ">
+                  <p className="font-nexa-bold text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px] lg:pl-[40px]">
+                    Create Account
+                  </p>
+                </span>
+                <div className="absolute right-[10px] top-[50%] translate-y-[-50%] lg:right-[25px]">
+                  <img
+                    src={wc}
+                    className={`${
+                      Password?.trim()?.length === 0 ||
+                      Email?.trim()?.length === 0 ||
+                      confirmPassword?.trim()?.length === 0
+                        ? "hi"
+                        : "hidden"
+                    } lg:h-10`}
+                  />
+                  <img
+                    src={ba}
+                    className={`${
+                      Password?.trim()?.length === 0 ||
+                      Email?.trim()?.length === 0 ||
+                      confirmPassword?.trim()?.length === 0
+                        ? "hidden"
+                        : "block"
+                    } lg:h-10`}
+                  />
+                </div>
               </div>
             </div>
+            <div
+              className={`pt-2 ${
+                loading ? "flex bg-[#ffffffd0] h-full" : "hidden"
+              } justify-center items-center`}
+            >
+              <Loader />
+            </div>
           </button>
+          <Gauth message="Create account using Google" />
         </form>
       </div>
     </div>

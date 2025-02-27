@@ -9,11 +9,15 @@ import wc from "../assets/Images/wcircle.svg";
 import ba from "../assets/Images/barrow.svg";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
+import { toast as sonnerToast, Toaster } from "sonner";
+import Toast from "./Toast";
 
 import { Context } from "../App";
-import Loader from "../Components/Loader";
+
 import { toast, ToastContainer } from "react-toastify";
+import Gauth from "../Components/Gauth";
+import Loader from "../Components/Loader2";
 
 const schema = z.object({
   Email: z.string() /* .email("Incorrect email") */,
@@ -42,39 +46,48 @@ export default function Login() {
   const onSubmit = async (data) => {
     console.log(data);
     try {
+      setLoading(true)
       const response = await axios.post(
-        "https://bserver-b2ue.onrender.com/auth/login",
+        "   https://bserver-b2ue.onrender.com/auth/login",
         data,
         {
           withCredentials: true, // Include cookies in the request
         }
       );
 
-      alert(response.data.message); // Show a success message
-      navigate("/"); // Redirect to the details page
+      
+      customToast({
+        color: "#000000",
+        message: response.data.message,
+      });
+
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+      
+
     } catch (error) {
-      alert(error.response?.data?.message || "An error occurred");
+      setLoading(false)
       const message = error.response?.data?.message || "An error occurred";
-      displayMsg(message);
+      console.log(message)
+      customToast({
+        color: "#E2063A",
+        message: message,
+      });
+      
+    } finally {
+      setLoading(false)
     }
   };
 
-  const displayMsg = (message) => {
-    console.log(message);
-    toast(
-      <h1 className="text-center font-nexa-bold text-[16px] leading-[26px] text-[#E2063A]">
-        {message}
-      </h1>,
-      {
-        autoClose: 3000, // Close after 3 seconds
-        closeButton: false,
-        className:
-          "bg-[#DDDDDD] h-[84px] rounded-[32px] flex justify-center border-dashed border-[#E2063A] border-[2px]",
-        hideProgressBar: true,
-      }
-    );
-    // toast(<Msg />) would also work
-  };
+  function customToast(toastProps) {
+    return sonnerToast.custom(() => (
+      <Toast
+        color={toastProps.color}
+        message={toastProps.message}
+      />
+    ));
+  }
 
   const Email = watch("Email"); // watch input value
   const Password = watch("Password"); // watch input value
@@ -90,6 +103,7 @@ export default function Login() {
   useEffect(() => {
     if (Object.keys(errors).length > 0) {
       Object.values(errors).forEach((error) => {
+        console.log(error)
         /* toast(
           <div className="h-[84px] w-[357px] mx-auto text-[#E2063A] text-center bg-[#DDDDDD] border-2 border-dashed border-[#E2063A]  flex flex-col rounded-[32px] justify-center items-center]">
             {error.message}
@@ -108,15 +122,7 @@ export default function Login() {
 
   return (
     <div className="mt-[96px] py-32 px-4 flex flex-col content-center items-center">
-      {loading ? <Loader /> : ""}
-      <ToastContainer 
-      position="top-center"
-      autoClose={3000} // Automatically closes after 3 seconds
-      closeOnClick
-      pauseOnHover
-      draggable
-      theme="light"
-    />
+      <Toaster position="top-center" />
       <div className="max-w-[482px]">
         <p className="text-center mb-2 text-[#9A9A9A] font-poopins font-medium text-[16px] leading-[26px] lg:font-nexa-bold lg:text-[36px] lg:leading-[48px] lg:mb-4">
           Login
@@ -140,6 +146,7 @@ export default function Login() {
             placeholder="Email Address"
             type="string"
             id="email"
+            autoComplete="off"
           />
           {/* include validation with required or other standard HTML validation rules */}
           <div
@@ -155,6 +162,7 @@ export default function Login() {
               {...register("Password")}
               placeholder="Password"
               type={hidden ? "password" : "text"}
+              autoComplete="off"
             />
             {hidden ? (
               <img
@@ -176,17 +184,22 @@ export default function Login() {
             8 characters including a letter and a number
           </p>
 
+          <NavLink className="text-right flex flex-col justify-center mt-4 pl-10 font-nexa-bold h-[48px] text-[14px] leading-[22px] lg:h-[72px] lg:text-[16px] lg:leading-[26px]" to="/Reset">
+            Reset Password?
+          </NavLink>
+
           {/* errors will return when field validation fails  */}
           {/* {errors.password && toast.error('Event has not been created')} */}
           {/* <input className="mt-4 h-12 bg"   disabled={password?.trim()?.length === 0 && email?.trim()?.length === 0}/> */}
 
           <button
             type="submit"
-            className="bg-[#E2063A] mt-4 text-white  rounded-full relative overflow-hidden group lg:h-[72px] lg:w-full  w-[100%]"
+            className="bg-[#E2063A] my-4 text-white  rounded-full relative overflow-hidden group lg:h-[72px] lg:w-full  w-[100%]"
             disabled={
               Password?.trim()?.length === 0 && Email?.trim()?.length === 0
             }
           >
+            <div className={`${loading ? "hidden" : "block"} justify-center items-center`}>
             <div
               className={`${
                 Password?.trim()?.length === 0 && Email?.trim()?.length === 0
@@ -229,7 +242,14 @@ export default function Login() {
                 ></div>
               </div>
             </div>
+            </div>
+            <div className={`pt-2 ${loading ? "flex bg-[#ffffffd0] h-full" : "hidden"} justify-center items-center`}>
+              <Loader />
+            </div>
           </button>
+          <Gauth 
+            message = "Login using Google"
+          />
         </form>
       </div>
     </div>

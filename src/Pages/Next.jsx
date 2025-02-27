@@ -12,6 +12,9 @@ import ba from "../assets/Images/barrow.svg";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import Loader from "../Components/Loader";
+import { toast as sonnerToast, Toaster } from "sonner";
+import Toast from "./Toast";
+
 
 
 
@@ -23,7 +26,7 @@ const schema = z.object({
   .refine((value) => value.length >= 10 && value.length <= 15, {
     message: "Phone number must be between 10 and 15 characters",
   }),
-  Brand_Name: z.string() /* .email("Incorrect email") */,
+  Brand_Name: z.string(),
   Location:
     z.string() /* .min(8, "Password doesn’t meet requirement").regex(/[A-Z]/, "Password must contain at least one uppercase letter")
   .regex(/[@$!%*?&]/, "Password must contain at least one special character (e.g., @, $, !, %, *, ?, &)") */,
@@ -50,12 +53,13 @@ export default function Next() {
   });
 
   const onSubmit = async (data) => {
+    console.log(data)
     
     setLoading(true); // Start loader while processing
 
     try {
       // Send data to the backend API
-      await axios.post("https://bserver-b2ue.onrender.com/auth/next", data, {
+      await axios.post("   https://bserver-b2ue.onrender.com/auth/next", data, {
         withCredentials: true, // Ensure cookies (token) are sent with the request
       });
 
@@ -97,7 +101,7 @@ export default function Next() {
   useEffect(() => {
     // Check if details are already filled
     axios
-      .get("https://bserver-b2ue.onrender.com/auth/isDetailsFilled", {
+      .get("   https://bserver-b2ue.onrender.com/auth/isDetailsFilled", {
         withCredentials: true,
       })
       .then((res) => {
@@ -108,21 +112,23 @@ export default function Next() {
       .catch(() => navigate("/Log in")); // Redirect if not authenticated
   }, [navigate]);
 
+  function customToast(toastProps) {
+    return sonnerToast.custom(() => (
+      <Toast
+        color={toastProps.color}
+        message={toastProps.message}
+      />
+    ));
+  }
+
   useEffect(() => {
     if (Object.keys(errors).length > 0) {
       Object.values(errors).forEach((error) => {
-        /* toast(
-          <div className="h-[84px] w-[357px] mx-auto text-[#E2063A] text-center bg-[#DDDDDD] border-2 border-dashed border-[#E2063A]  flex flex-col rounded-[32px] justify-center items-center]">
-            {error.message}
-          </div>,
-          {
-            position: "top-center",
-            classNames: {
-              cancelButton: "bg-orange-400",
-            },
-            duration: 5000,
-          }
-        ); */
+        console.log(error)
+        customToast({
+          color: "#E2063A",
+          message: error.message,
+        });
       });
     }
   }, [errors]);
@@ -137,7 +143,8 @@ export default function Next() {
   return (
     <div className="mt-[96px] py-32 px-4 flex flex-col content-center items-center">
       {loading ? <Loader /> : ""}
-      <div className="max-w-[482px]">
+      <Toaster position="top-center" />
+      <div className="max-w-[512px]">
         <h3 className="text-center font-nexa-bold text-[36px] mb-2 leading-[48px] lg:text-[56px] lg:leading-[78px] lg:mb-6">
           Just one more step
         </h3>

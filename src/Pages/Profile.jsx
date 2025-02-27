@@ -93,10 +93,10 @@ export default function Profile() {
               </p>
             </div>
           </div>
-          <div className="relative">
+          <div className="relative ">
             <img className="w-full" src={F2} alt="" />
             <div className="absolute inset-0 flex items-center justify-center">
-              <p className="text-white font-poopins font-medium text-[14px] leading-[22px] lg:font-nexa-bold lg:text-[24px] lg:leading-[38px]">
+              <p onClick={()=>navigate("/Liked")} className="text-white font-poopins font-medium text-[14px] leading-[22px] lg:font-nexa-bold lg:text-[24px] lg:leading-[38px]">
                 Favourites
               </p>
             </div>

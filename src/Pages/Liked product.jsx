@@ -9,51 +9,29 @@ import plus2 from "../assets/Images/plus2.svg";
 import minus from "../assets/Images/minus.svg";
 import dust from "../assets/Images/dust.svg";
 import { Context } from "../App";
+import { Toaster } from "sonner";
+import { CartFunctions } from "../Components/Cart_Functions";
 
 export default function likedProducts() {
-  const [likedProducts, setLikedProducts] = useState("");
-  const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const { cart, setCart } = useContext(Context);
+  const {
+    cart,
+    handleAddToCart,
+    handleRemoveFromCart,
+    handleDecreaseQuantity,
+    likeProduct,
+    unlikeProduct,
+  } = CartFunctions();
+  const { setCart, likedProducts, setLikedProducts, products } =
+    useContext(Context);
   const navigate = useNavigate();
 
+  console.log(likedProducts);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      document.body.classList.add("no-scroll");
-
-      try {
-        const response = await fetch("https://bserver-b2ue.onrender.com/api/products");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        let result = await response.json();
-        setProducts(result); // Correctly setting the fetched data to state
-        console.log(result); // Debugging: Log the fetched data
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        document.body.classList.remove("no-scroll");
-      }
-    };
-
-    fetchData();
-  }, []); // Empty dependency array ensures this runs once when the component mounts.
-
-  useEffect(() => {
-    axios
-      .get("https://bserver-b2ue.onrender.com/api/products/liked", {
-        withCredentials: true,
-      })
-      .then((response) => setLikedProducts(response.data.likedProducts))
-
-      .catch((error) => console.error(error));
-  }, []);
-
-  const likeProduct = (productId) => {
+  /* const likeProduct = (productId) => {
     axios
       .post(
-        "https://bserver-b2ue.onrender.com/api/products/like",
+        "   https://bserver-b2ue.onrender.com/api/products/like",
         { productId },
         { withCredentials: true }
       )
@@ -66,7 +44,7 @@ export default function likedProducts() {
   const unlikeProduct = (productId) => {
     axios
       .post(
-        "https://bserver-b2ue.onrender.com/api/products/unlike",
+        "   https://bserver-b2ue.onrender.com/api/products/unlike",
         { productId },
         { withCredentials: true }
       )
@@ -74,58 +52,108 @@ export default function likedProducts() {
         setLikedProducts((prev) => prev.filter((id) => id !== productId));
       })
       .catch((error) => console.error(error));
+  }; */
+
+  // const handleAddToCart = async (productId) => {
+  //   try {
+  //     console.log(cart);
+  //     const existingProduct =
+  //       cart.length > 0 && cart.some((item) => item._id === productId);
+  //     console.log(existingProduct);
+  //     if (existingProduct) {
+  //       const product = products.find((p) => p._id === productId);
+  //       const newCart = { ...product, quantity: 1 };
+  //       const updatedCart = cart.map((item) =>
+  //         item._id === productId
+  //           ? { ...item, quantity: item.quantity + 1 }
+  //           : item
+  //       );
+  //       /* console.log(updatedCart) */
+  //       await axios.post(`   https://bserver-b2ue.onrender.com/cart/`, newCart, {
+  //         withCredentials: true,
+  //       }); // Added credentials
+  //       setCart(updatedCart);
+  //       localStorage.setItem("cart", JSON.stringify(updatedCart));
+
+  //       } else {
+  //         const product = products.find((p) => p._id === productId);
+  //         const newCart1 = { ...product, quantity: 20 };
+  //         const newCart = [...cart, { ...product, quantity: 20 }];
+  //         console.log(newCart)
+  //         await axios.post("   https://bserver-b2ue.onrender.com/cart", newCart1, { withCredentials: true }); // Added credentials
+  //         setCart(newCart);
+  //         cartAddMsg();
+  //         localStorage.setItem("cart", JSON.stringify(newCart));
+  //     }
+  //   } catch (error) {
+  //     console.error("Error adding to cart:", error);
+  //     const message = error.response?.data?.message || "An error occurred";
+
+  //   }
+  // };
+
+  // const handleQuantityChange = async (productId, newQuantity) => {
+  //   setCart((prevCart) =>
+  //     prevCart.map((item) =>
+  //       item._id === productId ? { ...item, quantity: newQuantity } : item
+  //     )
+  //   );
+
+  //   if (newQuantity < 20) return;
+  //   try {
+  //     const updatedCart = cart.map((item) =>
+  //       item._id === productId ? { ...item, quantity: newQuantity } : item
+  //     );
+  //     console.log(updatedCart)
+  //     await axios.put(`   https://bserver-b2ue.onrender.com/cart/${productId}`, { quantity: newQuantity }, {
+  //       withCredentials: true,
+  //     }); // Added credentials
+  //     localStorage.setItem("cart", JSON.stringify(updatedCart));
+  //   } catch (error) {
+  //     console.error("Error updating quantity:", error);
+  //   }
+  // };
+
+  // const handleRemoveFromCart = async (productId) => {
+  //   try {
+  //     const updatedCart = cart.filter((item) => item._id !== productId);
+  //     await axios.delete(`   https://bserver-b2ue.onrender.com/cart/${productId}`, {
+  //       withCredentials: true,
+  //     }); // Added credentials
+  //     setCart(updatedCart);
+  //     localStorage.setItem("cart", JSON.stringify(updatedCart));
+  //     cartRemoveMsg();
+  //   } catch (error) {
+  //     console.error("Error removing from cart:", error);
+  //   }
+  // };
+
+  // const handleDecreaseQuantity = async (productId) => {
+  //   try {
+  //     const product = products.find((p) => p._id === productId);
+  //     const newCart = { ...product, quantity: -1 };
+  //     const updatedCart = cart.map((item) =>
+  //       item._id === productId ? { ...item, quantity: item.quantity - 1 } : item
+  //     );
+  //     /* console.log(updatedCart) */
+  //     await axios.post(`   https://bserver-b2ue.onrender.com/cart/`, newCart, {
+  //       withCredentials: true,
+  //     }); // Added credentials
+  //     setCart(updatedCart);
+  //     localStorage.setItem("cart", JSON.stringify(updatedCart));
+  //   } catch (error) {
+  //     console.error("Error decreasing quantity:", error);
+  //   }
+  // };
+
+  const Stop = (e, id) => {
+    e.stopPropagation(); // Prevent navigation
   };
 
-  const handleAddToCart = (productId) => {
-      setCart((prevCart) => {
-        const existingProduct = prevCart.find((item) => item._id === productId);
-        if (existingProduct) {
-          return prevCart.map((item) =>
-            item._id === productId
-              ? { ...item, quantity: item.quantity + 1 }
-              : item
-          );
-        } else {
-          const product = products.find((p) => p._id === productId);
-          return [...prevCart, { ...product, quantity: 20 }];
-        }
-      });
-    };
-  
-    const handleQuantityChange = (productId, newQuantity) => {
-      if (newQuantity < 20) return;
-      setCart((prevCart) =>
-        prevCart.map((item) =>
-          item._id === productId ? { ...item, quantity: newQuantity } : item
-        )
-      );
-    };
-  
-    const handleRemoveFromCart = (productId) => {
-      setCart((prevCart) => prevCart.filter((item) => item._id !== productId));
-    };
-  
-    const handleDecreaseQuantity = (productId) => {
-      setCart((prevCart) =>
-        prevCart
-          .map((item) =>
-            item._id === productId
-              ? { ...item, quantity: item.quantity - 1 }
-              : item
-          )
-          .filter((item) => item.quantity >= 20)
-      );
-    };
-  
-    const Stop = (e, id) => {
-      e.stopPropagation(); // Prevent navigation
-    };
-
-    
-      const handleProductClick = (id) => {
-        navigate(`/product/${id}`);
-        console.log(id);
-      };
+  const handleProductClick = (id) => {
+    navigate(`/product/${id}`);
+    console.log(id);
+  };
 
   useEffect(() => {
     if (likedProducts.length > 0 && products.length > 0) {
@@ -138,6 +166,7 @@ export default function likedProducts() {
 
   return (
     <div className="mt-[192px] px-4 md:px-[40px] lg:px-[60px] xl:px-[80px] 2xl:px-[120px]">
+      <Toaster position="top-center" />
       <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 p-4">
         {filteredProducts.map((product) => (
           <div key={product._id} className="mx-auto">

@@ -17,7 +17,7 @@ import rassist from "../assets/Images/rassist.svg";
 import rreseller from "../assets/Images/rreseller.svg";
 import Footer from "./Footer";
 import ar from "../assets/Images/arrow-left-w.svg";
-
+import { toast, ToastContainer } from "react-toastify";
 import { Context } from "../App";
 
 export default function Header() {
@@ -41,7 +41,8 @@ export default function Header() {
   }, [lastScrollY]);
 
   const { isLogin, user, cart } = useContext(Context);
-  const isLogi = false
+
+  console.log(isLogin);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -51,7 +52,6 @@ export default function Header() {
 
   useEffect(() => {
     if (isOpen) {
-      document.body.classList.add("no-scroll");
     } else {
       document.body.classList.remove("no-scroll");
     }
@@ -62,102 +62,94 @@ export default function Header() {
     event.stopPropagation();
   };
 
+  const check = () => {
+    if (isLogin) {
+      navigate("/Cart");
+    } else {
+      toast(
+        <h1 className="text-center font-nexa-bold text-[16px] leading-[26px] text-[#E2063A]">
+          Login to view cart
+        </h1>,
+        {
+          autoClose: 3000, // Close after 3 seconds
+          closeButton: false,
+          className:
+            "bg-[#DDDDDD] h-[84px] rounded-[32px] flex justify-center border-dashed border-[#E2063A] border-[2px]",
+          hideProgressBar: true,
+        }
+      );
+    }
+  };
+
   return (
     <>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000} // Automatically closes after 3 seconds
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="light"
+      />
       <div className="App ">
         <header
-          className={` px-4 py-[24px] fixed w-[100%] top-[0px] z-20 bg-white rounded-b-[40px]  justify-between items-center md:px-8 hidden lg:flex transition-all duration-500 ease-in-out ${
+          className={` px-4 py-[24px] fixed w-[100%] top-[0px] z-20 bg-white rounded-b-[40px]  justify-between items-center md:px-8 lg:px-[120px] hidden lg:flex transition-all duration-500 ease-in-out ${
             isVisible
               ? "translate-y-0 opacity-100"
               : "-translate-y-full opacity-0"
           }`}
         >
-          <Link to="/">
-            <img src={logo} className="w-36" alt="logo" />
-          </Link>
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex">
-            <div className="hidden lg:flex md:gap-[2rem]  space-x-8 items-center text-[#9A9A9A]">
-              <p>
+          <div className="flex flex-row">
+            <Link to="/">
+              <img src={logo} className="w-36" alt="logo" />
+            </Link>
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex">
+              <div className="hidden lg:flex md:gap-[2rem]  items-center text-[#9A9A9A]">
                 <NavLink
                   className={({ isActive }) =>
                     isActive
-                      ? "text-[#E2063A] font-nexa-light font-bold md:text-xs xl:text-sm 2xl:text-base"
-                      : "font-nexa-light font-bold xl:text-sm 2xl:text-base hover:text-black "
+                      ? "text-[#E2063A] font-nexa-light font-bold md:text-xs xl:text-sm 2xl:text-base pr-4 pl-8"
+                      : "font-nexa-light font-bold xl:text-sm 2xl:text-base hover:text-black pr-4 pl-8"
                   }
                   to="/About"
                 >
                   About Us
                 </NavLink>
-              </p>
-              <NavLink
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-[#E2063A] font-nexa-light font-bold xl:text-sm 2xl:text-base"
-                    : "font-nexa-light font-bold xl:text-sm 2xl:text-base hover:text-black active:text-[#E2063A] focus:text-[#E2063A]"
-                }
-                to="/Store"
-              >
-                Store
-              </NavLink>
-              <NavLink
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-[#E2063A] font-nexa-light font-bold xl:text-sm 2xl:text-base"
-                    : "font-nexa-light font-bold xl:text-sm 2xl:text-base hover:text-black active:text-[#E2063A] focus:text-[#E2063A]"
-                }
-                to="/Brandit Hub"
-              >
-                Brandit Hub
-              </NavLink>
-              <NavLink
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-[#E2063A] font-nexa-light font-bold xl:text-sm 2xl:text-base"
-                    : "font-nexa-light font-bold xl:text-sm 2xl:text-base hover:text-black active:text-[#E2063A] focus:text-[#E2063A]"
-                }
-                to="/Assist Centre"
-              >
-                Assist Centre
-              </NavLink>
-            </div>
-            {isLogin ? (
-              ""
-            ) : (
-              <div className="div flex gap flex-row ml-4">
+
                 <NavLink
                   className={({ isActive }) =>
                     isActive
-                      ? "border-[2px] border-black rounded-[72px] font-nexa-light font-bold xl:text-sm 2xl:text-base justify-center flex items-center lg:h-[72px] lg:w-[129px]"
-                      : "rounded-full font-nexa-light font-bold xl:text-sm 2xl:text-base  hover:border-[2px] lg:w-[129px] justify-center flex items-center lg:h-[72px]"
+                      ? "text-[#E2063A] font-nexa-light font-bold xl:text-sm 2xl:text-base px-4"
+                      : "font-nexa-light font-bold xl:text-sm 2xl:text-base hover:text-black active:text-[#E2063A] focus:text-[#E2063A] px-4"
                   }
-                  to="Log in"
+                  to="/Store"
                 >
-                  Log In
+                  Store
                 </NavLink>
                 <NavLink
                   className={({ isActive }) =>
                     isActive
-                      ? "bg-[#E2063A] border-[4px] border-[#E2063A] text-white w-[178px] px-4 py-[13px] rounded-full relative overflow-hidden group lg:w-[178px] lg:h-[72px] lg:py-4 lg:pl-[40px]  flex items-center content-center"
-                      : "bg-[#E2063A] text-white w-[178px] px-4 py-[13px] rounded-full relative overflow-hidden group lg:w-[178px] lg:h-[72px] lg:py-4 lg:pl-[40px]  flex items-center content-center"
+                      ? "text-[#E2063A] font-nexa-light font-bold xl:text-sm 2xl:text-base px-4"
+                      : "font-nexa-light font-bold xl:text-sm 2xl:text-base hover:text-black active:text-[#E2063A] focus:text-[#E2063A] px-4"
                   }
-                  to="Sign up"
+                  to="/Brandit Hub"
                 >
-                  <span className="relative z-10 ">
-                    <p className="font-nexa-bold text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px]">
-                      Sign Up
-                    </p>
-                  </span>
-                  <img
-                    src={ar}
-                    alt=""
-                    className="absolute right-[25px] top-[50%] z-50 translate-y-[-50%]"
-                  />
-                  <span className="absolute right-[10px] top-[50%]  translate-y-[-50%] h-8 w-8 bg-black transition-all duration-[1s] ease-in-out group-hover:translate-y-[-50%] group-hover:w-full group-hover:h-full group-hover:scale-[5]  rounded-full lg:right-4 lg:h-10 lg:w-10"></span>
+                  Brandit Hub
+                </NavLink>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-[#E2063A] font-nexa-light font-bold xl:text-sm 2xl:text-base px-4"
+                      : "font-nexa-light font-bold xl:text-sm 2xl:text-base hover:text-black active:text-[#E2063A] focus:text-[#E2063A] px-4"
+                  }
+                  to="/Assist Centre"
+                >
+                  Assist Centre
                 </NavLink>
               </div>
-            )}
-            {/* <div className="div flex gap flex-row ml-4">
+
+              {/* <div className="div flex gap flex-row ml-4">
               <NavLink className={({isActive})=> isActive ? "border-[2px] border-black rounded-[72px] font-nexa-light font-bold xl:text-sm 2xl:text-base justify-center flex items-center lg:h-[72px] lg:w-[129px]" : "font-nexa-light font-bold xl:text-sm 2xl:text-base hover:border-[2px] lg:w-[129px] justify-center flex items-center lg:h-[72px]"} to='Log in'>
                 Log In
               </NavLink>
@@ -167,7 +159,44 @@ export default function Header() {
                   <span className="absolute right-[10px] top-[50%]  translate-y-[-50%] h-8 w-8 bg-black transition-all duration-[1s] ease-in-out group-hover:translate-y-[-50%] group-hover:w-full group-hover:h-full group-hover:scale-[5]  rounded-full lg:right-4 lg:h-10 lg:w-10"></span>
               </NavLink>
             </div> */}
-          </nav>
+            </nav>
+          </div>
+          {isLogin ? (
+            ""
+          ) : (
+            <div className="div flex gap flex-row">
+              <NavLink
+                className={({ isActive }) =>
+                  isActive
+                    ? "border-[2px] border-black rounded-[72px] font-nexa-light font-bold xl:text-sm 2xl:text-base justify-center flex items-center lg:h-[72px] lg:w-[129px]"
+                    : "rounded-full font-nexa-light font-bold xl:text-sm 2xl:text-base  hover:border-[2px] lg:w-[129px] justify-center flex items-center lg:h-[72px]"
+                }
+                to="Log in"
+              >
+                Log In
+              </NavLink>
+              <NavLink
+                className={({ isActive }) =>
+                  isActive
+                    ? "bg-[#E2063A] border-[4px] border-[#E2063A] text-white w-[178px] px-4 py-[13px] rounded-full relative overflow-hidden group lg:w-[178px] lg:h-[72px] lg:py-4 lg:pl-[40px]  flex items-center content-center"
+                    : "bg-[#E2063A] text-white w-[178px] px-4 py-[13px] rounded-full relative overflow-hidden group lg:w-[178px] lg:h-[72px] lg:py-4 lg:pl-[40px]  flex items-center content-center"
+                }
+                to="Sign up"
+              >
+                <span className="relative z-10 ">
+                  <p className="font-nexa-bold text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px]">
+                    Sign Up
+                  </p>
+                </span>
+                <img
+                  src={ar}
+                  alt=""
+                  className="absolute right-[25px] top-[50%] z-50 translate-y-[-50%]"
+                />
+                <span className="absolute right-[10px] top-[50%]  translate-y-[-50%] h-8 w-8 bg-black transition-all duration-[1s] ease-in-out group-hover:translate-y-[-50%] group-hover:w-full group-hover:h-full group-hover:scale-[5]  rounded-full lg:right-4 lg:h-10 lg:w-10"></span>
+              </NavLink>
+            </div>
+          )}
           {isLogin ? (
             <div className="hidden lg:flex gap-4">
               <div className="relative flex items-center">
@@ -185,7 +214,7 @@ export default function Header() {
 
               <img
                 className="w-[72px] h-[72px] rounded-full"
-                src={user.Profile_Image ? user.Profile_Image : profile}
+                src={user?.Profile_Image ? user?.Profile_Image : profile}
                 alt="Menu"
                 onClick={() => navigate("/Profile")}
               />
@@ -196,21 +225,20 @@ export default function Header() {
         </header>
 
         <header
-          className={`fixed w-[100%] top-[0px] z-20 bg-white px-8 py-6 flex justify-between rounded-b-[40px] lg:hidden transition-all duration-500 ease-in-out ${
+          className={`fixed w-[100%] top-[0px] z-20 bg-white px-8 h-[80px] items-center flex justify-between rounded-b-[40px] lg:hidden transition-all duration-500 ease-in-out ${
             isVisible
               ? "translate-y-0 opacity-100"
               : "-translate-y-full opacity-0"
           }`}
         >
           <Link to="/">
-            <img src={logo} className="w-36" alt="logo" />
+            <img src={logo} className="h-[36px]" alt="logo" />
           </Link>
           {/* Mobile Menu Toggle Button */}
           <div className="lg:hidden flex">
-            <div className="relative">
-              <Link to="/Cart">
-                <img className="" src={cartt} alt="" />
-              </Link>
+            <div onClick={check} className="relative">
+              <img className="" src={cartt} alt="" />
+
               {num ? (
                 <div className="bg-[#E2063A] w-5 h-5 items-center justify-center flex  rounded-full text-center absolute top-[3px] right-[3px]">
                   <p className=" text-[12px] text-white">{num}</p>
@@ -332,7 +360,7 @@ export default function Header() {
                   </>
                 )}
               </NavLink>
-              {isLogi ? (
+              {isLogin ? (
                 ""
               ) : (
                 <div className="div flex gap flex-col ">
@@ -343,6 +371,7 @@ export default function Header() {
                         : "rounded-full font-nexa-bold  hover:border-[2px] w-full text-[14px] leading-[22px] text-black  justify-center flex items-center mb-3 h-[48px]"
                     }
                     to="Log in"
+                    onClick={toggleMenu}
                   >
                     Log In
                   </NavLink>
@@ -353,6 +382,7 @@ export default function Header() {
                         : "bg-[#E2063A] text-white font-nexa-bold text-[14px] leading-[22px] w-[178px] px-4 py-[13px] rounded-full relative overflow-hidden group h-[48px]  flex items-center content-center"
                     }
                     to="Sign up"
+                    onClick={toggleMenu}
                   >
                     <span className="relative z-10 ">
                       <p className="font-nexa-bold text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px]">

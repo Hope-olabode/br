@@ -1,9 +1,9 @@
 import React, { useEffect, createContext, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
-import axios from "axios"
-import HomePage from './Pages/Home page.jsx';
-import About from './Pages/About us.jsx';
-import Apparel from './Pages/Apparel.jsx';
+import axios from "axios";
+import HomePage from "./Pages/Home page.jsx";
+import About from "./Pages/About us.jsx";
+import Apparel from "./Pages/Apparel.jsx";
 import Header from "./Components/Header.jsx";
 import BranditHub from "./Pages/Brandit Hub.jsx";
 import AssistCentre from "./Pages/Assist Centre.jsx";
@@ -24,39 +24,73 @@ import ProfilePage from "./Pages/Edit Profile.jsx";
 import OrderHistory from "./Pages/Oder History.jsx";
 import LikedProducts from "./Pages/Liked product.jsx";
 import CustomQuote from "./Pages/Custom quote.jsx";
+import { store } from "./redux/store.js";
+import { Provider } from "react-redux";
+import ResetPassword from "./Pages/ResetPassword.jsx";
 
 export const Context = createContext();
 
 export default function App() {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState("");
   const [user, setUser] = useState("");
   const [name, setName] = useState("");
+  const [products, setProducts] = useState([]);
+  const [likedProducts, setLikedProducts] = useState("");
 
-  const [cart, setCart] = useState(() => {
-    return JSON.parse(localStorage.getItem("cart")) || [];
-  });
+  const [cart, setCart] = useState([]);
 
   const [loading, setLoading] = useState(true); // Loader state
   const location = useLocation(); // Detect route changes
 
   useEffect(() => {
-    // Check login status on app load
-    axios.get("https://bserver-b2ue.onrender.com/auth/isLogin", { withCredentials: true })
-      .then((res) => {
-        console.log(res); // Log the full response for debugging
-        setIsLogin(res.data.loggedIn); // Set login status
-        setUser(res.data.user); // Set name, default to "Guest" if undefined
-        setName(res.data.user.Full_Name || "Guest"); // Set name, default to "Guest" if undefined
-      })
-      .catch((err) => {
-        console.error("Error:", err); // Log any errors
-        setIsLogin(false);
-      });
+    const initializeApp = async () => {
+      setLoading(true); // Start loading and add no-scroll
+       
+
+      try {
+        const responses = await Promise.allSettled([
+          axios.get("https://bserver-b2ue.onrender.com/api/products"),
+          axios.get("https://bserver-b2ue.onrender.com/auth/isLogin", { withCredentials: true }),
+          axios.get("https://bserver-b2ue.onrender.com/cart", { withCredentials: true }),
+          axios.get("https://bserver-b2ue.onrender.com/api/products/liked", { withCredentials: true }),
+        ]);
+    
+        // Process products regardless of other failures
+        if (responses[0].status === "fulfilled") {
+          setProducts(responses[0].value.data);
+        } else {
+          console.error("Error fetching products", responses[0].reason);
+        }
+    
+        if (responses[1].status === "fulfilled") {
+          setIsLogin(responses[1].value.data.loggedIn);
+          setUser(responses[1].value.data.user);
+          setName(responses[1].value.data?.user?.Full_Name || "Guest");
+        } else {
+          console.error("Error checking login", responses[1].reason);
+        }
+    
+        if (responses[2].status === "fulfilled") {
+          setCart(responses[2].value.data);
+        } else {
+          console.error("Error fetching cart", responses[2].reason);
+        }
+    
+        if (responses[3].status === "fulfilled") {
+          setLikedProducts(responses[3].value.data.likedProducts);
+        } else {
+          console.error("Error fetching liked products", responses[3].reason);
+        }
+      } catch (error) {
+        console.error("Unexpected error:", error);
+      }}
+
+    initializeApp();
   }, []);
-  
-  console.log(isLogin)
-  console.log(name)
-  console.log(user)
+
+  console.log(isLogin);
+  console.log(name);
+  console.log(user);
 
   useEffect(() => {
     // Trigger loader on route changes
@@ -66,10 +100,23 @@ export default function App() {
     return () => clearTimeout(timeout); // Cleanup
   }, [location]);
 
-  console.log(isLogin)
+  console.log(isLogin);
 
   return (
-    <Context.Provider value={{ isLogin, setIsLogin, cart, setCart, user }}>
+    <Context.Provider
+      value={{
+        isLogin,
+        setIsLogin,
+        cart,
+        setCart,
+        user,
+        likedProducts,
+        setLikedProducts,
+        products,
+        setProducts,
+      }}
+    >
+      
       <ScroolToTop />
       <div style={{ visibility: loading ? "hidden" : "visible" }}>
         <Routes>
@@ -95,8 +142,7 @@ export default function App() {
             <Route path="/Liked" element={<LikedProducts />} />
             <Route path="/Custom" element={<CustomQuote />} />
             <Route path="/l" element={<Loader />} />
-
-            
+            <Route path="/Reset" element={<ResetPassword />} />
           </Route>
         </Routes>
       </div>

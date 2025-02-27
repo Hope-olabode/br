@@ -5,51 +5,73 @@ import plus2 from "../assets/Images/plus2.svg";
 import minus from "../assets/Images/minus.svg";
 import dust from "../assets/Images/dust.svg";
 import ar from "../assets/Images/arrow-left-w.svg";
+import { useNavigate } from "react-router-dom";
+import { CartFunctions } from "../Components/Cart_Functions";
+import { Toaster } from "sonner";
+
 export default function Cart() {
-  const { cart, setCart } = useContext(Context);
+  const {
+    cart,
+    handleAddToCart,
+    handleRemoveFromCart,
+    handleDecreaseQuantity,
+    handleQuantityChange,
+    likeProduct,
+    unlikeProduct,
+  } = CartFunctions();
+  const { setCart, isLogin } = useContext(Context);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (isLogin) {
+    } else {
+      navigate("/Log in");
+    }
+  }, []);
 
-  const handleAddToCart = (productId) => {
-    setCart((prevCart) => {
-      const existingProduct = prevCart.find((item) => item._id === productId);
-      if (existingProduct) {
-        return prevCart.map((item) =>
-          item._id === productId
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      } else {
-        const product = products.find((p) => p.id === productId);
-        return [...prevCart, { ...product, quantity: 20 }];
-      }
-    });
-  };
+  // const handleAddToCart = (productId) => {
+  //   setCart((prevCart) => {
+  //     const existingProduct = prevCart.find((item) => item._id === productId);
+  //     if (existingProduct) {
+  //       return prevCart.map((item) =>
+  //         item._id === productId
+  //           ? { ...item, quantity: item.quantity + 1 }
+  //           : item
+  //       );
+  //     } else {
+  //       const product = products.find((p) => p.id === productId);
+  //       return [...prevCart, { ...product, quantity: 20 }];
+  //     }
+  //   });
+  // };
 
-  const handleQuantityChange = (productId, newQuantity) => {
-    if (newQuantity < 20) return;
-    setCart((prevCart) =>
-      prevCart.map((item) =>
-        item._id === productId ? { ...item, quantity: newQuantity } : item
-      )
-    );
-  };
+  // const handleQuantityChange = (productId, newQuantity) => {
+  //   if (newQuantity < 20) return;
+  //   setCart((prevCart) =>
+  //     prevCart.map((item) =>
+  //       item._id === productId ? { ...item, quantity: newQuantity } : item
+  //     )
+  //   );
+  // };
 
-  const handleRemoveFromCart = (productId) => {
-    setCart((prevCart) => prevCart.filter((item) => item._id !== productId));
-  };
+  // const handleRemoveFromCart = (productId) => {
+  //   setCart((prevCart) => prevCart.filter((item) => item._id !== productId));
+  // };
 
-  const handleDecreaseQuantity = (productId) => {
-    setCart((prevCart) =>
-      prevCart
-        .map((item) =>
-          item._id === productId
-            ? { ...item, quantity: item.quantity - 1 }
-            : item
-        )
-        .filter((item) => item.quantity >= 20)
-    );
-  };
+  // const handleDecreaseQuantity = (productId) => {
+  //   setCart((prevCart) =>
+  //     prevCart
+  //       .map((item) =>
+  //         item._id === productId
+  //           ? { ...item, quantity: item.quantity - 1 }
+  //           : item
+  //       )
+  //       .filter((item) => item.quantity >= 20)
+  //   );
+  // };
+  console.log(cart);
   return (
     <div className="mt-[96px] py-6">
+      <Toaster position="top-center" />
       <div className="pt-8 px-4 md:px-[40px] lg:px-[60px] xl:px-[80px] 2xl:px-[120px]">
         <h2 className="font-nexa-bold text-[24px] leading-[35px] mb-8">Cart</h2>
         <div className="div lg:flex w-full">

@@ -95,28 +95,17 @@ export default function HomePage() {
           <div className="buttons flex flex-col items-center w-full mt-10 lg:mt-[48px]">
             <button
               onClick={() => navigate("/Custom")}
-              className="bg-[#E2063A] h-12 text-white w-[196px] pl-4 pr-2  rounded-full relative overflow-hidden group lg:w-[262px] lg:h-[72px]  lg:pl-[40px]"
+              className="bg-[#E2063A] h-12 text-white w-[196px] pl-4 pr-2  rounded-full relative overflow-hidden group lg:w-[205px] lg:h-[72px]  lg:pl-[40px]"
             >
               <span className="relative z-10 ">
-                <p className="font-nexa-bold text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px]">
-                  Get Custom Quote
+                <p className="font-nexa-bold  text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px]">
+                  Go to store
                 </p>
               </span>
               <span className="absolute right-[10px] top-[50%]  translate-y-[-50%] h-8 w-8 bg-black transition-all duration-[1s] ease-in-out group-hover:translate-y-[-50%] group-hover:w-full group-hover:h-full group-hover:scale-[5]  rounded-full lg:right-4 lg:h-10 lg:w-10"></span>
-              <img
-                className="absolute right-[10px] lg:right-[16px] top-[50%]  translate-y-[-50%] w-[33px] h-[33px] lg:w-10 lg:h-10"
-                src={but}
-                alt=""
-              />
+              
             </button>
-            <button
-              onClick={() => navigate("/Store")}
-              className="bg-white font-nexa-light px-4 h-12 w-[122px]  rounded-full mt-3 border-2 border-white hover:border-[#DDDDDD] lg:h-[72px] lg:w-[165px] "
-            >
-              <p className="font-nexa-bold text-center text-[14px] leading-[22px] lg:text-[16px] lg:leading-[26px]">
-                Get Blanks
-              </p>
-            </button>
+            
           </div>
         </div>
       </div>
@@ -129,7 +118,7 @@ export default function HomePage() {
             <img className="h-full" src={cm} alt="" />
           </div>
           <div className="lg:w-[50%] lg:flex lg:flex-col lg:items-end lg:justify-center">
-            <h1 className="font-nexa-bold text-[48px] leading-[64px] lg:text-[56px] lg:leading-[78px]">
+            <h1 className="font-nexa-bold text-[48px] leading-[64px] lg:text-[56px] lg:leading-[78px] tracking-[3%]">
               <span className="lg:whitespace-nowrap lg:block">
                 Ready to <span className="block lg:inline"> Launch Your</span>
               </span>{" "}
@@ -153,7 +142,7 @@ export default function HomePage() {
 
         <div className="px-4 py-[72px] flex flex-col-reverse bg-black text-white lg:py-[128px] lg:text-left lg:flex lg:flex-row lg:gap-[54px] md:px-[40px] lg:px-[60px] xl:px-[80px] 2xl:px-[120px] items-end">
           <div className="lg:w-[50%] lg:flex lg:flex-col lg:items-start justify-center">
-            <h1 className="text-[48px] leading-[64px]  lg:text-[56px] lg:leading-[78px]">
+            <h1 className="text-[48px] leading-[64px] font-nexa-bold lg:text-[56px] lg:leading-[78px]">
               Scale Up Your <div className="block">Clothing</div>{" "}
               <div className="block">Production</div>
             </h1>

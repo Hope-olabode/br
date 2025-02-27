@@ -1,4 +1,5 @@
 import React, { useState, useRef, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import Pic from "../assets/Images/profilePic.svg";
@@ -14,8 +15,8 @@ const ProfilePage = () => {
   const videoRef = useRef(null); // Reference to Video Element
   const canvasRef = useRef(null); // Reference to Canvas Element
   const fileInputRef = useRef(null);
-  const { user } = useContext(Context);
-
+  const { user, isLogin } = useContext(Context);
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -30,7 +31,6 @@ const ProfilePage = () => {
       Email: user.Email || "",
     },
   });
-
 
   useEffect(() => {
     if (user) {
@@ -66,7 +66,7 @@ const ProfilePage = () => {
   const handleImageClick = () => {
     fileInputRef.current.click();
   };
-  console.log(user.Full_Name)
+  console.log(user.Full_Name);
   // 📸 Start Camera
   const startCamera = async () => {
     try {
@@ -134,17 +134,17 @@ const ProfilePage = () => {
     Object.keys(data).forEach((key) => {
       formData.append(key, data[key]);
     });
-  
+
     // Append image file if it exists
     if (imgFile) {
       formData.append("image", imgFile);
     }
-  
+
     console.log("FormData for upload:", Array.from(formData.entries())); // Debugging
     setUploading(true);
     try {
       const res = await axios.post(
-        "https://bserver-b2ue.onrender.com/api/profilePic",
+        "   https://bserver-b2ue.onrender.com/api/profilePic",
         formData,
         {
           headers: {
@@ -161,6 +161,13 @@ const ProfilePage = () => {
       setUploading(false);
     }
   };
+
+  useEffect(() => {
+    if (isLogin) {
+    } else {
+      navigate("/");
+    }
+  }, [])
 
   return (
     <div className="flex flex-col justify-center items-center mt-[192px] px-4 md:px-[40px] lg:px-[60px] xl:px-[80px] 2xl:px-[120px]">

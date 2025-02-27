@@ -85,12 +85,12 @@ export default function Reseller() {
       </div>
       <div className="py-14 px-4 md:px-[80px] lg:px-[80px] xl:px-[100px] 2xl:px-[160px]">
         <h3 className="font-nexa-bold text-[24px] leading-[38px] lg:text-center lg:text-[36px] lg:leading-[48px]">How it works</h3>
-        <div className="mt-8 lg:mt-[68px] lg:flex gap-10 flex-row">
-          <div className="w-[40%]">
+        <div className="mt-8 lg:mt-[68px] lg:flex gap-10 lg:flex-row">
+          <div className="lg:w-[40%]">
             <h4 className="mb-4 font-nexa-bold text-[40px] leading-[56px] lg:text-[56px] lg:leading-[78px]">Simple Steps to Reseller Success</h4>
             <p className="font-poopins text-[14px] leading-[22px] lg:text-[20px] lg:leading-[32px] text-[#9A9A9A]">Here are 5 simple steps you should follow to achieve success while reselling</p>
           </div>
-          <div className="w-[60%] mt-10 lg:mt-0 border-2 border-black rounded-[32px] py-6 px-4 flex flex-col gap-10">
+          <div className="lg:w-[60%] mt-10 lg:mt-0 border-2 border-black rounded-[32px] py-6 px-4 flex flex-col gap-10">
             <div className="flex gap-2 content-center items-start">
               <img className="lg:w-[72px]" src={search} alt="" />
               <div>

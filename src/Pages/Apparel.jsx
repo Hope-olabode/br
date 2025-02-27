@@ -1,17 +1,20 @@
 import React, { useState, useEffect, useContext, useMemo } from "react";
+import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import FAQ from "../Components/FAQ.jsx";
 import Testimonials from "../Components/Testimonials.jsx";
 import Touch from "../Components/Touch.jsx";
 import one from "../assets/Images/Apparel-img/1.png";
+import one1 from "../assets/Images/Apparel-img/11.png";
 import two from "../assets/Images/Apparel-img/2.png";
 import three from "../assets/Images/Apparel-img/3.png";
 import four from "../assets/Images/Apparel-img/4.png";
 import five from "../assets/Images/Apparel-img/5.png";
 import six from "../assets/Images/Apparel-img/6.png";
 import seven from "../assets/Images/Apparel-img/7.png";
+import seven1 from "../assets/Images/Apparel-img/71.png";
 import eight from "../assets/Images/Apparel-img/8.png";
-import MOQ from "../Components/MOQ.jsx"
+import MOQ from "../Components/MOQ.jsx";
 import axios from "axios";
 import Store from "../Components/Store.jsx";
 import { Context } from "../App";
@@ -23,14 +26,15 @@ import Loader from "../Components/Loader";
 
 export default function Apparel() {
   const [loading, setLoading] = useState(false);
-  const [products, setProducts] = useState([]);
 
-  const { cart, setCart } = useContext(Context);
+  const { cart, setCart, products } = useContext(Context);
   const [filterCategory, setFilterCategory] = useState(() => {
     // Retrieve the initial value from localStorage or default to false
     return JSON.parse(localStorage.getItem("category")) || "";
   });
-  
+
+  console.log(products)
+
 
   // State to keep track of the active button (initially null or a specific index)
   const [activeIndex, setActiveIndex] = useState(() => {
@@ -52,10 +56,12 @@ export default function Apparel() {
 
   console.log(filteredProducts);
   console.log(typeof filterCategory);
+  console.log(products);
 
   // Function to handle button click
   const handleClick = (name, index) => {
     setActiveIndex(index);
+
     console.log(name);
     setFilterCategory(name);
     localStorage.setItem("category", JSON.stringify(name));
@@ -74,62 +80,55 @@ export default function Apparel() {
   ];
 
   const items = [
-    { name: "Hoodie", img: one, style: " col-start-1 col-end-3" },
-    { name: "Shorts", img: two, style: " col-start-3 col-end-5 " },
+    {
+      name: "Hoodie",
+      img: one,
+      img1: one1,
+      style: " col-start-1 col-end-3 lg:col-end-5",
+    },
+    {
+      name: "Shorts",
+      img: two,
+      img1: two,
+      style: " col-start-3 col-end-5 lg:col-start-5 lg:lg:col-end-7",
+    },
     {
       name: "T-shirts",
       img: three,
-      style: "  col-start-5 col-end-8",
+      img1: three,
+      style: "  col-start-5 col-end-8 lg:col-start-7 lg:lg:col-end-9",
     },
     {
       name: "Trouser",
       img: four,
-      style: "  col-start-1 col-end-3 ",
+      img1: four,
+      style: "  col-start-1 col-end-3 lg:col-start-9 lg:lg:col-end-11",
     },
     {
       name: "Sweatshirt",
       img: five,
-      style: "  col-start-3 col-end-5",
+      img1: five,
+      style: "  col-start-3 col-end-5 lg:col-start-1 lg:col-end-3",
     },
-    { name: "Cap", img: six, style: " col-start-5 col-end-8" },
+    {
+      name: "Cap",
+      img: six,
+      img1: six,
+      style: " col-start-5 col-end-8 lg:col-start-3 lg:lg:col-end-5",
+    },
     {
       name: "Jersey",
       img: seven,
-      style: "  col-start-2 col-end-4",
+      img1: seven1,
+      style: "  col-start-2 col-end-4 lg:col-start-5 lg:lg:col-end-9",
     },
     {
       name: "Jackets",
       img: eight,
-      style: "  col-start-4 col-end-6",
+      img1: eight,
+      style: "  col-start-4 col-end-6 lg:col-start-9 lg:lg:col-end-11",
     },
   ];
-
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true); // Start loading and add no-scroll
-      document.body.classList.add("no-scroll");
-  
-      try {
-        const response = await axios.get("https://bserver-b2ue.onrender.com/api/products");
-  
-        // The data is already parsed into JSON
-        setProducts(response.data); 
-        console.log(response.data); // Debugging: Log the fetched data
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false); // Stop loading and remove no-scroll
-        document.body.classList.remove("no-scroll");
-      }
-    };
-  
-    fetchData();
-  }, []);
-
 
   const Stop = (e, id) => {
     e.stopPropagation(); // Prevent navigation
@@ -147,14 +146,12 @@ export default function Apparel() {
   const img = [one, two, three, four, five, six, seven, eight];
 
   const [priceRange, setPriceRange] = useState({ from: "", to: "" });
-  
 
   const handleCategoryChange = (category) => {
     setFilterCategory(category);
     localStorage.setItem("category", JSON.stringify(category));
   };
 
- 
   const [accordionOpen, setAccordionOpen] = useState(true);
   const [accordionOpen2, setAccordionOpen2] = useState(true);
   const [filterSort, SetFilterSort] = useState(true);
@@ -191,12 +188,17 @@ export default function Apparel() {
     }
   };
 
-  
-
   loading ? document.body.classList.add("no-scroll") : "";
 
   return (
     <div className="mt-[96px]">
+      <ToastContainer
+        position="top-center"
+        autoClose={3000} // Automatically closes after 3 seconds
+        pauseOnHover
+        draggable
+        theme="light"
+      />
       {loading ? <Loader /> : ""}
       {mFilterSort ? (
         <div className="fixed inset-0 bg-black bg-opacity-40  justify-center items-center z-50 overflow-scroll">
@@ -420,27 +422,43 @@ export default function Apparel() {
 
         <div className="px-4 md:px-[40px] lg:px-[60px] xl:px-[80px] 2xl:px-[120px]">
           <div
-            className={`${
+            className={` ${
               activeIndex === -1
-                ? "px-4 py-2 grid grid-cols-6 grid-rows-3 gap-x-2  gap-y-2"
-                : "w-[100%] h-[200px] sm:h-[350px] lg:h-[500px] rounded-full  overflow-hidden"
+                ? "px-4 py-2 grid grid-cols-6 grid-rows-2 gap-x-2  gap-y-2 lg:grid-cols-[repeat(10,_minmax(0,_1fr))]"
+                : "w-[100%] h-[200px] sm:h-[350px] lg:h-[400px] xl:h-[500px]  rounded-full  overflow-hidden"
             }    `}
           >
             {/* <div className={` w-full h-[500px] rounded-full  overflow-hidden`}>
               <img className="w-full" src={one} alt="" />
             </div> */}
+
             {items.map((item, index) => (
-              <img
-                key={index}
-                src={item.img}
-                alt={item.name}
-                onClick={() => handleClick(item.name, index)}
-                className={` ${item.style} ${
-                  activeIndex === -1 || activeIndex === index
-                    ? "block rounded-full"
-                    : "hidden"
-                }${activeIndex === index ? " w-full rounded-none" : ""}`}
-              />
+              <div className={`lg:hidden ${item.style}`}>
+                <img
+                  src={item.img}
+                  alt={item.name}
+                  onClick={() => handleClick(item.name, index)}
+                  className={` ${item.style} ${
+                    activeIndex === -1 || activeIndex === index
+                      ? "block rounded-full"
+                      : "hidden"
+                  }${activeIndex === index ? " w-full rounded-none" : ""}`}
+                />
+              </div>
+            ))}
+            {items.map((item, index) => (
+              <div className={`hidden lg:block  ${item.style}`}>
+                <img
+                  src={item.img1}
+                  alt={item.name}
+                  onClick={() => handleClick(item.name, index)}
+                  className={` ${item.style} ${
+                    activeIndex === -1 || activeIndex === index
+                      ? "block rounded-full"
+                      : "hidden"
+                  }${activeIndex === index ? " w-full rounded-none" : ""}`}
+                />
+              </div>
             ))}
           </div>
         </div>
@@ -451,14 +469,18 @@ export default function Apparel() {
       {filteredProducts.length === 0 ? (
         <MOQ />
       ) : (
-        <Store handleCategoryChange={handleCategoryChange} filteredProducts={filteredProducts} filterCategory={filterCategory} products={products}/>
+        <Store
+          handleClick={handleClick}
+          filteredProducts={filteredProducts}
+          filterCategory={filterCategory}
+        />
       )}
       {/* <Feature /> */}
       {/* <QuoteCalc checkboxes1={checkboxes1} handleCheckboxChange={handleCheckboxChange}  checkboxData1={checkboxData1}/> */}
       <FAQ />
       <div className=" bg-[url('./assets/Images/hero-pattern.svg')] bg-cover bg-no-repeat">
-            <Testimonials />
-          </div>
+        <Testimonials />
+      </div>
       <Touch />
     </div>
   );
