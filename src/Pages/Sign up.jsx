@@ -59,14 +59,8 @@ export default function Signup() {
       });
       console.log(res);
 
-      // Once the POST is successful, execute the GET request
-      const loginResponse = await axios.get(
-        "   https://bserver-b2ue.onrender.com/auth/isLogin",
-        {
-          withCredentials: true,
-        }
-      );
-      setIsLogin(loginResponse.data.loggedIn);
+    
+      setIsLogin(true);
 
       // Navigate after successful GET
       customToast({

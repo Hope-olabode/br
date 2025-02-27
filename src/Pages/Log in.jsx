@@ -55,7 +55,7 @@ export default function Login() {
         }
       );
 
-      
+      setIsLogin(true)
       customToast({
         color: "#000000",
         message: response.data.message,
