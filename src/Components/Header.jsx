@@ -42,7 +42,7 @@ export default function Header() {
 
   const { isLogin, user, cart } = useContext(Context);
 
-  console.log(isLogin);
+ /*  console.log(isLogin); */
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
