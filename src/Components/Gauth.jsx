@@ -13,7 +13,7 @@ export default function Gauth({ message }) {
   const auth = getAuth(app)
 
   const { setIsLogin } = useContext(Context);
-
+console.log(`${import.meta.env.VITE_BACKEND_URL}/auth/isLogin`)
   const handleGoogleClick = async () => {
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({ prompt: "select_account" });
@@ -21,12 +21,12 @@ export default function Gauth({ message }) {
       const resultFromGoogle = await signInWithPopup(auth, provider)
       console.log(resultFromGoogle);
       const user = {Name: resultFromGoogle.user.displayName, Email: resultFromGoogle.user.email, Profile_Image: resultFromGoogle.user.photoURL};
-      const response = await axios.post("   https://bserver-b2ue.onrender.com/auth/google", user, {
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/google`, user, {
         withCredentials: true,
       });
       
       if (response.status === 200) {
-        const res2 = await axios.get("   https://bserver-b2ue.onrender.com/auth/isLogin")
+        const res2 = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth/isLogin`)
         if (res2.status === 200) {
           setIsLogin(true)
           console.log(1)

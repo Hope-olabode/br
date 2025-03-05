@@ -54,7 +54,7 @@ export default function Signup() {
     setLoading(true)
     try {
       // Wait for the POST request to complete successfully
-      const res = await axios.post("   https://bserver-b2ue.onrender.com/auth/signup", data, {
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/signup`, data, {
         withCredentials: true,
       });
       console.log(res);

@@ -1,21 +1,16 @@
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Toast from "../Pages/Toast";
-import { toast as sonnerToast, Toaster } from 'sonner';
+import { toast as sonnerToast, Toaster } from "sonner";
 import { Context } from "../App";
 
-
-
-export  function CartFunctions() {
-  const { cart, setCart, likedProducts, setLikedProducts, products } = useContext(Context);
-
+export function CartFunctions() {
+  const { cart, setCart, likedProducts, setLikedProducts, products } =
+    useContext(Context);
 
   function customToast(toastProps) {
     return sonnerToast.custom(() => (
-      <Toast
-        color={toastProps.color}
-        message={toastProps.message}
-      />
+      <Toast color={toastProps.color} message={toastProps.message} />
     ));
   }
 
@@ -34,28 +29,27 @@ export  function CartFunctions() {
             : item
         );
         /* console.log(updatedCart) */
-        await axios.post(`   https://bserver-b2ue.onrender.com/cart/`, newCart, {
+        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/cart/`, newCart, {
           withCredentials: true,
         }); // Added credentials
         setCart(updatedCart);
-       
-        
-      
-        
+
         localStorage.setItem("cart", JSON.stringify(updatedCart));
-        } else {
-          const product = products.find((p) => p._id === productId);
-          const newCart1 = { ...product, quantity: 20 };
-          const newCart = [...cart, { ...product, quantity: 20 }];
-          console.log(newCart)
-          await axios.post("   https://bserver-b2ue.onrender.com/cart", newCart1, { withCredentials: true }); // Added credentials
-          setCart(newCart);
-          
-          localStorage.setItem("cart", JSON.stringify(newCart));
-          customToast({
-            color: "#000000",
-            message: "Product added to cart",
-          });
+      } else {
+        const product = products.find((p) => p._id === productId);
+        const newCart1 = { ...product, quantity: 20 };
+        const newCart = [...cart, { ...product, quantity: 20 }];
+        console.log(newCart);
+        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/cart`, newCart1, {
+          withCredentials: true,
+        }); // Added credentials
+        setCart(newCart);
+
+        localStorage.setItem("cart", JSON.stringify(newCart));
+        customToast({
+          color: "#000000",
+          message: "Product added to cart",
+        });
       }
     } catch (error) {
       console.error("Error adding to cart:", error);
@@ -74,16 +68,20 @@ export  function CartFunctions() {
         item._id === productId ? { ...item, quantity: newQuantity } : item
       )
     );
-    
-    if (newQuantity < 20) return; 
+
+    if (newQuantity < 20) return;
     try {
       const updatedCart = cart.map((item) =>
         item._id === productId ? { ...item, quantity: newQuantity } : item
       );
-      console.log(updatedCart)
-      await axios.put(`   https://bserver-b2ue.onrender.com/cart/${productId}`, { quantity: newQuantity }, {
-        withCredentials: true,
-      }); // Added credentials
+      console.log(updatedCart);
+      await axios.put(
+        `    ${import.meta.env.VITE_BACKEND_URL}/cart/${productId}`,
+        { quantity: newQuantity },
+        {
+          withCredentials: true,
+        }
+      ); // Added credentials
       localStorage.setItem("cart", JSON.stringify(updatedCart));
     } catch (error) {
       console.error("Error updating quantity:", error);
@@ -93,13 +91,13 @@ export  function CartFunctions() {
         color: "#E2063A",
         message: message,
       });
-    } 
+    }
   };
 
   const handleRemoveFromCart = async (productId) => {
     try {
       const updatedCart = cart.filter((item) => item._id !== productId);
-      await axios.delete(`   https://bserver-b2ue.onrender.com/cart/${productId}`, {
+      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/cart/${productId}`, {
         withCredentials: true,
       }); // Added credentials
       setCart(updatedCart);
@@ -126,7 +124,7 @@ export  function CartFunctions() {
         item._id === productId ? { ...item, quantity: item.quantity - 1 } : item
       );
       /* console.log(updatedCart) */
-      await axios.post(`   https://bserver-b2ue.onrender.com/cart/`, newCart, {
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL}/cart/`, newCart, {
         withCredentials: true,
       }); // Added credentials
       setCart(updatedCart);
@@ -145,7 +143,7 @@ export  function CartFunctions() {
   const likeProduct = async (productId) => {
     try {
       const response = await axios.post(
-        "   https://bserver-b2ue.onrender.com/api/products/like",
+        `${import.meta.env.VITE_BACKEND_URL}/api/products/like`,
         { productId },
         { withCredentials: true }
       );
@@ -165,7 +163,7 @@ export  function CartFunctions() {
   const unlikeProduct = (productId) => {
     axios
       .post(
-        "   https://bserver-b2ue.onrender.com/api/products/unlike",
+        `${import.meta.env.VITE_BACKEND_URL}/api/products/unlike`,
         { productId },
         { withCredentials: true }
       )
@@ -173,16 +171,13 @@ export  function CartFunctions() {
         setLikedProducts((prev) => prev.filter((id) => id !== productId));
       })
       .catch((error) => console.error(error));
-      const message = error.response?.data?.message || "An error occurred";
-      // displayMsg(message);
-      customToast({
-        color: "#E2063A",
-        message: message,
-      });
+    const message = error.response?.data?.message || "An error occurred";
+    // displayMsg(message);
+    customToast({
+      color: "#E2063A",
+      message: message,
+    });
   };
-
-  
-
 
   return {
     cart,
@@ -192,6 +187,6 @@ export  function CartFunctions() {
     handleRemoveFromCart,
     handleDecreaseQuantity,
     likeProduct,
-    unlikeProduct
-  }
+    unlikeProduct,
+  };
 }

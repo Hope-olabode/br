@@ -49,10 +49,10 @@ export default function App() {
 
       try {
         const responses = await Promise.allSettled([
-          axios.get("https://bserver-b2ue.onrender.com/api/products"),
-          axios.get("https://bserver-b2ue.onrender.com/auth/isLogin", { withCredentials: true }),
-          axios.get("https://bserver-b2ue.onrender.com/cart", { withCredentials: true }),
-          axios.get("https://bserver-b2ue.onrender.com/api/products/liked", { withCredentials: true }),
+          axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/products`),
+          axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth/isLogin`, { withCredentials: true }),
+          axios.get(`${import.meta.env.VITE_BACKEND_URL}/cart`, { withCredentials: true }),
+          axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/products/liked`, { withCredentials: true }),
         ]);
     
         // Process products regardless of other failures

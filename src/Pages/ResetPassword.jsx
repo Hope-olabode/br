@@ -71,7 +71,7 @@ export default function ResetPassword() {
     const Email = data.Email;
     try {
       const response = await axios.post(
-        "   https://bserver-b2ue.onrender.com/auth/email",
+        `${import.meta.env.VITE_BACKEND_URL}/auth/email`,
         { Email },
         { withCredentials: true }
       );
@@ -116,7 +116,7 @@ export default function ResetPassword() {
     // Process your OTP submission logic here
     try {
       const response = await axios.post(
-        "   https://bserver-b2ue.onrender.com/auth/otp",
+        `${import.meta.env.VITE_BACKEND_URL}/auth/otp`,
         Data,
         { withCredentials: true }
       );
@@ -167,7 +167,7 @@ export default function ResetPassword() {
     try {
       // Call your API endpoint to reset the password
       const response = await axios.post(
-        "   https://bserver-b2ue.onrender.com/auth/reset",
+        `${import.meta.env.VITE_BACKEND_URL}/auth/reset`,
         { Email: localStorage.getItem("Email"), newPassword: data.Password },
         { withCredentials: true }
       );

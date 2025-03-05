@@ -57,7 +57,7 @@ export default function Store({
   // const likeProduct = async (productId) => {
   //   try {
   //     const response = await axios.post(
-  //       "   https://bserver-b2ue.onrender.com/api/products/like",
+  //       "    ${import.meta.env.VITE_BACKEND_URL}/api/products/like",
   //       { productId },
   //       { withCredentials: true }
   //     );
@@ -92,7 +92,7 @@ export default function Store({
   // const unlikeProduct = (productId) => {
   //   axios
   //     .post(
-  //       "   https://bserver-b2ue.onrender.com/api/products/unlike",
+  //       "    ${import.meta.env.VITE_BACKEND_URL}/api/products/unlike",
   //       { productId },
   //       { withCredentials: true }
   //     )
@@ -123,7 +123,7 @@ export default function Store({
   //           : item
   //       );
   //       /* console.log(updatedCart) */
-  //       await axios.post(`   https://bserver-b2ue.onrender.com/cart/`, newCart, {
+  //       await axios.post(`    ${import.meta.env.VITE_BACKEND_URL}/cart/`, newCart, {
   //         withCredentials: true,
   //       }); // Added credentials
   //       setCart(updatedCart);
@@ -137,7 +137,7 @@ export default function Store({
   //         const newCart1 = { ...product, quantity: 20 };
   //         const newCart = [...cart, { ...product, quantity: 20 }];
   //         console.log(newCart)
-  //         await axios.post("   https://bserver-b2ue.onrender.com/cart", newCart1, { withCredentials: true }); // Added credentials
+  //         await axios.post("    ${import.meta.env.VITE_BACKEND_URL}/cart", newCart1, { withCredentials: true }); // Added credentials
   //         setCart(newCart);
           
   //         localStorage.setItem("cart", JSON.stringify(newCart));
@@ -163,7 +163,7 @@ export default function Store({
   //       item._id === productId ? { ...item, quantity: newQuantity } : item
   //     );
   //     console.log(updatedCart)
-  //     await axios.put(`   https://bserver-b2ue.onrender.com/cart/${productId}`, { quantity: newQuantity }, {
+  //     await axios.put(`    ${import.meta.env.VITE_BACKEND_URL}/cart/${productId}`, { quantity: newQuantity }, {
   //       withCredentials: true,
   //     }); // Added credentials
   //     localStorage.setItem("cart", JSON.stringify(updatedCart));
@@ -175,7 +175,7 @@ export default function Store({
   // const handleRemoveFromCart = async (productId) => {
   //   try {
   //     const updatedCart = cart.filter((item) => item._id !== productId);
-  //     await axios.delete(`   https://bserver-b2ue.onrender.com/cart/${productId}`, {
+  //     await axios.delete(`    ${import.meta.env.VITE_BACKEND_URL}/cart/${productId}`, {
   //       withCredentials: true,
   //     }); // Added credentials
   //     setCart(updatedCart);
@@ -193,7 +193,7 @@ export default function Store({
   //       item._id === productId ? { ...item, quantity: item.quantity - 1 } : item
   //     );
   //     /* console.log(updatedCart) */
-  //     await axios.post(`   https://bserver-b2ue.onrender.com/cart/`, newCart, {
+  //     await axios.post(`    ${import.meta.env.VITE_BACKEND_URL}/cart/`, newCart, {
   //       withCredentials: true,
   //     }); // Added credentials
   //     setCart(updatedCart);

@@ -48,7 +48,7 @@ export default function Login() {
     try {
       setLoading(true)
       const response = await axios.post(
-        "   https://bserver-b2ue.onrender.com/auth/login",
+        `${import.meta.env.VITE_BACKEND_URL}/auth/login`,
         data,
         {
           withCredentials: true, // Include cookies in the request

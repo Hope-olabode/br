@@ -59,7 +59,7 @@ export default function Next() {
 
     try {
       // Send data to the backend API
-      await axios.post("   https://bserver-b2ue.onrender.com/auth/next", data, {
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/next`, data, {
         withCredentials: true, // Ensure cookies (token) are sent with the request
       });
 
@@ -101,7 +101,7 @@ export default function Next() {
   useEffect(() => {
     // Check if details are already filled
     axios
-      .get("   https://bserver-b2ue.onrender.com/auth/isDetailsFilled", {
+      .get(`${import.meta.env.VITE_BACKEND_URL}/auth/isDetailsFilled`, {
         withCredentials: true,
       })
       .then((res) => {

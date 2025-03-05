@@ -42,13 +42,15 @@ export default function Header() {
 
   const { isLogin, user, cart } = useContext(Context);
 
- /*  console.log(isLogin); */
+  /*  console.log(isLogin); */
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-
-  const num = cart.length;
+   
+  
+  const num = typeof cart === 'object' && cart !== null ? cart.length : '';
+  console.log(typeof(cart))
 
   useEffect(() => {
     if (isOpen) {
