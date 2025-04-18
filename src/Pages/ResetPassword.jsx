@@ -18,12 +18,9 @@ const schema = z.object({
 });
 
 export default function ResetPassword() {
-  const [confirmEmail, setConfirmEmail] = useState(
-    localStorage.getItem("Email confirmed") === "true"
-  );
-  const [confirmOtp, setConfirmOtp] = useState(
-    localStorage.getItem("Otp confirmed") === "true"
-  );
+  const [confirmEmail, setConfirmEmail] = useState(false);
+  const [email, setEmail] = useState("");
+  const [confirmOtp, setConfirmOtp] = useState(false);
   const [isFocused, setIsFocused] = useState("");
   const [hidden, setHidden] = useState(true);
 
@@ -76,8 +73,7 @@ export default function ResetPassword() {
         { withCredentials: true }
       );
       setConfirmEmail(true);
-      localStorage.setItem("Email confirmed", JSON.stringify(true));
-      localStorage.setItem("Email", JSON.stringify(Email));
+      setEmail(data.Email);
       customToast({
         color: "#000000",
         message: response.data.message,
@@ -121,7 +117,6 @@ export default function ResetPassword() {
         { withCredentials: true }
       );
       setConfirmOtp(true);
-      localStorage.setItem("Otp confirmed", JSON.stringify(true));
       customToast({
         color: "#000000",
         message: response.data.message,
@@ -164,15 +159,15 @@ export default function ResetPassword() {
 
   const onResetPassword = async (data) => {
     console.log("Reset Password Data:", data);
+    console.log(email);
     try {
       // Call your API endpoint to reset the password
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/auth/reset`,
-        { Email: localStorage.getItem("Email"), newPassword: data.Password },
+        { Email: email, newPassword: data.Password },
         { withCredentials: true }
       );
       // Handle success (for example, show a toast or navigate)
-      localStorage.removeItem("Otp confirmed", "Email", "Email confirmed");
       customToast({
         color: "#000000",
         message: response.data.message,

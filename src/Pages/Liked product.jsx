@@ -8,7 +8,7 @@ import plus from "../assets/Images/Icon Button.svg";
 import plus2 from "../assets/Images/plus2.svg";
 import minus from "../assets/Images/minus.svg";
 import dust from "../assets/Images/dust.svg";
-import { Context } from "../App";
+import { AuthContext } from "../context/authContext";
 import { Toaster } from "sonner";
 import { CartFunctions } from "../Components/Cart_Functions";
 
@@ -23,7 +23,7 @@ export default function likedProducts() {
     unlikeProduct,
   } = CartFunctions();
   const { setCart, likedProducts, setLikedProducts, products } =
-    useContext(Context);
+    useContext(AuthContext);
   const navigate = useNavigate();
 
   console.log(likedProducts);

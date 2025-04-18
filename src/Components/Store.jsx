@@ -11,7 +11,7 @@ import plus from "../assets/Images/Icon Button.svg";
 import plus2 from "../assets/Images/plus2.svg";
 import minus from "../assets/Images/minus.svg";
 import dust from "../assets/Images/dust.svg";
-import { Context } from "../App";
+import { AuthContext } from "../context/authContext";
 /* import { toast, ToastContainer } from "react-toastify"; */
 import { Toaster } from 'sonner';
 import up from "../assets/Images/up.svg";
@@ -29,7 +29,7 @@ export default function Store({
   const [loading, setLoading] = useState(false);
   
   const { cart, handleAddToCart, handleRemoveFromCart, handleDecreaseQuantity, handleQuantityChange, likeProduct, unlikeProduct } = CartFunctions();
-  const {  setCart, likedProducts, setLikedProducts, products } = useContext(Context);
+  const {  setCart, likedProducts, setLikedProducts, products } = useContext(AuthContext);
 
 
   console.log("this is:");
@@ -245,7 +245,7 @@ export default function Store({
     }
   };
 
-  loading ? document.body.classList.add("no-scroll") : "";
+  
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;
@@ -555,16 +555,23 @@ export default function Store({
 
                       {cart.find((item) => item._id === product._id) ? (
                         <input
+                        min={20}
                           type="number"
                           value={
                             cart.find((item) => item._id === product._id).quantity
                           }
-                          onChange={(e) =>
-                            handleQuantityChange(
-                              product._id,
-                              Number(e.target.value)
-                            )
-                          }
+                          onChange={(e) => {
+                            const newValue = Number(e.target.value);
+                            if (newValue >= 20) {
+                              handleQuantityChange(product._id, newValue);
+                            }
+                          }}
+                          onBlur={(e) => {
+                            const newValue = Number(e.target.value);
+                            if (newValue < 20) {
+                              handleQuantityChange(product._id, 20); // Reset to 20 if below minimum
+                            }
+                          }}
                           className=" p-1 rounded w-16 text-center"
                         />
                       ) : (

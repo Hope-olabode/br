@@ -196,7 +196,7 @@ export default function aboutUs() {
       <Touch />
       <div className="p-8">
       <h1 className="text-2xl font-bold mb-4">Horizontal Left Stacked Carousel</h1>
-      <StackedCarousel images={images} interval={3000} />
+      {/* <StackedCarousel images={images} interval={3000} /> */}
     </div>
      
     </div>

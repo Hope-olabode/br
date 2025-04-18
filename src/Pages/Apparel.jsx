@@ -17,7 +17,7 @@ import eight from "../assets/Images/Apparel-img/8.png";
 import MOQ from "../Components/MOQ.jsx";
 import axios from "axios";
 import Store from "../Components/Store.jsx";
-import { Context } from "../App";
+import { AuthContext } from "../context/authContext.jsx";
 
 import up from "../assets/Images/up.svg";
 import down from "../assets/Images/down.svg";
@@ -27,22 +27,14 @@ import Loader from "../Components/Loader";
 export default function Apparel() {
   const [loading, setLoading] = useState(false);
 
-  const { cart, setCart, products } = useContext(Context);
-  const [filterCategory, setFilterCategory] = useState(() => {
-    // Retrieve the initial value from localStorage or default to false
-    return JSON.parse(localStorage.getItem("category")) || "";
-  });
+  const { cart, setCart, products } = useContext(AuthContext);
+  const [filterCategory, setFilterCategory] = useState("");
 
   console.log(products)
 
 
   // State to keep track of the active button (initially null or a specific index)
-  const [activeIndex, setActiveIndex] = useState(() => {
-    // Retrieve the initial value from localStorage or default to -1 if not set or invalid
-    const storedValue = localStorage.getItem("index");
-    const parsedValue = storedValue !== null ? Number(storedValue) : -1;
-    return isNaN(parsedValue) ? -1 : parsedValue;
-  });
+  const [activeIndex, setActiveIndex] = useState(-1);
 
   const [filteredProducts, setFilteredProducts] = useState([]);
   console.log(activeIndex);
@@ -64,8 +56,7 @@ export default function Apparel() {
 
     console.log(name);
     setFilterCategory(name);
-    localStorage.setItem("category", JSON.stringify(name));
-    localStorage.setItem("index", JSON.stringify(index));
+    setActiveIndex(index);
   };
 
   const itemss = [
@@ -188,7 +179,7 @@ export default function Apparel() {
     }
   };
 
-  loading ? document.body.classList.add("no-scroll") : "";
+  
 
   return (
     <div className="mt-[96px]">

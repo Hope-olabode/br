@@ -133,7 +133,7 @@ export default function Next() {
     }
   }, [errors]);
 
-  loading ? document.body.classList.add("no-scroll") : "";
+  
 
   const handlePhoneInput = (e) => {
     const sanitizedValue = e.target.value.replace(/[^0-9+\-\(\)\s]/g, '');

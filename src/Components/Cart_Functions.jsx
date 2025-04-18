@@ -1,12 +1,12 @@
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 import axios from "axios";
 import Toast from "../Pages/Toast";
-import { toast as sonnerToast, Toaster } from "sonner";
-import { Context } from "../App";
+import { toast as sonnerToast } from "sonner";
+import { AuthContext } from "../context/authContext";
 
 export function CartFunctions() {
   const { cart, setCart, likedProducts, setLikedProducts, products } =
-    useContext(Context);
+    useContext(AuthContext);
 
   function customToast(toastProps) {
     return sonnerToast.custom(() => (
@@ -14,106 +14,92 @@ export function CartFunctions() {
     ));
   }
 
-  const handleAddToCart = async (productId) => {
-    try {
-      console.log(cart);
-      const existingProduct =
-        cart.length > 0 && cart.some((item) => item._id === productId);
-      console.log(existingProduct);
+  const handleAddToCart =  (productId) => {
+    // Save previous state so we can revert if needed
+    const previousCart = [...cart];
+  
+    
+      const existingProduct = cart.length > 0 && cart.some((item) => item._id === productId);
+      
+      let updatedCart;
+      let newCartItem;
+      
       if (existingProduct) {
-        const product = products.find((p) => p._id === productId);
-        const newCart = { ...product, quantity: 1 };
-        const updatedCart = cart.map((item) =>
-          item._id === productId
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
+        // If product exists, update its quantity
+        updatedCart = cart.map((item) =>
+          item._id === productId ? { ...item, quantity: item.quantity + 1 } : item
         );
-        /* console.log(updatedCart) */
-        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/cart/`, newCart, {
-          withCredentials: true,
-        }); // Added credentials
-        setCart(updatedCart);
-
-        localStorage.setItem("cart", JSON.stringify(updatedCart));
+        newCartItem = products.find((p) => p._id === productId);
+        newCartItem = { ...newCartItem, quantity: 1 };
       } else {
-        const product = products.find((p) => p._id === productId);
-        const newCart1 = { ...product, quantity: 20 };
-        const newCart = [...cart, { ...product, quantity: 20 }];
-        console.log(newCart);
-        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/cart`, newCart1, {
-          withCredentials: true,
-        }); // Added credentials
-        setCart(newCart);
-
-        localStorage.setItem("cart", JSON.stringify(newCart));
+        // If product does not exist, add it to cart with an initial quantity
+        const product = cart.find((p) => p._id === productId);
+        newCartItem = { _id:productId, quantity: 20 };
+        updatedCart = [...cart, newCartItem];
+        console.log(updatedCart)
+      }
+      
+  
+      // Optimistically update the UI
+      setCart(updatedCart);
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      
+      // Send the update to the backend
+      // await axios.post(
+      //   `${import.meta.env.VITE_BACKEND_URL}/cart`,
+      //   newCartItem,
+      //   { withCredentials: true }
+      // );
+      
+      // Optionally, you can display a success toast
+      if (!existingProduct) {
         customToast({
           color: "#000000",
           message: "Product added to cart",
         });
       }
-    } catch (error) {
-      console.error("Error adding to cart:", error);
-      const message = error.response?.data?.message || "An error occurred";
-      // displayMsg(message);
-      customToast({
-        color: "#E2063A",
-        message: message,
-      });
-    }
+    
   };
 
-  const handleQuantityChange = async (productId, newQuantity) => {
+  
+  
+
+  const handleQuantityChange = (productId, newQuantity) => {
     setCart((prevCart) =>
       prevCart.map((item) =>
         item._id === productId ? { ...item, quantity: newQuantity } : item
       )
     );
 
-    if (newQuantity < 20) return;
-    try {
+    
       const updatedCart = cart.map((item) =>
         item._id === productId ? { ...item, quantity: newQuantity } : item
       );
       console.log(updatedCart);
-      await axios.put(
+     /*  await axios.put(
         `    ${import.meta.env.VITE_BACKEND_URL}/cart/${productId}`,
         { quantity: newQuantity },
         {
           withCredentials: true,
         }
-      ); // Added credentials
+      ); // Added credentials */
       localStorage.setItem("cart", JSON.stringify(updatedCart));
-    } catch (error) {
-      console.error("Error updating quantity:", error);
-      const message = error.response?.data?.message || "An error occurred";
-      // displayMsg(message);
-      customToast({
-        color: "#E2063A",
-        message: message,
-      });
-    }
+   
   };
 
   const handleRemoveFromCart = async (productId) => {
-    try {
+    
       const updatedCart = cart.filter((item) => item._id !== productId);
-      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/cart/${productId}`, {
+      /* await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/cart/${productId}`, {
         withCredentials: true,
-      }); // Added credentials
+      }); // Added credentials */
       setCart(updatedCart);
       localStorage.setItem("cart", JSON.stringify(updatedCart));
       customToast({
         color: "#E2063A",
         message: "Product removed from cart",
       });
-    } catch (error) {
-      console.error("Error removing from cart:", error);
-      const message = error.response?.data?.message || "An error occurred";
-      customToast({
-        color: "#E2063A",
-        message: message,
-      });
-    }
+   
   };
 
   const handleDecreaseQuantity = async (productId) => {
@@ -124,9 +110,9 @@ export function CartFunctions() {
         item._id === productId ? { ...item, quantity: item.quantity - 1 } : item
       );
       /* console.log(updatedCart) */
-      await axios.post(`${import.meta.env.VITE_BACKEND_URL}/cart/`, newCart, {
+      /* await axios.post(`${import.meta.env.VITE_BACKEND_URL}/cart/`, newCart, {
         withCredentials: true,
-      }); // Added credentials
+      }); // Added credentials */
       setCart(updatedCart);
       localStorage.setItem("cart", JSON.stringify(updatedCart));
     } catch (error) {
@@ -140,9 +126,13 @@ export function CartFunctions() {
     }
   };
 
+  
+
+  
+
   const likeProduct = async (productId) => {
     try {
-      const response = await axios.post(
+       await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/products/like`,
         { productId },
         { withCredentials: true }

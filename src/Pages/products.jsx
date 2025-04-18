@@ -6,7 +6,7 @@ import plus2 from "../assets/Images/plus2.svg";
 import minus from "../assets/Images/minus.svg";
 import dust from "../assets/Images/dust.svg";
 import Touch from "../Components/Touch";
-import { Context } from "../App";
+import { AuthContext } from "../context/authContext";
 import Loader from "../Components/Loader";
 import axios from "axios";
 import { CartFunctions } from "../Components/Cart_Functions";
@@ -16,7 +16,7 @@ function ProductDetail() {
   const [loading, setLoading] = useState(false);
   
   const { cart, handleAddToCart, handleRemoveFromCart, likeProduct, unlikeProduct } = CartFunctions();
-  const {  setCart, products } = useContext(Context);
+  const {  setCart, products } = useContext(AuthContext);
 
   const [size, setSize] = useState("L");
 

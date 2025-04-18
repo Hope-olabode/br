@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import Pic from "../assets/Images/profilePic.svg";
 import Photo from "../assets/Images/photo.svg";
-import { Context } from "../App";
+import { AuthContext } from "../context/authContext";
 
 const ProfilePage = () => {
   const [preview, setPreview] = useState(""); // Image Preview
@@ -15,7 +15,7 @@ const ProfilePage = () => {
   const videoRef = useRef(null); // Reference to Video Element
   const canvasRef = useRef(null); // Reference to Canvas Element
   const fileInputRef = useRef(null);
-  const { user, isLogin } = useContext(Context);
+  const { user, isLogin } = useContext(AuthContext);
   const navigate = useNavigate()
   const {
     register,

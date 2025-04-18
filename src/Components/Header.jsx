@@ -18,31 +18,24 @@ import rreseller from "../assets/Images/rreseller.svg";
 import Footer from "./Footer";
 import ar from "../assets/Images/arrow-left-w.svg";
 import { toast, ToastContainer } from "react-toastify";
-import { Context } from "../App";
+import { AuthContext } from "../context/authContext";
+import { useMotionValueEvent, useScroll } from "framer-motion";
 
 export default function Header() {
+  const { scrollY } = useScroll()
   const [isOpen, setIsOpen] = useState(false);
-  const [lastScrollY, setLastScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
   const navigate = useNavigate();
+  useMotionValueEvent(scrollY, 'change', (latest)=> {
+    const previous = scrollY.getPrevious()
+    if (latest > previous && latest > 60) {
+      setIsVisible(false)
+    } else {
+      setIsVisible(true)
+    }
+  })
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      if (Math.abs(currentScrollY - lastScrollY) > 60) {
-        setIsVisible(currentScrollY < lastScrollY || currentScrollY < 60);
-        setLastScrollY(currentScrollY);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
-
-  const { isLogin, user, cart } = useContext(Context);
-
-  /*  console.log(isLogin); */
+  const { isLogin, user, cart } = useContext(AuthContext);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -50,15 +43,9 @@ export default function Header() {
    
   
   const num = typeof cart === 'object' && cart !== null ? cart.length : '';
-  console.log(typeof(cart))
+  /* console.log(typeof(cart)) */
 
-  useEffect(() => {
-    if (isOpen) {
-    } else {
-      document.body.classList.remove("no-scroll");
-    }
-  }, [isOpen]);
-
+  
   const handleModalClick = (event) => {
     // Prevent closing the modal when clicking inside the modal content
     event.stopPropagation();

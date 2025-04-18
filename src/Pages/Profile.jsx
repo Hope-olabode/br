@@ -9,10 +9,10 @@ import AD2 from "../assets/Images/AccountD2.svg";
 import CI2 from "../assets/Images/CartI2.svg";
 import OH2 from "../assets/Images/OrderH2.svg";
 import F2 from "../assets/Images/Favourite2.svg";
-import { Context } from "../App";
+import { AuthContext } from "../context/authContext";
 
 export default function Profile() {
-  const { user } = useContext(Context);
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate()
   return (
     <div className="mt-[192px] px-4 md:px-[40px] lg:px-[60px] xl:px-[80px] 2xl:px-[120px]">

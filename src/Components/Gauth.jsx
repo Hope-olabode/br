@@ -5,14 +5,14 @@ import { app } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import { Context } from "../App";
+import { AuthContext } from "../context/authContext";
 
 
 export default function Gauth({ message }) {
   const navigate = useNavigate()
   const auth = getAuth(app)
 
-  const { setIsLogin } = useContext(Context);
+  const { setIsLogin } = useContext(AuthContext);
 console.log(`${import.meta.env.VITE_BACKEND_URL}/auth/isLogin`)
   const handleGoogleClick = async () => {
     const provider = new GoogleAuthProvider();

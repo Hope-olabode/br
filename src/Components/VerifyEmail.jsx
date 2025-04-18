@@ -8,90 +8,18 @@ import axios from "axios";
 import { toast as sonnerToast, Toaster } from "sonner";
 import Toast from "../Pages/Toast";
 import { useNavigate } from "react-router-dom";
-import hpas from "../assets/Images/hpas.svg";
-import hpas2 from "../assets/Images/hpas2.svg";
-import hpas3 from "../assets/Images/hpas3.svg";
-import hpas4 from "../assets/Images/hpas4.svg";
 
-const schema = z.object({
-  Email: z.string(), // You can add .email("Incorrect email") if needed
-});
-
-export default function VerifyEmail() {
-  const [confirmEmail, setConfirmEmail] = useState(
-    localStorage.getItem("Email confirmed") === "true"
-  );
-  const [confirmOtp, setConfirmOtp] = useState(
-    localStorage.getItem("Otp confirmed") === "true"
-  );
-  const [isFocused, setIsFocused] = useState("");
-  const [hidden, setHidden] = useState(true);
-
+export default function VerifyEmail({email}) {
   const inputRefs = useRef([]); // used for OTP focus management
-
   // Email form
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm({
-    resolver: zodResolver(schema),
-  });
-
-  // NEW: Setup react-hook-form for the reset password form
-  const {
-    register: resetRegister,
-    handleSubmit: handleResetSubmit,
-    formState: { errors: resetErrors },
-  } = useForm({
-    defaultValues: { Password: "" },
-  });
 
   const navigate = useNavigate();
-  const Email = watch("Email");
-  const Password = watch("Password"); // watch input value
-
-  useEffect(() => {
-    setIsFocused(Password && Password.trim().length > 0);
-  }, [Password]);
-
-  useEffect(() => {
-    // Optionally you can add focus effects based on Email value here
-  }, [Email]);
 
   function customToast(toastProps) {
     return sonnerToast.custom(() => (
       <Toast color={toastProps.color} message={toastProps.message} />
     ));
   }
-
-  const onSubmit = async (data) => {
-    console.log("Email data:", data.Email);
-    const Email = data.Email;
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/auth/email`,
-        { Email },
-        { withCredentials: true }
-      );
-      setConfirmEmail(true);
-      localStorage.setItem("Email confirmed", JSON.stringify(true));
-      localStorage.setItem("Email", JSON.stringify(Email));
-      customToast({
-        color: "#000000",
-        message: response.data.message,
-      });
-    } catch (error) {
-      console.log(error);
-      const message = error.response?.data?.message || "An error occurred";
-      console.log(message);
-      customToast({
-        color: "#E2063A",
-        message: message,
-      });
-    }
-  };
 
   // OTP form using react-hook-form
   const {
@@ -109,23 +37,26 @@ export default function VerifyEmail() {
   const isOtpComplete =
     otpValues && otpValues.every((val) => val && val.trim() !== "");
 
-  const onOtpSubmit = async (data) => {
+  const verifyOtpSubmit = async (data) => {
     const otpString = data.otp.join("");
     console.log("OTP Submitted:", otpString);
-    const Data = { Email: localStorage.getItem("Email"), otp: otpString };
+    const Data = { email, otp: otpString };
+    console.log(Data)
     // Process your OTP submission logic here
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/auth/otp`,
+        `${import.meta.env.VITE_BACKEND_URL}/auth/verify`,
         Data,
         { withCredentials: true }
       );
-      setConfirmOtp(true);
-      localStorage.setItem("Otp confirmed", JSON.stringify(true));
+      
       customToast({
         color: "#000000",
         message: response.data.message,
       });
+      setTimeout(() => {
+        navigate("/Next")
+      }, 2000);
     } catch (error) {
       console.log(error);
       const message = error.response?.data?.message || "An error occurred";
@@ -162,42 +93,19 @@ export default function VerifyEmail() {
     });
   };
 
-  const onResetPassword = async (data) => {
-    console.log("Reset Password Data:", data);
-    try {
-      // Call your API endpoint to reset the password
-      const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/auth/reset`,
-        { Email: localStorage.getItem("Email"), newPassword: data.Password },
-        { withCredentials: true }
-      );
-      // Handle success (for example, show a toast or navigate)
-      localStorage.removeItem("Otp confirmed", "Email", "Email confirmed");
-      customToast({
-        color: "#000000",
-        message: response.data.message,
-      });
-      setTimeout(() => {
-        navigate("/Log in");
-      }, 2000);
-    } catch (error) {
-      const message = error.response?.data?.message || "An error occurred";
-      console.log(message);
-      customToast({
-        color: "#E2063A",
-        message: message,
-      });
-    }
-  };
-
   return (
-    <div className="div">
-      {confirmEmail && (
-        <div className={`${confirmOtp ? "hidden" : "block"}`}>
+    <div className="mt-[96px] flex flex-col items-center justify-center">
+      <Toaster position="top-center" />
+      <div className="mt-[120px] text-center max-w-[482px]">
+        <h1 className="font-nexa-bold text-[36px] leading-[48px] lg:text-[56px] lg:leading-[78px] mb-2 lg:mb-6">
+          Verify Email
+        </h1>
+
+        <div className="">
           <p className="font-poopins text-[14px] leading-[22px] lg:text-[20px] lg:leading-[32px] mb-14">
-            Enter the OTP sent to johndoe@gmail.com
+            Enter the OTP sent to {email}
           </p>
-          <form onSubmit={handleOtpSubmit(onOtpSubmit)}>
+          <form onSubmit={handleOtpSubmit(verifyOtpSubmit)}>
             <div className="flex gap-3 justify-center" onPaste={handlePaste}>
               {Array(4)
                 .fill(0)
@@ -256,7 +164,42 @@ export default function VerifyEmail() {
             </button>
           </form>
         </div>
-      )}
+      </div>
     </div>
   );
 }
+
+// Custom.js
+// import React from "react";
+// import { toast as sonnerToast, Toaster } from "sonner";
+// import Toast from "./Toast";
+
+// export default function Custom() {
+//   // Create a helper function for your custom toast
+//   function customToast(toastProps) {
+//     return sonnerToast.custom(() => (
+//       <Toast
+//         title={toastProps.title}
+//         message={toastProps.message}
+//       />
+//     ));
+//   }
+
+//   return (
+//     <div className="mt-[200px]">
+//       <button
+//         className="relative flex h-10 items-center justify-center gap-2 overflow-hidden rounded-full bg-white px-4 text-sm font-medium shadow-sm transition-all hover:bg-[#FAFAFA] dark:bg-[#161615] dark:hover:bg-[#1A1A19] dark:text-white"
+//         onClick={() => {
+//           customToast({
+//             title: "This is a headless toast",
+//             message:
+//               "You have full control of styles and jsx, while still having the animations.",
+//           });
+//         }}
+//       >
+//         Render toast
+//       </button>
+//       <Toaster />
+//     </div>
+//   );
+// }
