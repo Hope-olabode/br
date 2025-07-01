@@ -1,5 +1,5 @@
 // Toast.js
-import React from "react";
+
 import { toast as sonnerToast } from "sonner";
 
 export default function Toast({ message, color }) {

@@ -171,9 +171,9 @@ export default function likedProducts() {
         {filteredProducts.map((product) => (
           <div key={product._id} className="mx-auto">
             <div
-              className={`border-8 bg-white border-white hover:border-[#E6E6E6] rounded-t-full rounded-b-[900px]  ${
+              className={`border-8 shadow-custom bg-white border-white hover:border-[#E6E6E6] rounded-t-full rounded-b-[900px]  ${
                 cart.some((item) => item._id === product._id)
-                  ? "shadow-custom"
+                  ? "shadow-red"
                   : ""
               }`}
               onClick={() => handleProductClick(product._id)}

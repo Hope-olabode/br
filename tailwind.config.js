@@ -13,6 +13,7 @@ export default {
       },
       boxShadow: {
         custom: "0 0 10px 0 rgba(0, 0, 0, 0.1)",
+        red: "0 4px 12px rgba(255, 0, 0, 0.4)"
       },
       animation: {
         outer: "outerGrowShrink 1.1s infinite ease-in-out",
@@ -29,6 +30,10 @@ export default {
           "75%": { transform: "scale(1.5)" },
           "100%": { transform: "scale(1.5)" }, // Shrinks back to its original size
         },
+      },
+      screens: {
+        "lgg": "1160px",
+        
       },
     },
   },

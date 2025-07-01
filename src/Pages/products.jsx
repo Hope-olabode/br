@@ -14,24 +14,42 @@ import { CartFunctions } from "../Components/Cart_Functions";
 function ProductDetail() {
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
-  
-  const { cart, handleAddToCart, handleRemoveFromCart, likeProduct, unlikeProduct } = CartFunctions();
-  const {  setCart, products } = useContext(AuthContext);
 
-  const [size, setSize] = useState("L");
+  const [size, setSize] = useState(() => {
+    const stored = localStorage.getItem(`selectedSize_${id}`);
+    return stored || "L";
+  });
+
+  const {
+    cart,
+    handleAddToCart,
+    handleRemoveFromCart,
+    handleDecreaseQuantity,
+    handleQuantityChange,
+  } = CartFunctions(size);
+  const { setCart, products } = useContext(AuthContext);
+
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   // const products = [
   //   { id: 1, name: 'Product A', description: 'Description for Product A' },
   //   { id: 2, name: 'Product B', description: 'Description for Product B' },
   // ];
 
-  
+  const handleImageClick = (imgSrc) => {
+    setSelectedImage(imgSrc);
+    setShowModal(true);
+  };
 
-  
+  const closeModal = () => {
+    setShowModal(false);
+    setSelectedImage(null);
+  };
 
   const product = products.find((p) => p._id === String(id));
-  console.log(product)
-  console.log(products)
+  console.log(product);
+  console.log(products);
   console.log(id);
 
   if (!product) return <p className="mt-[96px]">Product not found</p>;
@@ -55,7 +73,7 @@ function ProductDetail() {
   //         withCredentials: true,
   //       }); // Added credentials
   //       setCart(updatedCart);
-        
+
   //       localStorage.setItem("cart", JSON.stringify(updatedCart));
   //       } else {
   //         const product = products.find((p) => p._id === productId);
@@ -64,7 +82,7 @@ function ProductDetail() {
   //         console.log(newCart)
   //         await axios.post("    ${import.meta.env.VITE_BACKEND_URL}/cart", newCart1, { withCredentials: true }); // Added credentials
   //         setCart(newCart);
-          
+
   //         localStorage.setItem("cart", JSON.stringify(newCart));
   //     }
   //   } catch (error) {
@@ -80,8 +98,8 @@ function ProductDetail() {
   //       item._id === productId ? { ...item, quantity: newQuantity } : item
   //     )
   //   );
-    
-  //   if (newQuantity < 20) return; 
+
+  //   if (newQuantity < 20) return;
   //   try {
   //     const updatedCart = cart.map((item) =>
   //       item._id === productId ? { ...item, quantity: newQuantity } : item
@@ -93,7 +111,7 @@ function ProductDetail() {
   //     localStorage.setItem("cart", JSON.stringify(updatedCart));
   //   } catch (error) {
   //     console.error("Error updating quantity:", error);
-  //   } 
+  //   }
   // };
 
   // const handleRemoveFromCart = async (productId) => {
@@ -132,6 +150,7 @@ function ProductDetail() {
     console.log(s);
     console.log(productId);
     setSize(s);
+    localStorage.setItem(`selectedSize_${productId}`, s);
     setCart((prevCart) =>
       prevCart.map((item) =>
         item._id === productId ? { ...item, size: s } : item
@@ -139,45 +158,55 @@ function ProductDetail() {
     );
   };
 
-  
-
-  
-
   return (
     <div className="div">
       {loading ? <Loader /> : ""}
       <div className="mt-[96px] py-14  px-4 md:px-[40px] lg:px-[60px] xl:px-[80px] 2xl:px-[120px]  lg:mt-[176px]">
         <div className="flex flex-col md:items-start md:flex-row md:gap-10">
           <div className="md:w-[50%] md:flex h-full gap-4">
-            <div className="flex w-[100%] items-start justify-center md:order-2 ">
-              <img
-                className="rounded-full  lg:min-w-[280px]"
-                src={Cap}
-                alt=""
-              />
+            {/* Main Image */}
+            <div
+              className="flex w-full items-center justify-center md:order-2 cursor-pointer"
+              onClick={() => handleImageClick(product.img1)}
+            >
+              <div className="max-w-[450px] lg:w-full"><img
+                className="rounded-full  lg:min-w-[300px]"
+                src={product.img1}
+                alt="Main"
+              /></div>
+              
             </div>
-            <div className="flex flex-row gap items-center pl-3 md:flex-col md:w-[112px]">
-              <img
-                className="rounded-full w-[56px] md:hau md:w-full p-2 md:m-4 md:p-0"
-                src={Cap}
-                alt=""
-              />
-              <img
-                className="rounded-full w-[56px] md:w-full p-2 md:m-4 md:p-0"
-                src={Cap}
-                alt=""
-              />
-              <img
-                className="rounded-full w-[56px] md:w-full p-2 md:m-4 md:p-0"
-                src={Cap}
-                alt=""
-              />
-              <img
-                className="rounded-full w-[56px] md:w-full p-2 md:m-4 md:p-0"
-                src={Cap}
-                alt=""
-              />
+
+            {/* Thumbnails */}
+            <div className="flex flex-row gap items-center justify-center pl-3 md:flex-col md:w-[112px] mt-4 md:mt-0">
+              {[product.img2, product.img3, product.img4].map((img, index) => (
+                <div
+                  key={index}
+                  className="w-[80px] h-[80px] xl:w-[100px] xl:h-[100px] rounded-[30px] overflow-hidden p-1 md:m-4 flex items-center justify-center bg-white"
+                >
+                  <img
+                    className="w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform"
+                    src={img}
+                    alt={`Thumbnail ${index}`}
+                    onClick={() => handleImageClick(img)}
+                  />
+                </div>
+              ))}
             </div>
+
+            {/* Modal */}
+            {showModal && (
+              <div
+                onClick={closeModal}
+                className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
+              >
+                <img
+                  src={selectedImage}
+                  alt="Selected"
+                  className="max-w-[90vw] max-h-[90vh] rounded-xl"
+                />
+              </div>
+            )}
           </div>
 
           <div className="p-4 mb-5 md:w-[50%] md:mb-0 md pt-0 flex flex-col">
@@ -206,7 +235,7 @@ function ProductDetail() {
                 ) : (
                   <div
                     className="div h-12 font-nexa-light text-[14px] leading-[22px] text-white bg-[#E2063A] rounded-full flex items-center pl-4 pr-2 gap-12 md:h-[72px] md:font-nexa-bold lg:text-[16px] lg:leading-[26px] md:gap-5 md:pl-10 md:pr-4"
-                    onClick={() => handleAddToCart(product._id)}
+                    onClick={() => handleAddToCart(product._id, size)}
                   >
                     Add to cart
                     <img src={cart2} alt="" />
@@ -244,23 +273,7 @@ function ProductDetail() {
               <p>size</p>
               <div className="flex flex-row gap-3 mt-2">
                 <p
-                  className={`font-nexa-bold text-[14px] leading-[24px] lg:text-[16px] lg:leading-[26px] rounded-full border-2 px-[15px] py-[13px] lg:px-[28px] lg:py-[25px] ${
-                    size === "XS" ? "border-black" : ""
-                  }`}
-                  onClick={() => setsize("XS", product._id)}
-                >
-                  XS
-                </p>
-                <p
-                  className={`font-nexa-bold text-[14px] leading-[24px]lg:text-[16px] lg:leading-[26px] rounded-full border-2 px-[20px] py-[13px] text-center lg:w-[80px] lg:px-[28px] lg:py-[25px] ${
-                    size === "S" ? "border-black" : ""
-                  }`}
-                  onClick={() => setsize("S", product._id)}
-                >
-                  S
-                </p>
-                <p
-                  className={`font-nexa-bold text-[14px] leading-[24px] lg:text-[16px] lg:leading-[26px] rounded-full border-2 px-[20px] py-[13px] text-center lg:w-[80px] lg:px-[28px] lg:py-[25px] ${
+                  className={`font-nexa-bold text-[14px] cursor-pointer leading-[24px] lg:text-[16px] lg:leading-[26px] rounded-full border-2 px-[20px] py-[13px] text-center lg:w-[80px] lg:px-[28px] lg:py-[25px] ${
                     size === "M" ? "border-black" : ""
                   }`}
                   onClick={() => setsize("M", product._id)}
@@ -268,7 +281,7 @@ function ProductDetail() {
                   M
                 </p>
                 <p
-                  className={`font-nexa-bold text-[14px] leading-[24px] lg:text-[16px] lg:leading-[26px] rounded-full border-2 px-[20px] py-[13px] text-center lg:w-[80px] lg:px-[28px] lg:py-[25px] ${
+                  className={`font-nexa-bold text-[14px] cursor-pointer leading-[24px] lg:text-[16px] lg:leading-[26px] rounded-full border-2 px-[20px] py-[13px] text-center lg:w-[80px] lg:px-[28px] lg:py-[25px] ${
                     size === "L" ? "border-black" : ""
                   }`}
                   onClick={() => setsize("L", product._id)}
@@ -276,12 +289,20 @@ function ProductDetail() {
                   L
                 </p>
                 <p
-                  className={`font-nexa-bold text-[14px] leading-[24px] lg:text-[16px] lg:leading-[26px] rounded-full border-2 px-[15px] py-[13px] lg:px-[28px] lg:py-[25px] ${
+                  className={`font-nexa-bold text-[14px] cursor-pointer leading-[24px] lg:text-[16px] lg:leading-[26px] rounded-full border-2 px-[15px] py-[13px] lg:px-[28px] lg:py-[25px] ${
                     size === "XL" ? "border-black" : ""
                   }`}
                   onClick={() => setsize("XL", product._id)}
                 >
                   XL
+                </p>
+                <p
+                  className={`font-nexa-bold text-[14px] cursor-pointer leading-[24px] lg:text-[16px] lg:leading-[26px] rounded-full border-2 px-[15px] py-[13px] lg:px-[28px] lg:py-[25px] ${
+                    size === "XXL" ? "border-black" : ""
+                  }`}
+                  onClick={() => setsize("XXL", product._id)}
+                >
+                  XXL
                 </p>
               </div>
             </div>

@@ -10,23 +10,14 @@ import Top from '../assets/Images/Top.svg'
 import Hoodie from '../assets/Images/Hoodie.svg'
 import quest from '../assets/Images/quest.svg'
 import Facts from '../Components/Facts.jsx'
-import Footer from '../Components/Footer.jsx'
+import StackedCarousel from '../Components/Slider.jsx'
+
 
 import Touch from '../Components/Touch.jsx'
 import Why from '../Components/Why.jsx'
 import Wrangler from '../Components/Wrangler.jsx'
-
-import StackedCarousel from '../Components/s.jsx';
 import GianniVersace from '../Components/Gianni_Versace.jsx';
 
-
-const images = [
-  'https://via.placeholder.com/600x300/FF0000/FFFFFF?text=Image+1',
-  'https://via.placeholder.com/600x300/00FF00/FFFFFF?text=Image+2',
-  'https://via.placeholder.com/600x300/0000FF/FFFFFF?text=Image+3',
-  'https://via.placeholder.com/600x300/FFFF00/FFFFFF?text=Image+4',
-  'https://via.placeholder.com/600x300/FF00FF/FFFFFF?text=Image+5',
-];
 
 
 export default function aboutUs() {
@@ -46,17 +37,17 @@ export default function aboutUs() {
       <div className="our_story px-4 py-[72px] md:px-[40px] md:font-light lg:px-[60px] xl:px-[80px] 2xl:px-[120px] lg:font-extralight">
         <h5 className="font-poopins text-[14px] leading-[22px] md:text-[18px] md:leading-[30px] lg:text-[24px] lg:leading-[38px]">Our Story</h5>
         <h1 className="text-[32px] leading-[42px] font-nexa-bold py-4">From Humble Threads to Fashion Fireworks!</h1>
-        <p className="font-poopins  text-[14px] leading-[22px] pb-[40px] md:text-[18px] md:leading-[30px] md:font-light lg:text-[24px] lg:leading-[38px] lg:font-extralight">Brandit is more than just a clothing production company; we’re a passionate collective of designers, production specialists, and dream-chaser enablers. We believe that everyone has the potential to create a thriving clothing line, and we’re here to empower you every step of the way. From the initial design spark to the final product in your customer’s hands, we’re your reliable partner in turning your fashion vision into a tangible reality.</p>
+        <p className="font-poopins  text-[14px] leading-[22px] md:text-[18px] md:leading-[30px] md:font-light lg:text-[24px] lg:leading-[38px] lg:font-extralight">Brandit is more than just a clothing production company; we’re a passionate collective of designers, production specialists, and dream-chaser enablers. We believe that everyone has the potential to create a thriving clothing line, and we’re here to empower you every step of the way. From the initial design spark to the final product in your customer’s hands, we’re your reliable partner in turning your fashion vision into a tangible reality.</p>
         <div className="image_slide">
-          <img src={slideMobile} alt="" />
+          <StackedCarousel />
         </div>
       </div>
 
       <div className="px-4 py-[72px] md:py-[100px] lg:py-[128px] md:px-[40px] lg:px-[60px] xl:px-[80px] 2xl:px-[120px]">
         <h2 className="text-[48px] leading-[64px] text-left font-nexa-bold lg:text-[56px] lg:leading-[78px]">The Brandit Dream Team: <span className="lg:block">We’re More Than Just Clothes! </span></h2>
-        <div className="grid grid-cols-2 gap-[20px] mt-[72px]   md:flex overflow-x-scroll overflow-y-hidden">
+        <div className="grid grid-cols-2 gap-[20px] mt-[72px] px-2 py-2  md:flex overflow-x-scroll overflow-y-hidden">
           
-          <div className="border-[2px] pb-0 p-2 border-white  hover:border-[#E6E6E6] rounded-t-full max-w-[350px] md:min-w-[300px]">
+          <div className="border-[2px] pb-0 p-2 border-white  hover:border-[#E6E6E6] rounded-t-full max-w-[350px] md:min-w-[300px] shadow-custom">
             <img className="rounded-full" src={Cap} alt="" />
               <div className="price-stock pt-2 pl-2">
                 <div className="flex">
@@ -68,7 +59,7 @@ export default function aboutUs() {
                 </div>
               </div>
           </div>
-          <div className="border-[2px] pb-0 p-2 border-white  hover:border-[#E6E6E6] rounded-t-full max-w-[350px] md:min-w-[300px]">
+          <div className="border-[2px] pb-0 p-2 border-white  hover:border-[#E6E6E6] rounded-t-full max-w-[350px] md:min-w-[300px] shadow-custom">
             <img className="rounded-full" src={Top} alt="" />
               <div className="price-stock pt-2 pl-2">
                 <div className="flex items-center justify-between">
@@ -80,7 +71,7 @@ export default function aboutUs() {
                 </div>
               </div>
           </div>
-          <div className="border-[2px] pb-0 p-2 border-white  hover:border-[#E6E6E6] rounded-t-full max-w-[350px] md:min-w-[300px]">
+          <div className="border-[2px] pb-0 p-2 border-white  hover:border-[#E6E6E6] rounded-t-full max-w-[350px] md:min-w-[300px] shadow-custom">
             <img className="rounded-full" src={Hoodie} alt="" />
               <div className="price-stock pt-2 pl-2">
               <div className="flex items-center justify-between">
@@ -92,7 +83,7 @@ export default function aboutUs() {
                 </div>
               </div>
           </div>
-          <div className="border-[2px] pb-0 p-2 border-white  hover:border-[#E6E6E6] rounded-t-full max-w-[350px] md:min-w-[300px]">
+          <div className="border-[2px] pb-0 p-2 border-white  hover:border-[#E6E6E6] rounded-t-full max-w-[350px] md:min-w-[300px] shadow-custom">
             <img className="rounded-full" src={Top} alt="" />
               <div className="price-stock pt-2 pl-2">
               <div className="flex items-center justify-between">
@@ -104,7 +95,7 @@ export default function aboutUs() {
                 </div>
               </div>
           </div>
-          <div className="border-[2px] pb-0 p-2 border-white  hover:border-[#E6E6E6] rounded-t-full max-w-[350px] md:min-w-[300px]">
+          <div className="border-[2px] pb-0 p-2 border-white  hover:border-[#E6E6E6] rounded-t-full max-w-[350px] md:min-w-[300px] shadow-custom">
             <img className="rounded-full" src={Cap} alt="" />
               <div className="price-stock pt-2 pl-2">
                 <div className="flex items-center justify-between">
@@ -116,7 +107,7 @@ export default function aboutUs() {
                 </div>
               </div>
           </div>
-          <div className="border-[2px] pb-0 p-2 border-white  hover:border-[#E6E6E6] rounded-t-full max-w-[350px] md:min-w-[300px]">
+          <div className="border-[2px] pb-0 p-2 border-white  hover:border-[#E6E6E6] rounded-t-full max-w-[350px] md:min-w-[300px] shadow-custom">
             <img className="rounded-full" src={Hoodie} alt="" />
               <div className="price-stock pt-2 pl-2">
                 <div className="flex items-center justify-between">
@@ -194,10 +185,7 @@ export default function aboutUs() {
       <Wrangler />
       <Facts/>
       <Touch />
-      <div className="p-8">
-      <h1 className="text-2xl font-bold mb-4">Horizontal Left Stacked Carousel</h1>
-      {/* <StackedCarousel images={images} interval={3000} /> */}
-    </div>
+      
      
     </div>
   )

@@ -79,7 +79,7 @@ export default function Cart() {
       )
       .map((product) => {
         const cartItem = cart.find((item) => item._id === product._id);
-        return { ...product, quantity: cartItem.quantity };
+        return { ...product, quantity: cartItem.quantity, size: cartItem.size };
       });
   };
   // Usage example
@@ -402,17 +402,15 @@ export default function Cart() {
                             </p>
                             <p className="font-poopins text-[12px] leading-[18px] text-[#9A9A9A]">
                               Size:
-                              {item.size === "XS"
-                                ? " Extra Small"
-                                : item.size === "S"
-                                ? " Small"
-                                : item.size === "M"
+                              {item.size === "M"
                                 ? " Medium"
                                 : item.size === "L"
                                 ? " Large"
                                 : item.size === "XL"
                                 ? " Extra Large"
-                                : ""}
+                                : item.size === "XXL"
+                                ? " Extra Extra Large"
+                                : " Large"}
                             </p>
                           </div>
                           <p className="font-medium font-poopins text-[20px] leading-[32px]">

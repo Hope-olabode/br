@@ -1,5 +1,5 @@
 import Wrangler from "../Components/Wrangler.jsx"
-import Touch from '../Components/Touch.jsx'
+/* import Touch from '../Components/Touch.jsx' */
 import Resellercap1 from '../assets/Images/cap1.jpg'
 import Resellercap2 from '../assets/Images/cap2.jpg'
 import bulb from '../assets/Images/bulb.svg'
@@ -28,14 +28,14 @@ export default function Reseller() {
           <div className="absolute right-[15px] top-[50%] translate-y-[-50%] lg:right-[25px]">
             <div className="group-hover:hidden">
               <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M15.3565 11.944L10.5005 16.8L5.64453 11.944" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M10.5 3.2V16.664" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M15.3565 11.944L10.5005 16.8L5.64453 11.944" stroke="white" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M10.5 3.2V16.664" stroke="white" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
             <div className="hidden group-hover:block">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 10C12.2091 10 14 8.20914 14 6C14 3.79086 12.2091 2 10 2C7.79086 2 6 3.79086 6 6C6 8.20914 7.79086 10 10 10Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M16.872 17.9999C16.872 14.9039 13.792 12.3999 10 12.3999C6.20805 12.3999 3.12805 14.9039 3.12805 17.9999" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M10 10C12.2091 10 14 8.20914 14 6C14 3.79086 12.2091 2 10 2C7.79086 2 6 3.79086 6 6C6 8.20914 7.79086 10 10 10Z" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M16.872 17.9999C16.872 14.9039 13.792 12.3999 10 12.3999C6.20805 12.3999 3.12805 14.9039 3.12805 17.9999" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
           </div>
@@ -64,7 +64,7 @@ export default function Reseller() {
             <img className="mb-6 w-[54px] lg:w-36" src={trending} alt="" />
             <div className="text-cente py-6 px-4 lg:px-0">
               <h4 className="font-poopins text-[16px] leading-[26px] font-medium mb-2">Scale Up Your Success</h4>
-              <p className="font-poopins text-[14px] leading-[22px]">The sky's the limit! Grow your reseller business at your own pace and experience the potential for significant earnings as you build your customer base.</p>
+              <p className="font-poopins text-[14px] leading-[22px]">The sky’s the limit! Grow your reseller business at your own pace and experience the potential for significant earnings as you build your customer base.</p>
             </div>
           </div>
           <div className="px-4 py-6 flex flex-col items-center">
@@ -78,7 +78,7 @@ export default function Reseller() {
             <img className="mb-6 w-[54px] lg:w-36" src={savings} alt="" />
             <div className="text-cente py-6 px-4 lg:px-0">
               <h4 className="font-poopins text-[16px] leading-[26px] font-medium mb-2">Low Investment, High Rewards</h4>
-              <p className="font-poopins text-[14px] leading-[22px]">Get started with minimal upfront costs and enjoy the potential for high returns. Brandit's reseller program offers a low barrier to entry and a chance to build a profitable business.</p>
+              <p className="font-poopins text-[14px] leading-[22px]">Get started with minimal upfront costs and enjoy the potential for high returns. Brandit’s reseller program offers a low barrier to entry and a chance to build a profitable business.</p>
             </div>
           </div>
         </div>
@@ -116,7 +116,7 @@ export default function Reseller() {
               <img className="lg:w-[72px]" src={campaign} alt="" />
               <div>
                 <h3 className="font-nexa-bold text-[24px] leading-[38px] lg:text-[32px] lg:leading-[42px]">Promote & Sell Your Collection</h3>
-                <p className="font-poopins text-[14px] leading-[22px] lg:text-[16px] lg:leading-[26px]">Utilize Brandit's marketing resources and your own creativity to promote your curated collection and start making sales!</p>
+                <p className="font-poopins text-[14px] leading-[22px] lg:text-[16px] lg:leading-[26px]">Utilize Brandit’s marketing resources and your own creativity to promote your curated collection and start making sales!</p>
               </div>
             </div>
             <div className="flex gap-2 content-center items-start">
@@ -166,14 +166,14 @@ export default function Reseller() {
           <div className="absolute right-[15px] top-[50%] translate-y-[-50%] lg:right-[25px]">
             <div className="group-hover:hidden">
               <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M15.3565 11.944L10.5005 16.8L5.64453 11.944" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M10.5 3.2V16.664" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M15.3565 11.944L10.5005 16.8L5.64453 11.944" stroke="white" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M10.5 3.2V16.664" stroke="white" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
             <div className="hidden group-hover:block">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 10C12.2091 10 14 8.20914 14 6C14 3.79086 12.2091 2 10 2C7.79086 2 6 3.79086 6 6C6 8.20914 7.79086 10 10 10Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M16.872 17.9999C16.872 14.9039 13.792 12.3999 10 12.3999C6.20805 12.3999 3.12805 14.9039 3.12805 17.9999" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M10 10C12.2091 10 14 8.20914 14 6C14 3.79086 12.2091 2 10 2C7.79086 2 6 3.79086 6 6C6 8.20914 7.79086 10 10 10Z" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M16.872 17.9999C16.872 14.9039 13.792 12.3999 10 12.3999C6.20805 12.3999 3.12805 14.9039 3.12805 17.9999" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
           </div>
@@ -187,7 +187,7 @@ export default function Reseller() {
               <p className="font-nexa-bold text-[14px] leading-[22px]">FAQ</p>
               <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="32" height="32" rx="16" fill="#1F1F1F"/>
-              <path d="M22.3361 13.5601L17.1201 18.7761C16.5041 19.3921 15.4961 19.3921 14.8801 18.7761L9.66406 13.5601" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M22.3361 13.5601L17.1201 18.7761C16.5041 19.3921 15.4961 19.3921 14.8801 18.7761L9.66406 13.5601" stroke="white" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
           </div>
@@ -212,7 +212,7 @@ export default function Reseller() {
             <p className="font-nexa-bold text-[14px] leading-[22px]">FAQ</p>
             <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="32" height="32" rx="16" fill="#1F1F1F"/>
-            <path d="M22.3361 13.5601L17.1201 18.7761C16.5041 19.3921 15.4961 19.3921 14.8801 18.7761L9.66406 13.5601" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M22.3361 13.5601L17.1201 18.7761C16.5041 19.3921 15.4961 19.3921 14.8801 18.7761L9.66406 13.5601" stroke="white" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
           <Accordion

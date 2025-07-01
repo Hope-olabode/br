@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { NavLink, Link, Outlet, useNavigate } from "react-router-dom";
 
 import logo from "../assets/Images/Logo Mark.svg";

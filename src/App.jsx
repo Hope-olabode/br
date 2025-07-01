@@ -28,6 +28,7 @@ import Error4 from "./Pages/404.jsx";
 import ResetPassword from "./Pages/ResetPassword.jsx";
 import Payment from "./Pages/Testpage.jsx";
 import Recipt from "./Pages/Recipt.jsx";
+import CreateProduct from "./Pages/Create Product.jsx";
 
 export default function App() {
   const location = useLocation(); // Detect route changes
@@ -72,6 +73,7 @@ export default function App() {
             <Route path="/Test" element={<Payment />} />
             <Route path="*" element={<Error4 />} />
             <Route path="/Recipt" element={<Recipt />} />
+            <Route path="/Create" element={<CreateProduct />} />
 
           </Route>
         </Routes>

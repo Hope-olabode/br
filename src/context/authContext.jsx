@@ -1,4 +1,4 @@
-import React, { useEffect, createContext, useState } from "react";
+import { useEffect, createContext, useState } from "react";
 import axios from "axios";
 
 export const AuthContext = createContext({})
@@ -7,7 +7,6 @@ export const AuthContext = createContext({})
 export const AuthProvider = ({children})=> {
   const [isLogin, setIsLogin] = useState("");
   const [user, setUser] = useState("");
-  const [name, setName] = useState("");
   const [products, setProducts] = useState([]);
   const [likedProducts, setLikedProducts] = useState("");
 
@@ -31,6 +30,7 @@ export const AuthProvider = ({children})=> {
         // Process products regardless of other failures
         if (responses[0].status === "fulfilled") {
           setProducts(responses[0].value.data);
+          console.log(products)
         } else {
           console.error("Error fetching products", responses[0].reason);
         }
@@ -38,7 +38,6 @@ export const AuthProvider = ({children})=> {
         if (responses[1].status === "fulfilled") {
           setIsLogin(responses[1].value.data.loggedIn);
           setUser(responses[1].value.data.user);
-          setName(responses[1].value.data?.user?.Full_Name || "Guest");
         } else {
           console.error("Error checking login", responses[1].reason);
         }
@@ -47,7 +46,7 @@ export const AuthProvider = ({children})=> {
         if (responses[2].status === "fulfilled") {
           setLikedProducts(responses[2].value.data.likedProducts);
         } else {
-          console.error("Error fetching liked products", responses[3].reason);
+          console.error("Error fetching liked products", responses[2].reason);
         }
       } catch (error) {
         console.error("Unexpected error:", error);
@@ -58,6 +57,8 @@ export const AuthProvider = ({children})=> {
     }
 
     initializeApp();
+    console.log("context");
+    console.log(products);
   }, []);
 
   

@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext, useMemo } from "react";
-import { toast, ToastContainer } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useContext, useMemo } from "react";
+import { ToastContainer } from "react-toastify";
 import FAQ from "../Components/FAQ.jsx";
 import Testimonials from "../Components/Testimonials.jsx";
 import Touch from "../Components/Touch.jsx";
@@ -15,7 +14,6 @@ import seven from "../assets/Images/Apparel-img/7.png";
 import seven1 from "../assets/Images/Apparel-img/71.png";
 import eight from "../assets/Images/Apparel-img/8.png";
 import MOQ from "../Components/MOQ.jsx";
-import axios from "axios";
 import Store from "../Components/Store.jsx";
 import { AuthContext } from "../context/authContext.jsx";
 
@@ -25,38 +23,33 @@ import down from "../assets/Images/down.svg";
 import Loader from "../Components/Loader";
 
 export default function Apparel() {
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
 
-  const { cart, setCart, products } = useContext(AuthContext);
+  const { products } = useContext(AuthContext);
   const [filterCategory, setFilterCategory] = useState("");
-
   console.log(products)
+
 
 
   // State to keep track of the active button (initially null or a specific index)
   const [activeIndex, setActiveIndex] = useState(-1);
 
-  const [filteredProducts, setFilteredProducts] = useState([]);
+  /* const [filteredProducts, setFilteredProducts] = useState([]); */
   console.log(activeIndex);
-  useEffect(() => {
-    const pro =
-      filterCategory === ""
-        ? []
-        : products.filter((product) => product.category === filterCategory);
-    setFilteredProducts(pro);
-  }, [filterCategory, products]);
+  const filteredProducts = useMemo(() => {
+  if (!products || products.length === 0 || filterCategory === "") return [];
+  return products.filter((product) => product.category === filterCategory);
+}, [products, filterCategory]);
 
-  console.log(filteredProducts);
+  /* console.log(filteredProducts);
   console.log(typeof filterCategory);
-  console.log(products);
+  console.log(products); */
 
   // Function to handle button click
   const handleClick = (name, index) => {
     setActiveIndex(index);
 
-    console.log(name);
     setFilterCategory(name);
-    setActiveIndex(index);
   };
 
   const itemss = [
@@ -134,7 +127,7 @@ export default function Apparel() {
       ? []
       : products.filter((product) => product.category === filterCategory); */
 
-  const img = [one, two, three, four, five, six, seven, eight];
+  /* const img = [one, two, three, four, five, six, seven, eight]; */
 
   const [priceRange, setPriceRange] = useState({ from: "", to: "" });
 
@@ -170,14 +163,7 @@ export default function Apparel() {
     };
   }, [mFilterSort]);
 
-  const mobile = (data) => {
-    SetMFilterSort(true);
-    if (data === "Filter") {
-      SetFilterSort(true);
-    } else {
-      SetFilterSort(false);
-    }
-  };
+  
 
   
 
@@ -196,7 +182,7 @@ export default function Apparel() {
           <div className="p-4 lg:hidden block mt-8 bg-white rounded-lg  w-full">
             {/* Header */}
             <div className="flex justify-between gap-2 items-center lg:hidden mb-4">
-              <button
+              {<button
                 onClick={() => {
                   SetFilterSort(true);
                 }}
@@ -205,7 +191,7 @@ export default function Apparel() {
                 }`}
               >
                 Filter
-              </button>
+              </button>}
               <button
                 onClick={() => {
                   SetFilterSort(false);
@@ -226,7 +212,7 @@ export default function Apparel() {
                 "flex items-center duration-[400ms] lg:h-[auto] h-[auto] "
               }`}
             >
-              <div
+             { <div
                 className={` ${accordionOpen && " "} group`}
                 onClick={toggleAccordion}
               >
@@ -292,7 +278,7 @@ export default function Apparel() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div>}
             </div>
             <div className="h-[1px] bg-[#DDDDDD] mx-4 my-4"></div>
             {/* Price Section */}
@@ -304,9 +290,9 @@ export default function Apparel() {
             >
               <div
                 className={` ${accordionOpen2 && " "} group`}
-                onClick={toggleAccordion2}
+                
               >
-                <button className="flex h-[74px] items-center  gap-5 w-full ">
+                <button onClick={toggleAccordion2} className="flex h-[74px] items-center  gap-5 w-full ">
                   <p
                     className={`font-poopins leading-[22px] text-[14px] lg:ml-6`}
                   >
@@ -375,9 +361,9 @@ export default function Apparel() {
             </div>
           </div>
         </div>
-      ) : (
+        ) : (
         ""
-      )}
+      )} 
       <div className="top_quality pt-[120px] ">
         <h1 className="text-[36px] leading-[48px] text-center font-nexa-bold lg:text-[56px] lg:leading-[78px]">
           Experience Top{" "}
@@ -424,7 +410,7 @@ export default function Apparel() {
             </div> */}
 
             {items.map((item, index) => (
-              <div className={`lg:hidden ${item.style}`}>
+              <div key={index} className={`lg:hidden ${item.style}`}>
                 <img
                   src={item.img}
                   alt={item.name}
@@ -438,7 +424,7 @@ export default function Apparel() {
               </div>
             ))}
             {items.map((item, index) => (
-              <div className={`hidden lg:block  ${item.style}`}>
+              <div key={index} className={`hidden lg:block  ${item.style}`}>
                 <img
                   src={item.img1}
                   alt={item.name}
@@ -464,6 +450,8 @@ export default function Apparel() {
           handleClick={handleClick}
           filteredProducts={filteredProducts}
           filterCategory={filterCategory}
+          mFilterSort={mFilterSort}
+          SetMFilterSort={SetMFilterSort}
         />
       )}
       {/* <Feature /> */}

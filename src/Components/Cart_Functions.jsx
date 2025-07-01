@@ -4,8 +4,9 @@ import Toast from "../Pages/Toast";
 import { toast as sonnerToast } from "sonner";
 import { AuthContext } from "../context/authContext";
 
-export function CartFunctions() {
-  const { cart, setCart, likedProducts, setLikedProducts, products } =
+export function CartFunctions(size) {
+  console.log(size)
+  const { cart, setCart, setLikedProducts, products } =
     useContext(AuthContext);
 
   function customToast(toastProps) {
@@ -14,7 +15,7 @@ export function CartFunctions() {
     ));
   }
 
-  const handleAddToCart =  (productId) => {
+  const handleAddToCart =  (productId, size) => {
     // Save previous state so we can revert if needed
     const previousCart = [...cart];
   
@@ -34,7 +35,7 @@ export function CartFunctions() {
       } else {
         // If product does not exist, add it to cart with an initial quantity
         const product = cart.find((p) => p._id === productId);
-        newCartItem = { _id:productId, quantity: 20 };
+        newCartItem = { _id:productId, quantity: 20, size: size  };
         updatedCart = [...cart, newCartItem];
         console.log(updatedCart)
       }

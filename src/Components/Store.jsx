@@ -13,24 +13,29 @@ import minus from "../assets/Images/minus.svg";
 import dust from "../assets/Images/dust.svg";
 import { AuthContext } from "../context/authContext";
 /* import { toast, ToastContainer } from "react-toastify"; */
-import { Toaster } from 'sonner';
+import { Toaster } from "sonner";
 import up from "../assets/Images/up.svg";
 import down from "../assets/Images/down.svg";
 import { CartFunctions } from "./Cart_Functions";
 import Toast from "../Pages/Toast";
 
-
 export default function Store({
   handleClick,
   filteredProducts,
   filterCategory,
-  
+  mFilterSort,
+  SetMFilterSort,
 }) {
-  const [loading, setLoading] = useState(false);
-  
-  const { cart, handleAddToCart, handleRemoveFromCart, handleDecreaseQuantity, handleQuantityChange, likeProduct, unlikeProduct } = CartFunctions();
-  const {  setCart, likedProducts, setLikedProducts, products } = useContext(AuthContext);
-
+  const {
+    cart,
+    handleAddToCart,
+    handleRemoveFromCart,
+    handleDecreaseQuantity,
+    handleQuantityChange,
+    likeProduct,
+    unlikeProduct,
+  } = CartFunctions();
+  const { likedProducts } = useContext(AuthContext);
 
   console.log("this is:");
 
@@ -49,11 +54,6 @@ export default function Store({
     "Jackets",
   ];
 
-  
-  
-
-  
- 
   // const likeProduct = async (productId) => {
   //   try {
   //     const response = await axios.post(
@@ -86,7 +86,6 @@ export default function Store({
     //   }
     // );
     // // toast(<Msg />) would also work
-    
   };
 
   // const unlikeProduct = (productId) => {
@@ -127,10 +126,9 @@ export default function Store({
   //         withCredentials: true,
   //       }); // Added credentials
   //       setCart(updatedCart);
-       
+
   //       displayMsg()
-      
-        
+
   //       localStorage.setItem("cart", JSON.stringify(updatedCart));
   //       } else {
   //         const product = products.find((p) => p._id === productId);
@@ -139,7 +137,7 @@ export default function Store({
   //         console.log(newCart)
   //         await axios.post("    ${import.meta.env.VITE_BACKEND_URL}/cart", newCart1, { withCredentials: true }); // Added credentials
   //         setCart(newCart);
-          
+
   //         localStorage.setItem("cart", JSON.stringify(newCart));
   //         toast.success("Product added to cart");
   //     }
@@ -156,8 +154,8 @@ export default function Store({
   //       item._id === productId ? { ...item, quantity: newQuantity } : item
   //     )
   //   );
-    
-  //   if (newQuantity < 20) return; 
+
+  //   if (newQuantity < 20) return;
   //   try {
   //     const updatedCart = cart.map((item) =>
   //       item._id === productId ? { ...item, quantity: newQuantity } : item
@@ -169,7 +167,7 @@ export default function Store({
   //     localStorage.setItem("cart", JSON.stringify(updatedCart));
   //   } catch (error) {
   //     console.error("Error updating quantity:", error);
-  //   } 
+  //   }
   // };
 
   // const handleRemoveFromCart = async (productId) => {
@@ -212,7 +210,7 @@ export default function Store({
   const [accordionOpen, setAccordionOpen] = useState(true);
   const [accordionOpen2, setAccordionOpen2] = useState(true);
   const [filterSort, SetFilterSort] = useState(true);
-  const [mFilterSort, SetMFilterSort] = useState(false);
+  /* const [mFilterSort, SetMFilterSort] = useState(false); */
 
   const [hoverDisabled, setHoverDisabled] = useState(false);
 
@@ -237,6 +235,7 @@ export default function Store({
   }, [mFilterSort]);
 
   const mobile = (data) => {
+    console.log(1);
     SetMFilterSort(true);
     if (data === "Filter") {
       SetFilterSort(true);
@@ -245,8 +244,6 @@ export default function Store({
     }
   };
 
-  
-
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;
 
@@ -254,6 +251,8 @@ export default function Store({
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+
+  console.log(paginatedProducts);
 
   // Calculate total pages
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
@@ -275,7 +274,6 @@ export default function Store({
       className="px-4 md:px-[40px] lg:px-[60px] xl:px-[80px] 2xl:px-[120px] pt-[56px] bg-cover bg-center"
       style={{ backgroundImage: `url(${Back})` }}
     >
-      
       {/* <ToastContainer
         position="top-center"
         autoClose={3000} // Automatically closes after 3 seconds
@@ -284,16 +282,20 @@ export default function Store({
         draggable
         theme="light"
       /> */}
-      <Toaster 
-        position = "top-center"
-      />
+      <Toaster position="top-center" />
       <div className="flex lg:hidden h-16 p-2 gap-8 w-full rounded-full shadow-custom bg-white mb-[32px]">
-        <div className="flex items-center w-[50%] gap-3 pl-2 font-nexa-light text-[14px] leading-[22px]">
-          <img src={filter} onClick={() => mobile("Filter")} alt="" />
+        <div
+          onClick={() => mobile("Filter")}
+          className="flex items-center w-[50%] gap-3 pl-2 font-nexa-light text-[14px] leading-[22px]"
+        >
+          <img src={filter} alt="" />
           filter
         </div>
-        <div className="flex items-center w-[50%] gap-3 pl-2 font-nexa-light text-[14px] leading-[22px]">
-          <img src={sort} onClick={() => mobile("Sort")} alt="" />
+        <div
+          onClick={() => mobile("Sort")}
+          className="flex items-center w-[50%] gap-3 pl-2 font-nexa-light text-[14px] leading-[22px]"
+        >
+          <img src={sort} alt="" />
           sort
         </div>
       </div>
@@ -367,7 +369,7 @@ export default function Store({
                             ? "bg-black text-white "
                             : "bg-white text-black "
                         } flex items-center px-4 py-2 rounded-full  transition`}
-                        onClick={() => handleClick(item , index)}
+                        onClick={() => handleClick(item, index)}
                       >
                         <span
                           className={`w-4 h-4 mr-2 flex items-center justify-center rounded-full ${
@@ -407,11 +409,11 @@ export default function Store({
               "flex items-center duration-[400ms] lg:h-[auto] h-[auto] "
             }`}
           >
-            <div
-              className={` ${accordionOpen2 && " "} group`}
-              onClick={toggleAccordion2}
-            >
-              <button className="flex h-[74px] items-center  gap-5 w-full ">
+            <div className={` ${accordionOpen2 && " "} group`}>
+              <button
+                onClick={toggleAccordion2}
+                className="flex h-[74px] items-center  gap-5 w-full "
+              >
                 <p
                   className={`font-poopins leading-[12px] text-[14px] lg:ml-6 lg:text-[16px] lg:leading-[26px]`}
                 >
@@ -460,7 +462,7 @@ export default function Store({
           </div>
           <div className="h-[1px] bg-[#DDDDDD] mx-4 my-4"></div>
         </div>
-        <div className="lg:grid flex flex-row flex-wrap items-center lg:items-start justify-center grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 p-4">
+        {/* <div className="lg:grid flex flex-row flex-wrap items-center lg:items-start justify-center grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 p-4">
           {paginatedProducts.map((product) => (
             <div key={product._id} className="mx-auto w-[250px] lg:w-auto">
               <div
@@ -471,7 +473,11 @@ export default function Store({
                 }`}
                 onClick={() => handleProductClick(product._id)}
               >
-                <img className="rounded-full" src={Cap} alt="" />
+                <img
+                  className="rounded-full ma"
+                  src={product.img1 || Cap}
+                  alt=""
+                />
                 <div className="pt-[16px] rounded-full pb-[11.6px] px-[8px] relative">
                   <p className="font-poopins  text-[12px] leading-[18px] md:text-[20px] md:leading-[32px]">
                     {product.name}
@@ -507,7 +513,7 @@ export default function Store({
                     >
                       <div className="price">
                         <p className="font-nexa-bold text-[16px] leading-[26px] font-bold md:text-[24px] md:leading-[38px]">
-                          ${product.price /* .toFixed(2) */}
+                          ${product.price}
                         </p>
                         <p className="font-poopins text-[10px] leading-[16px] md:text-[16px] md:leading-[26px]">
                           Out of stock
@@ -555,10 +561,11 @@ export default function Store({
 
                       {cart.find((item) => item._id === product._id) ? (
                         <input
-                        min={20}
+                          min={20}
                           type="number"
                           value={
-                            cart.find((item) => item._id === product._id).quantity
+                            cart.find((item) => item._id === product._id)
+                              .quantity
                           }
                           onChange={(e) => {
                             const newValue = Number(e.target.value);
@@ -569,7 +576,149 @@ export default function Store({
                           onBlur={(e) => {
                             const newValue = Number(e.target.value);
                             if (newValue < 20) {
-                              handleQuantityChange(product._id, 20); // Reset to 20 if below minimum
+                              handleQuantityChange(product._id, 20); 
+                            }
+                          }}
+                          className=" p-1 rounded w-16 text-center"
+                        />
+                      ) : (
+                        ""
+                      )}
+
+                      {cart.find((item) => item._id === product._id) ? (
+                        <button
+                          onClick={() => handleAddToCart(product._id)}
+                          className=" text-white  rounded"
+                        >
+                          <img src={plus2} className="" />
+                        </button>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div> */}
+        <div className="grid w-full lg:w-[80%] grid-cols-1 sm:grid-cols-2 md:grid-cols-2 2xl:grid-cols-3 gap-4 p-4">
+          {paginatedProducts.map((product) => (
+            <div key={product._id} className="mx-auto w-[250px] lg:w-[260px] md:w-[315px] lgg:w-[315px]  ">
+              <div
+                className={`border-4 p-[4px] shadow-custom bg-white border-white hover:scale-105 transition-transform rounded-t-full rounded-b-[900px]  ${
+                  cart.some((item) => item._id === product._id)
+                    ? "shadow-red"
+                    : ""
+                }`}
+                onClick={() => handleProductClick(product._id)}
+              >
+                <div className="w-full h-[230px] lg:w-[245px] lgg:w-[300px] lg:h-[250px] md:h-[300px] md:w-[300px] lgg:h-[300px]  overflow-hidden flex justify-center items-center">
+                  <img
+                    src={product.img1 || Cap}
+                    alt=""
+                    className="w-full h-full object-cover rounded-full"
+                  />
+                </div>
+                <div className="pt-[16px] rounded-full pb-[11.6px] px-[8px] relative">
+                  <p className="font-poopins  text-[12px] leading-[18px] md:text-[20px] md:leading-[32px]">
+                    {product.name}
+                  </p>
+                  <div onClick={(e) => Stop(e)} className="div">
+                    <div
+                      onClick={() => {
+                        if (likedProducts.includes(product._id)) {
+                          unlikeProduct(product._id);
+                        } else {
+                          likeProduct(product._id);
+                        }
+                      }}
+                      className="lg:w-[72px] w-[48px] h-[48px] lg:h-[72px] rounded-full flex items-center justify-center absolute bg-white lg:top-[-60px] top-[-35px] md:top-[-70px]   right-[16px] "
+                    >
+                      <img
+                        className=" bg-white"
+                        src={
+                          likedProducts.includes(product._id) ? Heart2 : Heart
+                        }
+                        alt=""
+                      />
+                    </div>
+                  </div>
+
+                  <div className="md:flex items-center md:mt-[20px]">
+                    <div
+                      className={`flex flex-row justify-between items-center mt-[20px] md:mt-0 w-full ${
+                        cart.some((item) => item._id === product._id)
+                          ? "md:w-[50%]"
+                          : ""
+                      } `}
+                    >
+                      <div className="price">
+                        <p className="font-nexa-bold text-[16px] leading-[26px] font-bold md:text-[24px] md:leading-[38px]">
+                          ${product.price}
+                        </p>
+                        <p className="font-poopins text-[10px] leading-[16px] md:text-[16px] md:leading-[26px]">
+                          Out of stock
+                        </p>
+                      </div>
+                      {cart.some((item) => item._id === product._id) ? (
+                        ""
+                      ) : (
+                        <div className="div" onClick={(e) => Stop(e)}>
+                          <img
+                            src={plus}
+                            alt=""
+                            onClick={() => handleAddToCart(product._id)}
+                          />
+                        </div>
+                      )}
+                    </div>
+                    <div
+                      className={`flex items-center mt-[12px] justify-center space-x-2 ${
+                        cart.some((item) => item._id === product._id)
+                          ? "md:w-[50%]"
+                          : ""
+                      } md:mt-0`}
+                      onClick={(e) => Stop(e)}
+                    >
+                      {cart.find((item) => item._id === product._id) ? (
+                        <button
+                          onClick={() =>
+                            cart.find((item) => item._id === product._id)
+                              .quantity > 20
+                              ? handleDecreaseQuantity(product._id)
+                              : handleRemoveFromCart(product._id)
+                          }
+                        >
+                          {cart.find((item) => item._id === product._id)
+                            .quantity > 20 ? (
+                            <img src={minus} className="" />
+                          ) : (
+                            <img src={dust} className="" />
+                          )}
+                        </button>
+                      ) : (
+                        ""
+                      )}
+
+                      {cart.find((item) => item._id === product._id) ? (
+                        <input
+                          min={20}
+                          type="number"
+                          value={
+                            cart.find((item) => item._id === product._id)
+                              .quantity
+                          }
+                          onChange={(e) => {
+                            const newValue = Number(e.target.value);
+                            if (newValue >= 20) {
+                              handleQuantityChange(product._id, newValue);
+                            }
+                          }}
+                          onBlur={(e) => {
+                            const newValue = Number(e.target.value);
+                            if (newValue < 20) {
+                              handleQuantityChange(product._id, 20);
                             }
                           }}
                           className=" p-1 rounded w-16 text-center"
