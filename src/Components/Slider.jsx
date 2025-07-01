@@ -78,7 +78,7 @@ const StackedCarousel = () => {
 
   return (
     <>
-      <div className="flex w-full md:hidden lg:flex mt-[80px] pl-[40px] items-center justify-center min-h-[350px] pb-[60px] bg-gradient-to-br ">
+      <div className="w-full hidden lg:flex mt-[80px] pl-[40px] items-center justify-center min-h-[350px] pb-[60px] bg-gradient-to-br ">
         <div className="relative items-center justify-center">
           <div
             className="relative  w-[805px] h-[250px]"
