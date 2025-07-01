@@ -15,7 +15,7 @@ import Error from "../Components/Error";
 import { toast, ToastContainer } from "react-toastify";
 import { AuthContext } from "../context/authContext";
 import { toast as sonnerToast, Toaster } from "sonner";
-import Toast from "./Toast";
+import Toast from "../Components/Toast";
 import VerifyEmail from "../Components/VerifyEmail";
 
 import Gauth from "../Components/Gauth";
@@ -121,7 +121,10 @@ export default function Signup() {
     if (Object.keys(errors).length > 0) {
       Object.values(errors).forEach((error) => {
         console.log(error.message);
-        displayMsg(error.message);
+        customToast({
+        color: "#E2063A",
+        message: error.message,
+      });
       });
     }
   }, [errors]);

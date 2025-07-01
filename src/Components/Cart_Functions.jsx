@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import axios from "axios";
-import Toast from "../Pages/Toast";
+import Toast from "./Toast";
 import { toast as sonnerToast } from "sonner";
 import { AuthContext } from "../context/authContext";
 

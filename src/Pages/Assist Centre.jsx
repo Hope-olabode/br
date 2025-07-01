@@ -13,7 +13,7 @@ import rd from '../assets/Images/reddown.svg';
 import call from '../assets/Images/call.svg';
 import mail from '../assets/Images/mail.svg';
 import whatsapp from '../assets/Images/whatsapp.svg';
-import { NavLink, Link, Outlet, redirect } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 
 export default function AssistCentre() {

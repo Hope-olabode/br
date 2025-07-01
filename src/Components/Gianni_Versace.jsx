@@ -1,9 +1,3 @@
-import Cap from '../assets/Images/Cap.svg'
-import Top from '../assets/Images/Top.svg'
-import Hoodie from '../assets/Images/Hoodie.svg'
-
-import { useState, useEffect } from "react";
-
 export default function GianniVersace() {
   
 

@@ -1,6 +1,3 @@
-import React, { useState } from 'react';
-
-
 export default function Terms() {
   return(
     <div className="mt-[96px] py-14 px-4 lg:flex gap-4 md:px-[40px] lg:px-[60px] xl:px-[80px] 2xl:px-[120px] lg:mt-[176px] lg:mb-[88px]"> 
@@ -19,7 +16,7 @@ export default function Terms() {
             <li>You agree not to use the Website:</li>
             <ol className="font-poopins text-[14px] list-alpha leading-[22px] pl-6">
               <li>In a manner that could damage, disable, overburden, or impair the Website.</li>
-              <li>To interfere with any other user's enjoyment of the Website.</li>
+              <li>To interfere with any other user’s enjoyment of the Website.</li>
               <li>To violate any applicable laws or regulations.</li>
               <li>To transmit any harmful or unlawful content.</li>
             </ol>

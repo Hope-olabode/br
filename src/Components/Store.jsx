@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext, useMemo } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Cap from "../assets/Images/Cap.svg";
 import filter from "../assets/Images/filter.svg";
 import sort from "../assets/Images/sort.svg";
 import Back from "../assets/Images/back.svg";
-import axios from "axios";
+
 import Heart from "../assets/Images/Heart.svg";
 import Heart2 from "../assets/Images/Heart2.svg";
 import plus from "../assets/Images/Icon Button.svg";
@@ -17,7 +17,15 @@ import { Toaster } from "sonner";
 import up from "../assets/Images/up.svg";
 import down from "../assets/Images/down.svg";
 import { CartFunctions } from "./Cart_Functions";
-import Toast from "../Pages/Toast";
+import PropTypes from "prop-types";
+
+Store.propTypes = {
+  handleClick: PropTypes.func.isRequired,
+  filteredProducts: PropTypes.array.isRequired,
+  filterCategory: PropTypes.string,
+  mFilterSort: PropTypes.bool,
+  SetMFilterSort: PropTypes.func.isRequired,
+};
 
 export default function Store({
   handleClick,
@@ -71,22 +79,7 @@ export default function Store({
   //   }
   // };
 
-  const displayMsg = () => {
-    // console.log(message);
-    // toast(
-    //   <h1 className="text-center font-nexa-bold text-[16px] leading-[26px] text-[#E2063A]">
-    //     {message}
-    //   </h1>,
-    //   {
-    //     autoClose: 3000, // Close after 3 seconds
-    //     closeButton: false,
-    //     className:
-    //       "bg-[#DDDDDD] h-[84px] rounded-[32px] flex justify-center border-dashed border-[#E2063A] border-[2px]",
-    //     hideProgressBar: true,
-    //   }
-    // );
-    // // toast(<Msg />) would also work
-  };
+  
 
   // const unlikeProduct = (productId) => {
   //   axios
@@ -201,7 +194,7 @@ export default function Store({
   //   }
   // };
 
-  const Stop = (e, id) => {
+  const Stop = (e, ) => {
     e.stopPropagation(); // Prevent navigation
   };
 
@@ -604,7 +597,13 @@ export default function Store({
         </div> */}
         <div className="grid w-full lg:w-[80%] grid-cols-1 sm:grid-cols-2 md:grid-cols-2 2xl:grid-cols-3 gap-4 p-4">
           {paginatedProducts.map((product) => (
-            <div key={product._id} className="mx-auto w-[250px] lg:w-[260px] md:w-[315px] lgg:w-[315px]  ">
+            <div
+              key={product._id}
+              className="mx-auto w-[250px] relative lg:w-[260px] md:w-[315px] lgg:w-[315px]  "
+            >
+              {product.quantity < 20 && (
+                <div className="absolute inset-0 bg-[#ffffffd0] z-10 w-full h-full rounded-t-full rounded-b-[900px]"></div>
+              )}
               <div
                 className={`border-4 p-[4px] shadow-custom bg-white border-white hover:scale-105 transition-transform rounded-t-full rounded-b-[900px]  ${
                   cart.some((item) => item._id === product._id)
@@ -617,6 +616,7 @@ export default function Store({
                   <img
                     src={product.img1 || Cap}
                     alt=""
+                    loading="lazy"
                     className="w-full h-full object-cover rounded-full"
                   />
                 </div>
@@ -645,7 +645,7 @@ export default function Store({
                     </div>
                   </div>
 
-                  <div className="md:flex items-center md:mt-[20px]">
+                  <div className="md:flex items-center md:mt-[20px] ">
                     <div
                       className={`flex flex-row justify-between items-center mt-[20px] md:mt-0 w-full ${
                         cart.some((item) => item._id === product._id)
@@ -655,9 +655,13 @@ export default function Store({
                     >
                       <div className="price">
                         <p className="font-nexa-bold text-[16px] leading-[26px] font-bold md:text-[24px] md:leading-[38px]">
-                          ${product.price}
+                          ₦ {product.price}
                         </p>
-                        <p className="font-poopins text-[10px] leading-[16px] md:text-[16px] md:leading-[26px]">
+                        <p
+                          className={`${
+                            product.quantity < 20 ? "text-black" : "text-white"
+                          } font-poopins text-[10px] leading-[16px] md:text-[16px] md:leading-[26px]`}
+                        >
                           Out of stock
                         </p>
                       </div>

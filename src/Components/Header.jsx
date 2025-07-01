@@ -80,9 +80,9 @@ export default function Header() {
         draggable
         theme="light"
       />
-      <div className="App ">
+      <div className="App">
         <header
-          className={` px-4 py-[24px] fixed w-[100%] top-[0px] z-20 bg-white rounded-b-[40px]  justify-between items-center md:px-8 lg:px-[120px] hidden lg:flex transition-all duration-500 ease-in-out ${
+          className={` px-4 py-[24px] fixed shadow-xl  w-[100%] top-[0px] z-20 bg-white rounded-b-[40px]  justify-between items-center md:px-8 lg:px-[120px] hidden lg:flex transition-all duration-500 ease-in-out ${
             isVisible
               ? "translate-y-0 opacity-100"
               : "-translate-y-full opacity-0"
@@ -90,7 +90,7 @@ export default function Header() {
         >
           <div className="flex flex-row">
             <Link to="/">
-              <img src={logo} className="w-36" alt="logo" />
+              <img src={logo} loading="lazy" width={36} height={36} className="w-36" alt="logo" />
             </Link>
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex">

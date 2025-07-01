@@ -4,7 +4,7 @@ import packaging from '../assets/Images/packaging.jpg';
 import ecommerce from '../assets/Images/e-commerce.jpg';
 import welcome from '../assets/Images/welcome.jpg'
 import welcome2 from '../assets/Images/welcome2.jpg'
-import slideMobile from '../assets/Images/slideMobile.svg'
+
 import Cap from '../assets/Images/Cap.svg'
 import Top from '../assets/Images/Top.svg'
 import Hoodie from '../assets/Images/Hoodie.svg'

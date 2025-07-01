@@ -1,4 +1,6 @@
 export const getFlutterwaveConfig = (cartProducts) => {
+
+  
     return {
       public_key: "FLWPUBK_TEST-8242cc0eab5b4ae39d11ad95bde693b8-X",
       tx_ref: Date.now(),

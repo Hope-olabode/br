@@ -1,5 +1,5 @@
 import { useState } from "react";
-import  {Link, NavLink} from "react-router-dom";
+import  { NavLink} from "react-router-dom";
 import logo from '../assets/Images/Logo Mark.svg';
 import phone from '../assets/Images/phone.svg';
 import email from '../assets/Images/email.svg';
@@ -95,7 +95,7 @@ export default function Footer() {
               <p className="text-[#E2063A] font-poopins font-medium text-[16px] leading-[26px] lg:font-nexa-bold lg:text-[20px] lg:leading-[32px]">Navigation</p>
               <NavLink className={({isActive})=> isActive ? "text-[#E2063A] font-nexa-bold font-bold text-[16px] leading-[22px]" : "font-nexa-bold font-bold text-[16px] leading-[22px]  active:text-[#E2063A] focus:text-[#E2063A]"} to='/About'>About Us</NavLink>
               <NavLink className={({isActive})=> isActive ? "text-[#E2063A] font-nexa-bold font-bold text-[16px] leading-[22px]" : "font-nexa-bold font-bold text-[16px] leading-[22px]  active:text-[#E2063A] focus:text-[#E2063A]"} to='/Become a reseller'>Become a Reseller</NavLink>
-              <NavLink className={({isActive})=> isActive ? "text-[#E2063A] font-nexa-bold font-bold text-[16px] leading-[22px]" : "font-nexa-bold font-bold text-[16px] leading-[22px]  active:text-[#E2063A] focus:text-[#E2063A]"} to='/Apparel'>Store</NavLink>
+              <NavLink className={({isActive})=> isActive ? "text-[#E2063A] font-nexa-bold font-bold text-[16px] leading-[22px]" : "font-nexa-bold font-bold text-[16px] leading-[22px]  active:text-[#E2063A] focus:text-[#E2063A]"} to='/Store'>Store</NavLink>
               <NavLink className={({isActive})=> isActive ? "text-[#E2063A] font-nexa-bold font-bold text-[16px] leading-[22px]" : "font-nexa-bold font-bold text-[16px] leading-[22px]  active:text-[#E2063A] focus:text-[#E2063A]"} to='/Launchpad'>Launchpad</NavLink> 
             </div>
             <div className="flex lg:w-[220px] xl:w-[231px] flex-col gap-4">

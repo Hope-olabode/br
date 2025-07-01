@@ -1,6 +1,14 @@
 import  { useState } from "react";
 
+import PropTypes from "prop-types";
+
 const Accordion = ({ title, answer }) => {
+
+  Accordion.propTypes = {
+  title: PropTypes.string.isRequired,
+  answer: PropTypes.string.isRequired,
+};
+
   const [accordionOpen, setAccordionOpen] = useState(false);
 
   const [hoverDisabled, setHoverDisabled] = useState(false);

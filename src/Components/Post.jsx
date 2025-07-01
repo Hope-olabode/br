@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import PropTypes from "prop-types";
 import post from "../assets/Images/Post-img/CoverImage.jpg";
 import post1 from "../assets/Images/Post-img/CoverImage1.jpg";
 import post2 from "../assets/Images/Post-img/CoverImage2.jpg";
@@ -412,5 +413,7 @@ const Post = ({ totalPages }) => {
     </div>
   );
 };
-
+Post.propTypes = {
+  totalPages: PropTypes.number.isRequired,
+};
 export default Post;

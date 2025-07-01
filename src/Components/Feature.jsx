@@ -6,6 +6,20 @@ import plus2 from "../assets/Images/plus2.svg";
 import minus from "../assets/Images/minus.svg";
 import dust from "../assets/Images/dust.svg";
 
+
+//
+//
+//
+//  DELETE THIS
+//
+//
+//
+
+
+
+
+
+
 /*export default function Feature () {
   return (
     <div className="px-4 py-[72px] lg:py-[96px] ">
@@ -107,7 +121,7 @@ import dust from "../assets/Images/dust.svg";
 
 } */
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ProductList = () => {

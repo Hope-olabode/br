@@ -169,12 +169,13 @@ function ProductDetail() {
               className="flex w-full items-center justify-center md:order-2 cursor-pointer"
               onClick={() => handleImageClick(product.img1)}
             >
-              <div className="max-w-[450px] lg:w-full"><img
-                className="rounded-full  lg:min-w-[300px]"
-                src={product.img1}
-                alt="Main"
-              /></div>
-              
+              <div className="max-w-[450px] lg:w-[450px] lg:h-[450px] rounded-full overflow-hidden">
+                <img
+                  className="rounded-full   lg:w-[450px] lg:h-[450px]"
+                  src={product.img1}
+                  alt="Main"
+                />
+              </div>
             </div>
 
             {/* Thumbnails */}
@@ -214,7 +215,7 @@ function ProductDetail() {
               {product.name}
             </h1>
             <div className="flex flex-row items-center justify-between font-nexa-bold text-[20px] leading-[32px] lg:text-[36px] lg:leading-[48px] mb-5 md:order-4 md:mt-[58px]">
-              <p>N{product.price}</p>
+              <p>₦ {product.price}</p>
               <div className="flex items-center  justify-center space-x-2 ">
                 {cart.find((item) => item._id === product._id) ? (
                   <button
@@ -273,7 +274,7 @@ function ProductDetail() {
               <p>size</p>
               <div className="flex flex-row gap-3 mt-2">
                 <p
-                  className={`font-nexa-bold text-[14px] cursor-pointer leading-[24px] lg:text-[16px] lg:leading-[26px] rounded-full border-2 px-[20px] py-[13px] text-center lg:w-[80px] lg:px-[28px] lg:py-[25px] ${
+                  className={`font-nexa-bold hover:scale-105 transition-transform text-[14px] cursor-pointer leading-[24px] lg:text-[16px] lg:leading-[26px] rounded-full border-2 px-[20px] py-[13px] text-center lg:w-[80px] lg:px-[28px] lg:py-[25px] ${
                     size === "M" ? "border-black" : ""
                   }`}
                   onClick={() => setsize("M", product._id)}
@@ -281,7 +282,7 @@ function ProductDetail() {
                   M
                 </p>
                 <p
-                  className={`font-nexa-bold text-[14px] cursor-pointer leading-[24px] lg:text-[16px] lg:leading-[26px] rounded-full border-2 px-[20px] py-[13px] text-center lg:w-[80px] lg:px-[28px] lg:py-[25px] ${
+                  className={`font-nexa-bold hover:scale-105 transition-transform text-[14px] cursor-pointer leading-[24px] lg:text-[16px] lg:leading-[26px] rounded-full border-2 px-[20px] py-[13px] text-center lg:w-[80px] lg:px-[28px] lg:py-[25px] ${
                     size === "L" ? "border-black" : ""
                   }`}
                   onClick={() => setsize("L", product._id)}
@@ -289,7 +290,7 @@ function ProductDetail() {
                   L
                 </p>
                 <p
-                  className={`font-nexa-bold text-[14px] cursor-pointer leading-[24px] lg:text-[16px] lg:leading-[26px] rounded-full border-2 px-[15px] py-[13px] lg:px-[28px] lg:py-[25px] ${
+                  className={`font-nexa-bold hover:scale-105 transition-transform text-[14px] cursor-pointer leading-[24px] lg:text-[16px] lg:leading-[26px] rounded-full border-2 px-[15px] py-[13px] lg:px-[28px] lg:py-[25px] ${
                     size === "XL" ? "border-black" : ""
                   }`}
                   onClick={() => setsize("XL", product._id)}
@@ -297,7 +298,7 @@ function ProductDetail() {
                   XL
                 </p>
                 <p
-                  className={`font-nexa-bold text-[14px] cursor-pointer leading-[24px] lg:text-[16px] lg:leading-[26px] rounded-full border-2 px-[15px] py-[13px] lg:px-[28px] lg:py-[25px] ${
+                  className={`font-nexa-bold hover:scale-105 transition-transform text-[14px] cursor-pointer leading-[24px] lg:text-[16px] lg:leading-[26px] rounded-full border-2 px-[15px] py-[13px] lg:px-[28px] lg:py-[25px] ${
                     size === "XXL" ? "border-black" : ""
                   }`}
                   onClick={() => setsize("XXL", product._id)}

@@ -13,7 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import Loader from "../Components/Loader";
 import { toast as sonnerToast, Toaster } from "sonner";
-import Toast from "./Toast";
+import Toast from "../Components/Toast";
 
 
 

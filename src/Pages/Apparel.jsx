@@ -26,13 +26,19 @@ export default function Apparel() {
   const [loading] = useState(false);
 
   const { products } = useContext(AuthContext);
-  const [filterCategory, setFilterCategory] = useState("");
+  const [filterCategory, setFilterCategory] = useState(() => {
+      // Retrieve the initial value from localStorage or default to false
+      return JSON.parse(localStorage.getItem("filterCategory")) || "";
+    });
   console.log(products)
 
 
 
   // State to keep track of the active button (initially null or a specific index)
-  const [activeIndex, setActiveIndex] = useState(-1);
+   const [activeIndex, setActiveIndex] = useState(() => {
+      // Retrieve the initial value from localStorage or default to false
+      return JSON.parse(localStorage.getItem("activeIndex")) || -1;
+    });
 
   /* const [filteredProducts, setFilteredProducts] = useState([]); */
   console.log(activeIndex);
@@ -48,8 +54,10 @@ export default function Apparel() {
   // Function to handle button click
   const handleClick = (name, index) => {
     setActiveIndex(index);
+    localStorage.setItem("activeIndex", JSON.stringify(index));
 
     setFilterCategory(name);
+    localStorage.setItem("filterCategory", JSON.stringify(name));
   };
 
   const itemss = [

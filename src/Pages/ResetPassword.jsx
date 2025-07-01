@@ -6,23 +6,27 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { toast as sonnerToast, Toaster } from "sonner";
-import Toast from "./Toast";
+import Toast from "../Components/Toast";
 import { useNavigate } from "react-router-dom";
 import hpas from "../assets/Images/hpas.svg";
 import hpas2 from "../assets/Images/hpas2.svg";
 import hpas3 from "../assets/Images/hpas3.svg";
 import hpas4 from "../assets/Images/hpas4.svg";
-
+import Loader from "../Components/Loader2";
 const schema = z.object({
   Email: z.string(), // You can add .email("Incorrect email") if needed
 });
 
 export default function ResetPassword() {
   const [confirmEmail, setConfirmEmail] = useState(false);
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(() => {
+    const storedEmail = localStorage.getItem("email");
+    return storedEmail ? JSON.parse(storedEmail) : "";
+  });
   const [confirmOtp, setConfirmOtp] = useState(false);
   const [isFocused, setIsFocused] = useState("");
   const [hidden, setHidden] = useState(true);
+  const [loading, setLoading] = useState(false)
 
   const inputRefs = useRef([]); // used for OTP focus management
 
@@ -64,9 +68,12 @@ export default function ResetPassword() {
   }
 
   const onSubmit = async (data) => {
+    
     console.log("Email data:", data.Email);
     const Email = data.Email;
+    localStorage.setItem("email", JSON.stringify(Email));
     try {
+      setLoading(true);
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/auth/email`,
         { Email },
@@ -78,6 +85,7 @@ export default function ResetPassword() {
         color: "#000000",
         message: response.data.message,
       });
+      setLoading(false);
     } catch (error) {
       console.log(error);
       const message = error.response?.data?.message || "An error occurred";
@@ -86,6 +94,7 @@ export default function ResetPassword() {
         color: "#E2063A",
         message: message,
       });
+      setLoading(false);
     }
   };
 
@@ -111,6 +120,7 @@ export default function ResetPassword() {
     const Data = { Email: localStorage.getItem("Email"), otp: otpString };
     // Process your OTP submission logic here
     try {
+      setLoading(true);
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/auth/otp`,
         Data,
@@ -121,6 +131,7 @@ export default function ResetPassword() {
         color: "#000000",
         message: response.data.message,
       });
+      setLoading(false);
     } catch (error) {
       console.log(error);
       const message = error.response?.data?.message || "An error occurred";
@@ -129,6 +140,7 @@ export default function ResetPassword() {
         color: "#E2063A",
         message: message,
       });
+      setLoading(true);
     }
   };
 
@@ -161,6 +173,7 @@ export default function ResetPassword() {
     console.log("Reset Password Data:", data);
     console.log(email);
     try {
+      setLoading(true);
       // Call your API endpoint to reset the password
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/auth/reset`,
@@ -175,6 +188,7 @@ export default function ResetPassword() {
       setTimeout(() => {
         navigate("/Log in");
       }, 2000);
+      setLoading(false);
     } catch (error) {
       const message = error.response?.data?.message || "An error occurred";
       console.log(message);
@@ -182,6 +196,7 @@ export default function ResetPassword() {
         color: "#E2063A",
         message: message,
       });
+      setLoading(false);
     }
   };
 
@@ -239,34 +254,61 @@ export default function ResetPassword() {
           <button
             type="submit"
             className="bg-[#E2063A] my-4 text-white  rounded-full relative overflow-hidden group lg:h-[72px] lg:w-full  w-[100%]"
-            disabled={Email?.trim()?.length === 0}
+            disabled={
+              Email?.trim()?.length === 0 || loading
+            }
           >
             <div
               className={`${
-                Email?.trim()?.length === 0
-                  ? "inset-0 bg-[#ffffffd0] z-10 absolute w-100%"
-                  : ""
-              } relative  px-4 py-[13px] lg:py-[23px] lg:px-0  `}
+                loading ? "hidden" : "block"
+              } justify-center items-center`}
             >
-              <span className="relative z-10 ">
-                <p className="font-nexa-bold text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px] lg:pl-[40px]">
-                  Submit
-                </p>
-              </span>
-              <div className="absolute right-[10px] top-[50%] translate-y-[-50%] lg:right-[25px]">
-                <img
-                  src={wc}
-                  className={`${
-                    Email?.trim()?.length === 0 ? "hi" : "hidden"
-                  } lg:h-10`}
-                />
-                <img
-                  src={ba}
-                  className={`${
-                    Email?.trim()?.length === 0 ? "hidden" : "block"
-                  } lg:h-10`}
-                />
+              <div
+                className={`${
+                  Email?.trim()?.length === 0
+                    ? "inset-0 bg-[#ffffffd0] z-10 absolute w-100%"
+                    : ""
+                } relative  px-4 py-[13px] lg:py-[23px] lg:px-0  `}
+              >
+                <span className="relative z-10 ">
+                  <p className="font-nexa-bold text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px] lg:pl-[40px]">
+                    Submit
+                  </p>
+                </span>
+                <div className="absolute right-[10px] top-[50%] translate-y-[-50%] lg:right-[25px]">
+                  <img
+                    src={wc}
+                    className={`${
+                      Email?.trim()?.length === 0
+                        ? "hi"
+                        : "hidden"
+                    } lg:h-10`}
+                  />
+                  <img
+                    src={ba}
+                    className={`${
+                      Email?.trim()?.length === 0
+                        ? "hidden"
+                        : "block"
+                    } lg:h-10 h-8`}
+                  />
+
+                  <div
+                    className={`${
+                      Email?.trim()?.length === 0
+                        ? ""
+                        : " "
+                    }`}
+                  ></div>
+                </div>
               </div>
+            </div>
+            <div
+              className={`pt-2 ${
+                loading ? "flex bg-[#ffffffd0] h-full" : "hidden"
+              } justify-center items-center`}
+            >
+              <Loader />
             </div>
           </button>
         </form>
@@ -274,7 +316,7 @@ export default function ResetPassword() {
         {confirmEmail && (
           <div className={`${confirmOtp ? "hidden" : "block"}`}>
             <p className="font-poopins text-[14px] leading-[22px] lg:text-[20px] lg:leading-[32px] mb-14">
-              Enter the OTP sent to johndoe@gmail.com
+              Enter the OTP sent to {email}
             </p>
             <form onSubmit={handleOtpSubmit(onOtpSubmit)}>
               <div className="flex gap-3 justify-center" onPaste={handlePaste}>
@@ -304,37 +346,66 @@ export default function ResetPassword() {
                     );
                   })}
               </div>
-              <button
-                type="submit"
-                className="bg-[#E2063A] mb-4 mt-14 text-white  rounded-full relative overflow-hidden group lg:h-[72px] w-[200px]"
-                disabled={!isOtpComplete}
+               <button
+            type="submit"
+            className="bg-[#E2063A] my-4 text-white  rounded-full relative overflow-hidden group lg:h-[72px] lg:w-full  w-[100%]"
+            disabled={
+              !isOtpComplete|| loading
+            }
+          >
+            <div
+              className={`${
+                loading ? "hidden" : "block"
+              } justify-center items-center`}
+            >
+              <div
+                className={`${
+                  !isOtpComplete
+                    ? "inset-0 bg-[#ffffffd0] z-10 absolute w-100%"
+                    : ""
+                } relative  px-4 py-[13px] lg:py-[23px] lg:px-0  `}
               >
-                <div
-                  className={`${
-                    !isOtpComplete
-                      ? "inset-0 bg-[#ffffffd0] z-10 absolute w-100%"
-                      : ""
-                  } relative  px-4 py-[13px] lg:py-[23px] lg:px-0  `}
-                >
-                  <span className="relative z-10 ">
-                    <p className="font-nexa-bold text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px] lg:pl-[40px]">
-                      Submit
-                    </p>
-                  </span>
-                  <div className="absolute right-[10px] top-[50%] translate-y-[-50%] lg:right-[25px]">
-                    <img
-                      src={wc}
-                      className={`${!isOtpComplete ? "hi" : "hidden"} lg:h-10`}
-                    />
-                    <img
-                      src={ba}
-                      className={`${
-                        !isOtpComplete ? "hidden" : "block"
-                      } lg:h-10`}
-                    />
-                  </div>
+                <span className="relative z-10 ">
+                  <p className="font-nexa-bold text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px] lg:pl-[40px]">
+                    Submit
+                  </p>
+                </span>
+                <div className="absolute right-[10px] top-[50%] translate-y-[-50%] lg:right-[25px]">
+                  <img
+                    src={wc}
+                    className={`${
+                      !isOtpComplete
+                        ? "hi"
+                        : "hidden"
+                    } lg:h-10`}
+                  />
+                  <img
+                    src={ba}
+                    className={`${
+                      !isOtpComplete
+                        ? "hidden"
+                        : "block"
+                    } lg:h-10 h-8`}
+                  />
+
+                  <div
+                    className={`${
+                      !isOtpComplete
+                        ? ""
+                        : " "
+                    }`}
+                  ></div>
                 </div>
-              </button>
+              </div>
+            </div>
+            <div
+              className={`pt-2 ${
+                loading ? "flex bg-[#ffffffd0] h-full" : "hidden"
+              } justify-center items-center`}
+            >
+              <Loader />
+            </div>
+          </button>
             </form>
           </div>
         )}
@@ -379,10 +450,17 @@ export default function ResetPassword() {
                 />
               )}
             </div>
-            <button
-              type="submit"
-              className="bg-[#E2063A] my-4 text-white  rounded-full relative overflow-hidden group lg:h-[72px] lg:w-full  w-[100%]"
-              disabled={Password?.trim()?.length === 0}
+             <button
+            type="submit"
+            className="bg-[#E2063A] my-4 text-white  rounded-full relative overflow-hidden group lg:h-[72px] lg:w-full  w-[100%]"
+            disabled={
+              Password?.trim()?.length === 0 || loading
+            }
+          >
+            <div
+              className={`${
+                loading ? "hidden" : "block"
+              } justify-center items-center`}
             >
               <div
                 className={`${
@@ -400,18 +478,38 @@ export default function ResetPassword() {
                   <img
                     src={wc}
                     className={`${
-                      Password?.trim()?.length === 0 ? "hi" : "hidden"
+                      Password?.trim()?.length === 0
+                        ? "hi"
+                        : "hidden"
                     } lg:h-10`}
                   />
                   <img
                     src={ba}
                     className={`${
-                      Password?.trim()?.length === 0 ? "hidden" : "block"
-                    } lg:h-10`}
+                      Password?.trim()?.length === 0
+                        ? "hidden"
+                        : "block"
+                    } lg:h-10 h-8`}
                   />
+
+                  <div
+                    className={`${
+                      Password?.trim()?.length === 0
+                        ? ""
+                        : " "
+                    }`}
+                  ></div>
                 </div>
               </div>
-            </button>
+            </div>
+            <div
+              className={`pt-2 ${
+                loading ? "flex bg-[#ffffffd0] h-full" : "hidden"
+              } justify-center items-center`}
+            >
+              <Loader />
+            </div>
+          </button>
           </form>
         </div>
       </div>

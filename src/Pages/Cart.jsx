@@ -8,15 +8,16 @@ import plus2 from "../assets/Images/plus2.svg";
 import minus from "../assets/Images/minus.svg";
 import dust from "../assets/Images/dust.svg";
 import ar from "../assets/Images/arrow-left-w.svg";
+import arr from "../assets/Images/arrow-right.svg";
 import PM from "../assets/Images/PaystackMobile.svg";
 import PD from "../assets/Images/PaystackDesktop.svg";
 import FM from "../assets/Images/FlutterMobile.svg";
 import FD from "../assets/Images/FlutterDesktop.svg";
-
+import empty from "../assets/Images/empty cart.svg";
 import { CartFunctions } from "../Components/Cart_Functions";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Toast from "./Toast";
+import Toast from "../Components/Toast";
 import { toast as sonnerToast, Toaster } from "sonner";
 
 import { usePaystackPayment } from "react-paystack";
@@ -39,8 +40,9 @@ const schema = z
   })
   .refine(
     (data) =>
-      data.Option !== "option1" ||
-      (data.Shipping_Address && data.Shipping_Address.trim() !== ""),
+      data.Option !== "option1" &&
+      data.Shipping_Address &&
+      data.Shipping_Address.trim() !== "",
     {
       path: ["Shipping_Address"],
       message: "Shipping Address is required ",
@@ -91,8 +93,8 @@ export default function Cart() {
     handleSubmit,
     reset,
 
-    formState: { errors },
-  } = useForm({
+   
+    } = useForm({
     defaultValues: {
       Full_Name: user?.Full_Name || "",
       Phone_No: user?.Phone_No || "",
@@ -111,21 +113,29 @@ export default function Cart() {
     }
   }, [user, reset]);
 
+  const back = () => {
+    setStep(false);
+  };
+
+  const back2 = () => {
+    setPayment(false);
+    setStep(true);
+  };
+
   const next = (data) => {
-    console.log(data);
     let Data = { ...data };
     if (option === "option1") {
       if (selected) {
         Data = { ...data, Shipping: selected };
         setData(Data);
-        console.log(Data);
         window.scrollTo(0, 0);
         setPayment(true);
         setStep(false);
+        console.log(Data);
       } else {
         customToast({
           color: "#E2063A",
-          message: "select a shipping information",
+          message: "select a shipping type",
         });
       }
     } else {
@@ -135,7 +145,7 @@ export default function Cart() {
         Pickup_Location: "32, western avenue ojuelegba, Lagos, Nigeria.",
       };
       setData(Data);
-      console.log(Data);
+
       window.scrollTo(0, 0);
       setPayment(true);
       setStep(false);
@@ -143,6 +153,7 @@ export default function Cart() {
   };
 
   const onError = (errors) => {
+    console.log(errors);
     Object.values(errors).forEach((error) => {
       customToast({
         color: "#E2063A",
@@ -162,7 +173,7 @@ export default function Cart() {
   };
 
   console.log(cart);
-  console.log(cartProducts)
+  console.log(cartProducts);
 
   const shipping = [
     {
@@ -214,10 +225,25 @@ export default function Cart() {
   //   onClose: () => { },
   // };
 
-  
-
   return (
     <div className="mt-[96px] py-6">
+      <div className="lg:pt-16 px-4 md:px-[40px] lg:px-[60px] xl:px-[80px] 2xl:px-[120px]">
+        {step ? (
+          <button type="button" onClick={back}>
+            <img src={arr} className="w-5 h-5" alt="" />
+          </button>
+        ) : (
+          ""
+        )}
+
+        {payment ? (
+          <button type="button" onClick={back2}>
+            <img src={arr} className="w-5 h-5" alt="" />
+          </button>
+        ) : (
+          ""
+        )}
+      </div>
       <Toaster position="top-center" expand={true} />
       {payment ? (
         ""
@@ -304,7 +330,6 @@ export default function Cart() {
                             type="text"
                             {...register("Shipping_Address")}
                             placeholder="Shipping Address"
-                            value={option === "option1" ? "" : "FLY"}
                             className="border-2 border-[#DDDDDD] mb-4 outline-none h-12 rounded-full w-[100%] pl-6 pr-2 text-[#9A9A9A] focus:bg-black focus:text-white focus:border-black lg:h-[72px] font-poopins text-[14px] leading-[22px] lg:text-[16px] lg:leading-[26px]"
                           />
                         )}
@@ -422,6 +447,7 @@ export default function Cart() {
                       {/* Quantity Management */}
                       <div className="flex items-center justify-end space-x-2">
                         <button
+                          type="button"
                           onClick={() =>
                             item.quantity > 20
                               ? handleDecreaseQuantity(item._id)
@@ -453,6 +479,7 @@ export default function Cart() {
                         />
 
                         <button
+                          type="button"
                           onClick={() => handleAddToCart(item._id)}
                           className=" text-white  rounded"
                         >
@@ -464,7 +491,14 @@ export default function Cart() {
                 </ul>
               ) : (
                 <div className="div lg:w-[60%]">
-                  <p className="mb-10 lg:mb-0 ">Your cart is empty.</p>
+                  <div className="flex justify-center items-center gap-4">
+                    <img
+                      src={empty}
+                      className="w-[64px] md:w-[70px] lg:w-[134px] rounded-full"
+                      alt="empty"
+                    />
+                    <p className=" ">Your cart is empty.</p>
+                  </div>
                   <div className="h-[1px] w-full bg-[#DDDDDD] mb-6"></div>
                 </div>
               )}
@@ -621,7 +655,9 @@ export default function Cart() {
                       : "Shipping Address"}
                   </p>
                   <p className="font-poopins font-medium text-[16px] leading-[26px] lg:text-[20px] lg:leading-[32px]">
-                    {data.Pickup_Location}
+                    {data.Shipping === "Pick up"
+                      ? data.Pickup_Location
+                      : data.Shipping_Address}
                   </p>
                 </div>
               </div>
@@ -656,14 +692,18 @@ export default function Cart() {
 
               <div className="my-2 h-[2px] bg-black w-full"></div>
 
-              <div className="flex flex-row justify-between items-center">
-                <p className="font-poopins font-medium text-[14px] leading-[22px] lg:font-nexa-bold lg:text-[20px] lg:leading-[32px] text-[#DDDDDD]">
-                  Shipping Cost
-                </p>
-                <p className="font-poopins font-medium text-[14px] leading-[22px] lg:font-nexa-bold lg:text-[20px] lg:leading-[32px] text-[#DDDDDD]">
-                  ₦ 202,000
-                </p>
-              </div>
+              {data.Shipping === "Pick up" ? (
+                ""
+              ) : (
+                <div className="flex flex-row justify-between items-center">
+                  <p className="font-poopins font-medium text-[14px] leading-[22px] lg:font-nexa-bold lg:text-[20px] lg:leading-[32px] text-[#DDDDDD]">
+                    Shipping Cost
+                  </p>
+                  <p className="font-poopins font-medium text-[14px] leading-[22px] lg:font-nexa-bold lg:text-[20px] lg:leading-[32px] text-[#DDDDDD]">
+                    {data.Shipping === "Standard Shipping" ? "₦ 3,000" : "₦ 6,000"}
+                  </p>
+                </div>
+              )}
               <div className="flex flex-row justify-between items-center mt-2">
                 <p className="font-poopins font-medium text-[14px] leading-[22px] lg:font-nexa-bold lg:text-[20px] lg:leading-[32px] text-[#DDDDDD]">
                   VAT
@@ -696,7 +736,7 @@ export default function Cart() {
               <p className="font-poopins font-medium text-[14px] leading-[22px] lg:text-[16px] lg:leading-[26px] text-[#9A9A9A] mb-3">
                 Payment Method
               </p>
-              <div className="flex justify-between">
+              <div className="flex lg:justify-between justify-center lg:gap-0 ">
                 <div
                   className="div border-[#DDDDDD] mb-4 lg:mb-2 border-2 rounded-[16px] p-4"
                   onClick={() => {
@@ -728,7 +768,10 @@ export default function Cart() {
                   </p>
                 </div>
               </div>
-              <p className="font-poopins font-medium text-[12px] leading-[20px]  text-[#9A9A9A] mt43">Using this option you will be redirected back to the website once payment has been made and confirmed</p>
+              <p className="font-poopins font-medium text-[12px] leading-[20px]  text-[#9A9A9A] mt43">
+                Using this option you will be redirected back to the website
+                once payment has been made and confirmed
+              </p>
             </div>
           </div>
         </div>

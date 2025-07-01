@@ -1,6 +1,6 @@
 // Toast.js
 
-import { toast as sonnerToast } from "sonner";
+import PropTypes from "prop-types";
 
 export default function Toast({ message, color }) {
   return (
@@ -18,3 +18,8 @@ export default function Toast({ message, color }) {
     </div>
   );
 }
+
+Toast.propTypes = {
+  message: PropTypes.string.isRequired,
+  color: PropTypes.string
+};

@@ -8,8 +8,7 @@ export default function OrderHistory() {
       orderDate: "Jan 15, 2023",
       orderId: "001",
       itemsOrdered: [
-        { name: "Black T-shirts", quantity: 10, specifications: "N/A" },
-        { name: "Blue Jeans", quantity: 5, specifications: "N/A" }
+        { name: "Blue Jeans", quantity: 5, }
       ],
       totalPrice: "₦88,000",
     },
@@ -17,8 +16,8 @@ export default function OrderHistory() {
       orderDate: "Jan 15, 2023",
       orderId: "002",
       itemsOrdered: [
-        { name: "Custom Hoodies", quantity: 15, specifications: "Red color" },
-        { name: "Custom Caps", quantity: 20,specifications: "Logo print, Adjustable logo" }
+        { name: "Custom Hoodies", quantity: 15,  },
+        { name: "Custom Caps", quantity: 20, }
       ],
       totalPrice: "₦120,000",
     },
@@ -26,8 +25,8 @@ export default function OrderHistory() {
       orderDate: "Jan 15, 2023",
       orderId: "003",
       itemsOrdered: [
-        { name: "White Polo Shirts", quantity: 20, specifications: "N/A" },
-        { name: "Grey Sweatpants", quantity: 10, specifications: "N/A" }
+        { name: "White Polo Shirts", quantity: 20,  },
+        { name: "Grey Sweatpants", quantity: 10,  }
       ],
       totalPrice: "₦140,500",
     },
@@ -42,7 +41,6 @@ export default function OrderHistory() {
             <th className="border border-gray-300 px-4 py-2">Order ID</th>
             <th className="border border-gray-300 px-4 py-2">Item Name</th>
             <th className="border border-gray-300 px-4 py-2">Quantity</th>
-            <th className="border border-gray-300 px-4 py-2">Specifications</th>
             <th className="border border-gray-300 px-4 py-2">Total Price</th>
           </tr>
         </thead>
@@ -69,7 +67,6 @@ export default function OrderHistory() {
                   )}
                   <td className="border border-gray-300 px-4 py-2">{item.name}</td>
                   <td className="border border-gray-300 px-4 py-2">{item.quantity}</td>
-                  <td className="border border-gray-300 px-4 py-2">{item.specifications}</td>
                   {idx === 0 && (
                     <td
                       className="border border-gray-300 px-4 py-2"

@@ -1,14 +1,17 @@
 import wc from "../assets/Images/wcircle.svg";
 import ba from "../assets/Images/barrow.svg";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useState, useEffect, useRef } from "react";
+
+
+import { useRef } from "react";
 import axios from "axios";
 import { toast as sonnerToast, Toaster } from "sonner";
-import Toast from "../Pages/Toast";
+import Toast from "./Toast";
 import { useNavigate } from "react-router-dom";
-
+import PropTypes from "prop-types";
+VerifyEmail.propTypes = {
+    email: PropTypes.string.isRequired,
+  };
 export default function VerifyEmail({email}) {
   const inputRefs = useRef([]); // used for OTP focus management
   // Email form

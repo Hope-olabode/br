@@ -1,4 +1,3 @@
-import React, { useState, useEffect, useContext, useMemo } from "react";
 import ho from "../assets/Images/ho.svg";
 import sho from "../assets/Images/sho.svg";
 import shi from "../assets/Images/shi.svg";

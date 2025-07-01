@@ -6,7 +6,7 @@ const CustomCheckboxGroup = ({ checkboxData, checkboxes, handleCheckboxChange, s
       <p className="text-[14px] leading-[22px] font-medium mb-4">{tag}</p>
       <div key={style} className={`${style}`}>
         {checkboxData.map(({ key, label }) => (
-          <div >
+          <div key={key} >
             <label className={`${checkboxes[key] ? 'bg-black  hover:border-white transition-all duration-200 ease-in-out' : ''}  border-2 border-white pl-4  hover:border-2 hover:border-[#DDDDDD] group rounded-full inline-flex w-full h-12 items-center cursor-pointer`} key={key}>
               <input
                 type="checkbox"

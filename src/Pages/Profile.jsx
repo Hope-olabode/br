@@ -33,7 +33,7 @@ export default function Profile() {
           </p>
         </div>
         <button className="div bg-black grid grid-cols-2 p-2 gap-2 rounded-[32px] lg:hidden">
-          <button className="relative">
+          <button className="relative cursor-pointer">
             <img className="w-full" src={AD} alt="" />
             <button className="absolute inset-0 flex items-center justify-center">
               <button onClick={()=>navigate("/Edit")} className="text-white font-poopins font-medium text-[14px] leading-[22px] lg:font-nexa-bold lg:text-[24px] lg:leading-[38px]">
@@ -69,7 +69,7 @@ export default function Profile() {
 
 
         <div className="div bg-black  grid-cols-4 p-2 gap-2 rounded-[128px] hidden lg:grid">
-          <div className="relative">
+          <div className="relative cursor-pointer hover:scale-105 transition-transform">
             <img className="w-full" src={AD2} alt="" />
             <div className="absolute inset-0 flex items-center justify-center">
               <p onClick={()=>navigate("/Edit") } className="text-white font-poopins font-medium text-[14px] leading-[22px] lg:font-nexa-bold lg:text-[24px] lg:leading-[38px]">
@@ -77,7 +77,7 @@ export default function Profile() {
               </p>
             </div>
           </div>
-          <div className="relative">
+          <div className="relative cursor-pointer hover:scale-105 transition-transform">
             <img className="w-full" src={OH2} alt="" />
             <div className="absolute inset-0 flex items-center justify-center">
               <p onClick={()=>navigate("/Order")} className="text-white font-poopins font-medium text-[14px] leading-[22px] lg:font-nexa-bold lg:text-[24px] lg:leading-[38px]">
@@ -85,7 +85,7 @@ export default function Profile() {
               </p>
             </div>
           </div>
-          <div className="relative">
+          <div className="relative cursor-pointer hover:scale-105 transition-transform">
             <img className="w-full" src={CI2} alt="" />
             <div className="absolute inset-0 flex items-center justify-center">
               <p onClick={()=>navigate("/Cart")} className="text-white font-poopins font-medium text-[14px] leading-[22px] lg:font-nexa-bold lg:text-[24px] lg:leading-[38px]">
@@ -93,7 +93,7 @@ export default function Profile() {
               </p>
             </div>
           </div>
-          <div className="relative ">
+          <div className="relative cursor-pointer hover:scale-105 transition-transform">
             <img className="w-full" src={F2} alt="" />
             <div className="absolute inset-0 flex items-center justify-center">
               <p onClick={()=>navigate("/Liked")} className="text-white font-poopins font-medium text-[14px] leading-[22px] lg:font-nexa-bold lg:text-[24px] lg:leading-[38px]">
