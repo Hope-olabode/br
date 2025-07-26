@@ -18,13 +18,14 @@ export default function CustomQuote() {
 
   const checkboxData1 = [
     "Hoodie",
-    "Shorts",
-    "T-shirts",
+    "T-Shirts",
+    "Shirts",
     "Trouser",
-    "Sweatshirt",
+    "Joggers",
     "Cap",
     "Jersey",
-    "Jackets",
+    "Female-Wears",
+    "Tank-tops"
   ];
 
   const checkboxData4 = [

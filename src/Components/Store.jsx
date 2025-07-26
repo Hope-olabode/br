@@ -53,13 +53,15 @@ export default function Store({
 
   const itemss = [
     "Hoodie",
-    "Shorts",
-    "T-shirts",
+    "T-Shirts",
+    "Shirts",
     "Trouser",
-    "Sweatshirt",
+    "Shorts",
+    "Trousers",
     "Cap",
     "Jersey",
-    "Jackets",
+    "Female-Wears",
+    "Tank-tops"
   ];
 
   // const likeProduct = async (productId) => {
@@ -122,7 +124,7 @@ export default function Store({
 
   //       displayMsg()
 
-  //       localStorage.setItem("cart", JSON.stringify(updatedCart));
+  //       sessionStorage.setItem("cart", JSON.stringify(updatedCart));
   //       } else {
   //         const product = products.find((p) => p._id === productId);
   //         const newCart1 = { ...product, quantity: 20 };
@@ -131,7 +133,7 @@ export default function Store({
   //         await axios.post("    ${import.meta.env.VITE_BACKEND_URL}/cart", newCart1, { withCredentials: true }); // Added credentials
   //         setCart(newCart);
 
-  //         localStorage.setItem("cart", JSON.stringify(newCart));
+  //         sessionStorage.setItem("cart", JSON.stringify(newCart));
   //         toast.success("Product added to cart");
   //     }
   //   } catch (error) {
@@ -157,7 +159,7 @@ export default function Store({
   //     await axios.put(`    ${import.meta.env.VITE_BACKEND_URL}/cart/${productId}`, { quantity: newQuantity }, {
   //       withCredentials: true,
   //     }); // Added credentials
-  //     localStorage.setItem("cart", JSON.stringify(updatedCart));
+  //     sessionStorage.setItem("cart", JSON.stringify(updatedCart));
   //   } catch (error) {
   //     console.error("Error updating quantity:", error);
   //   }
@@ -170,7 +172,7 @@ export default function Store({
   //       withCredentials: true,
   //     }); // Added credentials
   //     setCart(updatedCart);
-  //     localStorage.setItem("cart", JSON.stringify(updatedCart));
+  //     sessionStorage.setItem("cart", JSON.stringify(updatedCart));
   //   } catch (error) {
   //     console.error("Error removing from cart:", error);
   //   }
@@ -188,7 +190,7 @@ export default function Store({
   //       withCredentials: true,
   //     }); // Added credentials
   //     setCart(updatedCart);
-  //     localStorage.setItem("cart", JSON.stringify(updatedCart));
+  //     sessionStorage.setItem("cart", JSON.stringify(updatedCart));
   //   } catch (error) {
   //     console.error("Error decreasing quantity:", error);
   //   }
@@ -238,7 +240,7 @@ export default function Store({
   };
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 9;
+  const itemsPerPage = 6;
 
   // Calculate the displayed products
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -655,7 +657,7 @@ export default function Store({
                     >
                       <div className="price">
                         <p className="font-nexa-bold text-[16px] leading-[26px] font-bold md:text-[24px] md:leading-[38px]">
-                          ₦ {product.price}
+                          ₦ {product.price.toLocaleString()}
                         </p>
                         <p
                           className={`${

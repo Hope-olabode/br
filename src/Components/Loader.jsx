@@ -14,10 +14,12 @@ export default function Loader() {
   }, []);
   return (
     
-    <div className="flex items-center justify-center fixed inset-0 bg-white z-50">
+    <div className="div">
+      <div className="flex items-center justify-center fixed inset-0 bg-white z-50">
       <div className="relative flex items-center justify-center w-12 h-12 bg-[#E2063A] rounded-full animate-outer">
         <div className="absolute w-10 h-10 bg-[#000000] rounded-full animate-inner"></div>
       </div>
+    </div>
     </div>
   );
 }

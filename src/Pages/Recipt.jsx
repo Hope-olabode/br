@@ -129,7 +129,7 @@ export default function Recipt() {
             {/* Bottom Row */}
             <div className="grid grid-cols-4 gap-2 text-center py-4">
               <p className="text-[#9A9A9A] font-medium font-poopins text-[14px] leading-[22px] flex justify-center items-center">
-                Cozy Comfort Crewneck Sweatshirt
+                Cozy Comfort Crewneck Joggers
               </p>
               <p className="text-[#9A9A9A] font-medium font-poopins text-[14px] leading-[22px] flex justify-center items-center">
                 15

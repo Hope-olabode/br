@@ -73,7 +73,7 @@ export default function likedProducts() {
   //         withCredentials: true,
   //       }); // Added credentials
   //       setCart(updatedCart);
-  //       localStorage.setItem("cart", JSON.stringify(updatedCart));
+  //       sessionStorage.setItem("cart", JSON.stringify(updatedCart));
 
   //       } else {
   //         const product = products.find((p) => p._id === productId);
@@ -83,7 +83,7 @@ export default function likedProducts() {
   //         await axios.post("    ${import.meta.env.VITE_BACKEND_URL}/cart", newCart1, { withCredentials: true }); // Added credentials
   //         setCart(newCart);
   //         cartAddMsg();
-  //         localStorage.setItem("cart", JSON.stringify(newCart));
+  //         sessionStorage.setItem("cart", JSON.stringify(newCart));
   //     }
   //   } catch (error) {
   //     console.error("Error adding to cart:", error);
@@ -108,7 +108,7 @@ export default function likedProducts() {
   //     await axios.put(`    ${import.meta.env.VITE_BACKEND_URL}/cart/${productId}`, { quantity: newQuantity }, {
   //       withCredentials: true,
   //     }); // Added credentials
-  //     localStorage.setItem("cart", JSON.stringify(updatedCart));
+  //     sessionStorage.setItem("cart", JSON.stringify(updatedCart));
   //   } catch (error) {
   //     console.error("Error updating quantity:", error);
   //   }
@@ -121,7 +121,7 @@ export default function likedProducts() {
   //       withCredentials: true,
   //     }); // Added credentials
   //     setCart(updatedCart);
-  //     localStorage.setItem("cart", JSON.stringify(updatedCart));
+  //     sessionStorage.setItem("cart", JSON.stringify(updatedCart));
   //     cartRemoveMsg();
   //   } catch (error) {
   //     console.error("Error removing from cart:", error);
@@ -140,7 +140,7 @@ export default function likedProducts() {
   //       withCredentials: true,
   //     }); // Added credentials
   //     setCart(updatedCart);
-  //     localStorage.setItem("cart", JSON.stringify(updatedCart));
+  //     sessionStorage.setItem("cart", JSON.stringify(updatedCart));
   //   } catch (error) {
   //     console.error("Error decreasing quantity:", error);
   //   }

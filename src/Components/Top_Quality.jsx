@@ -6,13 +6,14 @@ export default function TopQuality() {
       <h1 className="text-[40px] font-nexa-bold text px-10 leading-[52px] ">Experience Top Quality <br /> Product</h1>
       <div className="list">
         <p>Hoodie</p>
-        <p>Shorts</p>
-        <p>T-shirt</p>
+        <p>T-Shirts</p>
+        <p>Shirts</p>
         <p>Trouser</p>
-        <p>Sweatshirt</p>
+        <p>Joggers</p>
         <p>Cap</p>
         <p>Jersey</p>
-        <p>Jackets</p>
+        <p>Female-Wears</p>
+        <p>Tank-tops</p>
       </div>
       <div className="products">
         <img src={temp_product} alt="" />

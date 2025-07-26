@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import wc from "../assets/Images/wcircle.svg";
-import ba from "../assets/Images/barrow.svg";
-import Loader from "../Components/Loader2";
+import wc from "../../assets/Images/wcircle.svg";
+import ba from "../../assets/Images/barrow.svg";
+import Loader from "../../Components/Loader2";
 export default function CreateProduct() {
   const {
     register,
@@ -102,7 +102,7 @@ export default function CreateProduct() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white shadow-2xl rounded mt-[150px]">
+    <div className="max-w-3xl mx-auto p-6 bg-white  rounded mt-[50px]">
       <h1 className="text-2xl font-bold mb-6">Create Product</h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -169,8 +169,9 @@ export default function CreateProduct() {
             <option value="">Select Category</option>
             <option value="Hoodie">Hoodie</option>
             <option value="Shirts">Shirts</option>
-            <option value="Shorts">Shorts</option>
+            <option value="T-Shirts">T-Shirts</option>
             <option value="Trouser">Trouser</option>
+            <option value="Shorts">Shorts</option>
             <option value="Tanktop">Tanktop</option>
             <option value="Cap">Cap</option>
             <option value="Jersey">Jersey</option>
@@ -266,13 +267,13 @@ export default function CreateProduct() {
         <button
           type="submit"
           className="bg-[#E2063A] my-4 text-white  rounded-full relative overflow-hidden group lg:h-[72px] lg:w-full  w-[100%]"
-          disabled={
+          /* disabled={
             Name?.trim()?.length === 0 ||
             Price?.trim()?.length === 0 ||
             Quantity?.trim()?.length === 0 ||
             Discription?.trim()?.length === 0 ||
             Category?.trim()?.length === 0
-          }
+          } */
         >
           <div
             className={`${
@@ -284,8 +285,8 @@ export default function CreateProduct() {
                 Name?.trim()?.length === 0 ||
                 Price?.trim()?.length === 0 ||
                 Quantity?.trim()?.length === 0 ||
-                Discription?.trim()?.length === 0 ||
-                Category?.trim()?.length === 0
+                Category?.trim()?.length === 0 /* ||
+                Discription?.trim()?.length === 0 */
                   ? "inset-0 bg-[#ffffffd0] z-10 absolute w-100%"
                   : ""
               } relative  px-4 py-[13px] lg:py-[23px] lg:px-0  `}
@@ -301,9 +302,9 @@ export default function CreateProduct() {
                   className={`${
                     Name?.trim()?.length === 0 ||
                     Price?.trim()?.length === 0 ||
-                    Quantity?.trim()?.length === 0 ||
-                    Discription?.trim()?.length === 0 ||
-                    Category?.trim()?.length === 0
+                    Quantity?.trim()?.length === 0  ||
+                    Category?.trim()?.length === 0 /* ||
+                    Discription?.trim()?.length === 0 */
                       ? "hi"
                       : "hidden"
                   } lg:h-10`}
@@ -313,9 +314,9 @@ export default function CreateProduct() {
                   className={`${
                     Name?.trim()?.length === 0 ||
                     Price?.trim()?.length === 0 ||
-                    Quantity?.trim()?.length === 0 ||
-                    Discription?.trim()?.length === 0 ||
-                    Category?.trim()?.length === 0
+                    Quantity?.trim()?.length === 0  ||
+                    Category?.trim()?.length === 0 /* ||
+                    Discription?.trim()?.length === 0 */
                       ? "hidden"
                       : "block"
                   } lg:h-10`}

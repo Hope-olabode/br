@@ -127,13 +127,13 @@ import { useNavigate } from "react-router-dom";
 const ProductList = () => {
   const [data, setData] = useState([]);
   const [cart, setCart] = useState(() => {
-    // Retrieve the initial value from localStorage or default to false
-    return JSON.parse(localStorage.getItem("cart")) || [];
+    // Retrieve the initial value from sessionStorage or default to false
+    return JSON.parse(sessionStorage.getItem("cart")) || [];
   });
   const [filterCategory, setFilterCategory] = useState(""); // No category selected by default
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
+    sessionStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
   useEffect(() => {

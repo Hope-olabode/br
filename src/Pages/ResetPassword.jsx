@@ -20,7 +20,7 @@ const schema = z.object({
 export default function ResetPassword() {
   const [confirmEmail, setConfirmEmail] = useState(false);
   const [email, setEmail] = useState(() => {
-    const storedEmail = localStorage.getItem("email");
+    const storedEmail = sessionStorage.getItem("email");
     return storedEmail ? JSON.parse(storedEmail) : "";
   });
   const [confirmOtp, setConfirmOtp] = useState(false);
@@ -71,7 +71,7 @@ export default function ResetPassword() {
     
     console.log("Email data:", data.Email);
     const Email = data.Email;
-    localStorage.setItem("email", JSON.stringify(Email));
+    sessionStorage.setItem("email", JSON.stringify(Email));
     try {
       setLoading(true);
       const response = await axios.post(
@@ -117,7 +117,7 @@ export default function ResetPassword() {
   const onOtpSubmit = async (data) => {
     const otpString = data.otp.join("");
     console.log("OTP Submitted:", otpString);
-    const Data = { Email: localStorage.getItem("Email"), otp: otpString };
+    const Data = { Email: sessionStorage.getItem("Email"), otp: otpString };
     // Process your OTP submission logic here
     try {
       setLoading(true);

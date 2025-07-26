@@ -3,7 +3,7 @@ import RB from '../assets/Images/RB.svg';
 
 export default function Error4() {
     return(
-        <div className="mt-[80px] flex flex-col items-center justify-center h-screen px-4 md:px-[40px] lg:px-[60px] xl:px-[80px] 2xl:px-[120px]">
+        <div className="flex flex-col items-center justify-center h-screen  px-4 md:px-[40px] lg:px-[60px] xl:px-[80px] 2xl:px-[120px]">
             <img src={E4} alt="" />
             <p className=" font-poopins font-medium text-[16px] leading-[26px] lg:font-nexa-bold lg:text-[48px] md:leading-[64px]">Page Not Found</p>
             <a href="/" className="mt-10 flex items-center gap-4">

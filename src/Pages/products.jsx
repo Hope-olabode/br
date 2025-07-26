@@ -16,7 +16,7 @@ function ProductDetail() {
   const [loading, setLoading] = useState(false);
 
   const [size, setSize] = useState(() => {
-    const stored = localStorage.getItem(`selectedSize_${id}`);
+    const stored = sessionStorage.getItem(`selectedSize_${id}`);
     return stored || "L";
   });
 
@@ -74,7 +74,7 @@ function ProductDetail() {
   //       }); // Added credentials
   //       setCart(updatedCart);
 
-  //       localStorage.setItem("cart", JSON.stringify(updatedCart));
+  //       sessionStorage.setItem("cart", JSON.stringify(updatedCart));
   //       } else {
   //         const product = products.find((p) => p._id === productId);
   //         const newCart1 = { ...product, quantity: 20 };
@@ -83,7 +83,7 @@ function ProductDetail() {
   //         await axios.post("    ${import.meta.env.VITE_BACKEND_URL}/cart", newCart1, { withCredentials: true }); // Added credentials
   //         setCart(newCart);
 
-  //         localStorage.setItem("cart", JSON.stringify(newCart));
+  //         sessionStorage.setItem("cart", JSON.stringify(newCart));
   //     }
   //   } catch (error) {
   //     console.error("Error adding to cart:", error);
@@ -108,7 +108,7 @@ function ProductDetail() {
   //     await axios.put(`    ${import.meta.env.VITE_BACKEND_URL}/cart/${productId}`, { quantity: newQuantity }, {
   //       withCredentials: true,
   //     }); // Added credentials
-  //     localStorage.setItem("cart", JSON.stringify(updatedCart));
+  //     sessionStorage.setItem("cart", JSON.stringify(updatedCart));
   //   } catch (error) {
   //     console.error("Error updating quantity:", error);
   //   }
@@ -121,7 +121,7 @@ function ProductDetail() {
   //       withCredentials: true,
   //     }); // Added credentials
   //     setCart(updatedCart);
-  //     localStorage.setItem("cart", JSON.stringify(updatedCart));
+  //     sessionStorage.setItem("cart", JSON.stringify(updatedCart));
   //   } catch (error) {
   //     console.error("Error removing from cart:", error);
   //   }
@@ -140,7 +140,7 @@ function ProductDetail() {
   //     }); // Added credentials
   //     setCart(updatedCart);
   //     setCart2(updatedCart);
-  //     localStorage.setItem("cart", JSON.stringify(updatedCart));
+  //     sessionStorage.setItem("cart", JSON.stringify(updatedCart));
   //   } catch (error) {
   //     console.error("Error decreasing quantity:", error);
   //   }
@@ -150,7 +150,7 @@ function ProductDetail() {
     console.log(s);
     console.log(productId);
     setSize(s);
-    localStorage.setItem(`selectedSize_${productId}`, s);
+    sessionStorage.setItem(`selectedSize_${productId}`, s);
     setCart((prevCart) =>
       prevCart.map((item) =>
         item._id === productId ? { ...item, size: s } : item
@@ -215,7 +215,7 @@ function ProductDetail() {
               {product.name}
             </h1>
             <div className="flex flex-row items-center justify-between font-nexa-bold text-[20px] leading-[32px] lg:text-[36px] lg:leading-[48px] mb-5 md:order-4 md:mt-[58px]">
-              <p>₦ {product.price}</p>
+              <p>₦ {product.price.toLocaleString()}</p>
               <div className="flex items-center  justify-center space-x-2 ">
                 {cart.find((item) => item._id === product._id) ? (
                   <button
