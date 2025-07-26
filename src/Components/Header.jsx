@@ -82,7 +82,7 @@ export default function Header() {
       />
       <div className="App">
         <header
-          className={` px-4 py-[24px] fixed shadow-xl  w-[100%] top-[0px] z-20 bg-white rounded-b-[40px]  justify-between items-center md:px-8 lg:px-[120px] hidden lg:flex transition-all duration-500 ease-in-out ${
+          className={` px-4 py-[24px] fixed w-[100%] top-[0px] z-20 bg-white rounded-b-[40px]  justify-between items-center md:px-8 lg:px-[120px] hidden lg:flex transition-all duration-500 ease-in-out ${
             isVisible
               ? "translate-y-0 opacity-100"
               : "-translate-y-full opacity-0"
