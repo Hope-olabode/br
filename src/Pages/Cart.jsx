@@ -38,16 +38,7 @@ const schema = z
     Full_Name: z.string().min(1, "Name is Required"),
     Shipping_Address: z.string().optional(),
   })
-  .refine(
-    (data) =>
-      data.Option !== "option1" &&
-      data.Shipping_Address &&
-      data.Shipping_Address.trim() !== "",
-    {
-      path: ["Shipping_Address"],
-      message: "Shipping Address is required ",
-    }
-  );
+  
 
 export default function Cart() {
   const {
@@ -88,13 +79,7 @@ export default function Cart() {
   const cartProducts = getCartProducts();
   console.log(cartProducts);
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-
-   
-    } = useForm({
+  const { register, handleSubmit, reset } = useForm({
     defaultValues: {
       Full_Name: user?.Full_Name || "",
       Phone_No: user?.Phone_No || "",
@@ -115,6 +100,7 @@ export default function Cart() {
 
   const back = () => {
     setStep(false);
+    setPayment(false);
   };
 
   const back2 = () => {
@@ -125,6 +111,13 @@ export default function Cart() {
   const next = (data) => {
     let Data = { ...data };
     if (option === "option1") {
+      if (!data.Shipping_Address || data.Shipping_Address.trim() === "") {
+      customToast({
+        color: "#E2063A",
+        message: "Shipping Address is required for delivery",
+      });
+      return; 
+    }
       if (selected) {
         Data = { ...data, Shipping: selected };
         setData(Data);
@@ -144,12 +137,13 @@ export default function Cart() {
         Shipping: "Pick up",
         Pickup_Location: "32, western avenue ojuelegba, Lagos, Nigeria.",
       };
+      delete Data.Shipping_Address;
       setData(Data);
-
       window.scrollTo(0, 0);
       setPayment(true);
       setStep(false);
     }
+    console.log(Data);
   };
 
   const onError = (errors) => {
@@ -228,21 +222,17 @@ export default function Cart() {
   return (
     <div className="mt-[96px] py-6">
       <div className="lg:pt-16 px-4 md:px-[40px] lg:px-[60px] xl:px-[80px] 2xl:px-[120px]">
-        {step ? (
-          <button type="button" onClick={back}>
-            <img src={arr} className="w-5 h-5" alt="" />
-          </button>
-        ) : (
-          ""
-        )}
+        <div className="flex font-poopins items-center gap-1 text-[#C7C7C7]">
+          <p className=" cursor-pointer" onClick={back}>Cart</p>
+          {step && (
+            <>
+              {" / "}
+              <span  className="text-black cursor-pointer">Order information</span>
+            </>
+          )}
+          {payment && (<>/ <p onClick={back2} className="cursor-pointer">Order information /</p> <span  className="text-black cursor-pointer">Checkout</span></>)}
+        </div>
 
-        {payment ? (
-          <button type="button" onClick={back2}>
-            <img src={arr} className="w-5 h-5" alt="" />
-          </button>
-        ) : (
-          ""
-        )}
       </div>
       <Toaster position="top-center" expand={true} />
       {payment ? (
@@ -250,7 +240,7 @@ export default function Cart() {
       ) : (
         <form onSubmit={handleSubmit(next, onError)}>
           <div className="pt-8 px-4 md:px-[40px] lg:px-[60px] xl:px-[80px] 2xl:px-[120px]">
-            <h2 className="font-nexa-bold text-[24px] leading-[35px] mb-8">
+            <h2 className={`font-nexa-bold text-[24px] leading-[35px] mb-8 ${step ? "hidden" : ""}`}>
               Cart
             </h2>
             <div className="div lg:flex w-full">
@@ -700,7 +690,9 @@ export default function Cart() {
                     Shipping Cost
                   </p>
                   <p className="font-poopins font-medium text-[14px] leading-[22px] lg:font-nexa-bold lg:text-[20px] lg:leading-[32px] text-[#DDDDDD]">
-                    {data.Shipping === "Standard Shipping" ? "₦ 3,000" : "₦ 6,000"}
+                    {data.Shipping === "Standard Shipping"
+                      ? "₦ 3,000"
+                      : "₦ 6,000"}
                   </p>
                 </div>
               )}

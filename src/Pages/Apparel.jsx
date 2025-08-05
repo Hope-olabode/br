@@ -19,8 +19,10 @@ import { AuthContext } from "../context/authContext.jsx";
 import { motion, AnimatePresence } from "framer-motion";
 import up from "../assets/Images/up.svg";
 import down from "../assets/Images/down.svg";
+import  Scroll  from "../Components/smoothScrool.jsx";
 
 import Loader from "../Components/Loader";
+import Play from "./Play Ground.jsx";
 
 export default function Apparel() {
   const [loading] = useState(false);
@@ -35,7 +37,7 @@ export default function Apparel() {
   // State to keep track of the active button (initially null or a specific index)
   const [activeIndex, setActiveIndex] = useState(() => {
     // Retrieve the initial value from sessionStorage or default to false
-    return JSON.parse(sessionStorage.getItem("activeIndex")) || -1;
+    return JSON.parse(sessionStorage.getItem("activeIndex")) || null;
   });
 
   /* const [filteredProducts, setFilteredProducts] = useState([]); */
@@ -49,8 +51,35 @@ export default function Apparel() {
   console.log(typeof filterCategory);
   console.log(products); */
 
+  const {
+    smoothScrollTo,
+  } = Scroll();
+
+  // const smoothScrollBy = (targetY, duration = 200) => {
+  //   const startY = window.scrollY;
+  //   const startTime = performance.now();
+
+  //   const animate = (currentTime) => {
+  //     const elapsed = currentTime - startTime;
+  //     const progress = Math.min(elapsed / duration, 1);
+  //     const ease =
+  //       progress < 0.5
+  //         ? 2 * progress * progress
+  //         : -1 + (4 - 2 * progress) * progress; // easeInOutQuad
+
+  //     window.scrollTo(0, startY + targetY * ease);
+
+  //     if (elapsed < duration) {
+  //       requestAnimationFrame(animate);
+  //     }
+  //   };
+
+  //   requestAnimationFrame(animate);
+  // };
+
   // Function to handle button click
   const handleClick = (name, index) => {
+    smoothScrollTo(950, 2000);
     setActiveIndex(index);
     sessionStorage.setItem("activeIndex", JSON.stringify(index));
 
@@ -186,7 +215,7 @@ export default function Apparel() {
     };
   }, [mFilterSort]);
 
-  console.log(filteredProducts)
+  console.log(filteredProducts);
 
   return (
     <div className="mt-[96px]">
@@ -395,22 +424,7 @@ export default function Apparel() {
           <span className="block lg:inline">Quality Product</span>
         </h1>
         <div className="md:flex mt-4 items-center justify-center mb-10 overflow-scroll md:px-[40px] lg:px-[60px] xl:px-[80px] 2xl:px-[120px]">
-          {/* <div className="flex  flex-row gap-[4px]">
-            <button onClick={ ()=>select("hoodie")} className="px-6 py-2 border-2 border-white hover:border-[#E6E6E6] focus:border-black focus:border-2 rounded-full font-nexa-bold text-[14px] leading-[22px] lg:text-[16px] lg:leading-[26px]">Hoodie</button>
-            <button className="px-6 py-2 border-2 border-white hover:border-[#E6E6E6] focus:border-black focus:border-2 rounded-full font-nexa-bold text-[14px] leading-[22px] lg:text-[16px] lg:leading-[26px]">Shorts</button>
-            <button className="px-6 py-2 border-2 border-white hover:border-[#E6E6E6] focus:border-black focus:border-2 rounded-full font-nexa-bold text-[14px] leading-[22px] lg:text-[16px] lg:leading-[26px] whitespace-nowrap">T-shirt</button>
-            <button className="px-6 py-2 border-2 border-white hover:border-[#E6E6E6] focus:border-black focus:border-2 rounded-full font-nexa-bold text-[14px] leading-[22px] lg:text-[16px] lg:leading-[26px]">Trouser</button>
-            <button className="px-6 py-2 border-2 border-white hover:border-[#E6E6E6] focus:border-black focus:border-2 rounded-full font-nexa-bold text-[14px] leading-[22px] lg:text-[16px] lg:leading-[26px]">Joggers</button>
-            <button className="px-6 py-2 border-2 border-white hover:border-[#E6E6E6] focus:border-black focus:border-2 rounded-full font-nexa-bold text-[14px] leading-[22px] lg:text-[16px] lg:leading-[26px]">Cap</button>
-            <button className="px-6 py-2 border-2 border-white hover:border-[#E6E6E6] focus:border-black focus:border-2 rounded-full font-nexa-bold text-[14px] leading-[22px] lg:text-[16px] lg:leading-[26px]">Jersey</button>
-            <button className="px-6 py-2 border-2 border-white hover:border-[#E6E6E6] focus:border-black focus:border-2 rounded-full font-nexa-bold text-[14px] leading-[22px] lg:text-[16px] lg:leading-[26px]">Female-Wears</button>
-          </div> */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="flex gap-[4px] mt-4 flex-wrap justify-center"
-          >
+          <div className="flex gap-[4px] mt-4 flex-wrap justify-center">
             {items.map((item, index) => (
               <button
                 key={index}
@@ -424,11 +438,11 @@ export default function Apparel() {
                 {item.name}
               </button>
             ))}
-          </motion.div>
+          </div>
         </div>
 
-        <div className="px-4 md:px-[40px] flex justify-center lg:px-[60px] xl:px-[80px] 2xl:px-[120px]   py-8">
-          <div className="max-w-[622px] relative">
+        {/* <div className="px-4 md:px-[40px] flex justify-center lg:px-[60px] xl:px-[80px] 2xl:px-[120px]   py-8">
+          <div className="max-w-[722px] relative">
             <AnimatePresence mode="wait">
               {activeIndex === -1 ? (
                 // Grid view
@@ -438,12 +452,12 @@ export default function Apparel() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="px-4 py-2 grid grid-cols-8 grid-rows-3 gap-x-2 gap-y-2"
+                  className="px-4 py-2 grid grid-cols-5 grid-rows-2 gap-x-2 gap-y-2"
                 >
                   {items.map((item, index) => (
                     <motion.div
                       key={index}
-                      className={item.style}
+                      
                       initial={{ opacity: 0, scale: 0.5 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{
@@ -489,12 +503,18 @@ export default function Apparel() {
               )}
             </AnimatePresence>
           </div>
-        </div>
+        </div> */}
+        <Play
+          activeIndex={activeIndex}
+          setActiveIndex={setActiveIndex}
+          filterCategory={filterCategory}
+          setFilterCategory={setFilterCategory}
+        />
       </div>
       {/* <CustomCheckbox checkboxes={checkboxes} handleCheckboxChange={handleCheckboxChange}  checkboxData={checkboxData}/> */}
       {/* {filterCategory === "" ? "" : } */}
 
-      {filteredProducts.length === 0 ? (
+      {filterCategory === "" ? (
         <MOQ />
       ) : (
         <Store

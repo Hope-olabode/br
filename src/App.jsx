@@ -40,6 +40,8 @@ import Dashboard from "./Pages/Admin/Dashboard.jsx";
 import Posts from "./Pages/Admin/Posts.jsx";
 import Customer from "./Pages/Admin/Customers.jsx";
 
+import CardStack from "./Components/CardStack.jsx";
+
 export default function App() {
   const location = useLocation(); // Detect route changes
   const [routeLoading, setRouteLoading] = useState(false);
@@ -119,12 +121,15 @@ export default function App() {
           <Route path="/l" element={<Loader />} />
           <Route path="/Reset" element={<ResetPassword />} />
           <Route path="/Test" element={<Payment />} />
+          
+        
+          
 
           <Route path="/Recipt" element={<Recipt />} />
           {/* <Route path="/Create" element={<CreateProduct />} /> */}
         </Route>
         <Route path="*" element={<Error4 />} />
-
+        <Route path="/card" element={<CardStack />}></Route>
         {/* Admin Routes */}
         <Route path="/Admin" element={<Admin />}>
           <Route path="Create products" element={<CreateProduct />} />

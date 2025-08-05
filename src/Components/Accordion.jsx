@@ -19,14 +19,14 @@ const Accordion = ({ title, answer }) => {
   };
 
   return (
-    <div className={` px-4 lg:h-24 transform ease-out flex items-center  duration-[400ms] rounded-2xl ${accordionOpen && "flex items-center duration-[400ms] p-4 lg:h-[auto] h-[auto] bg-black"}`}>
+    <div className={` px-4 lg:h-24 transform ease-out flex items-center duration-[400ms] rounded-2xl ${accordionOpen && "flex items-center duration-[400ms] p-4 lg:h-[auto] h-[auto] bg-black"}`}>
       <div
           className={`py-2 ${accordionOpen && " "} group`}
           onClick={toggleAccordion}
         >
           <button className="flex  items-center justify-between w-full text-[#9A9A9A]">
             <p
-              className={` font-medium leading-[22px] text-[14px]  md:font-nexa-bold lg:text-[24px] lg:leading-[38px] ${
+              className={` font-medium text-left leading-[22px] text-[14px]  md:font-nexa-bold lg:text-[24px] lg:leading-[38px] ${
                 hoverDisabled ? "/* text-[#E2063A] */" : "group-hover:text-black"
               }`}
             >

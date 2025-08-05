@@ -95,11 +95,11 @@ export default function HomePage() {
           <div className="buttons flex flex-col items-center w-full mt-10 lg:mt-[48px]">
             <button
               onClick={() => navigate("/Custom")}
-              className="bg-[#E2063A] h-12 text-white w-[196px] pl-4 pr-2  rounded-full relative overflow-hidden group lg:w-[205px] lg:h-[72px]  lg:pl-[40px]"
+              className="bg-[#E2063A] h-12 text-white w-[196px] pl-4 pr-2  rounded-full relative overflow-hidden group lg:w-[265px] lg:h-[72px]  lg:pl-[40px]"
             >
               <span className="relative z-10 ">
                 <p className="font-nexa-bold  text-[14px] leading-[22px] text-left lg:text-[16px] lg:leading-[26px]">
-                  Go to store
+                  Shop Brandit Store
                 </p>
               </span>
               <span className="absolute right-[10px] top-[50%]  translate-y-[-50%] h-8 w-8 bg-black transition-all duration-[1s] ease-in-out group-hover:translate-y-[-50%] group-hover:w-full group-hover:h-full group-hover:scale-[5]  rounded-full lg:right-4 lg:h-10 lg:w-10"></span>

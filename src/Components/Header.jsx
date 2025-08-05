@@ -82,24 +82,25 @@ export default function Header() {
       />
       <div className="App">
         <header
-          className={` px-4 py-[24px] fixed w-[100%] top-[0px] z-20 bg-white rounded-b-[40px]  justify-between items-center md:px-8 lg:px-[120px] hidden lg:flex transition-all duration-500 ease-in-out ${
+          className={` px-4 py-[24px] fixed w-[100%] top-[0px] z-[60] bg-white rounded-b-[40px] justify-evenly items-center md:px-8 custom-range:px-2 lg:px-[120px] hidden lg:flex transition-all duration-500 ease-in-out ${
             isVisible
               ? "translate-y-0 opacity-100"
               : "-translate-y-full opacity-0"
           }`}
-        >
-          <div className="flex flex-row">
-            <Link to="/">
+        > 
+          <Link to="/">
               <img src={logo} loading="lazy" width={36} height={36} className="w-36" alt="logo" />
             </Link>
+          <div className="flex flex-row">
+            
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex">
               <div className="hidden lg:flex md:gap-[2rem]  items-center text-[#9A9A9A]">
                 <NavLink
                   className={({ isActive }) =>
                     isActive
-                      ? "text-[#E2063A] font-nexa-light font-bold md:text-xs xl:text-sm 2xl:text-base pr-4 pl-8"
-                      : "font-nexa-light font-bold xl:text-sm 2xl:text-base hover:text-black pr-4 pl-8"
+                      ? "text-[#E2063A] font-nexa-light font-bold md:text-xs xl:text-sm 2xl:text-base px-4 pl-8"
+                      : "font-nexa-light font-bold xl:text-sm 2xl:text-base hover:text-black px-4 pl-8"
                   }
                   to="/About"
                 >
@@ -214,7 +215,7 @@ export default function Header() {
         </header>
 
         <header
-          className={`fixed w-[100%] top-[0px] z-20 bg-white px-8 h-[80px] items-center flex justify-between rounded-b-[40px] lg:hidden transition-all duration-500 ease-in-out ${
+          className={`fixed w-[100%] top-[0px] z-[60] bg-white px-8 h-[80px] items-center flex justify-between rounded-b-[40px] lg:hidden transition-all duration-500 ease-in-out ${
             isVisible
               ? "translate-y-0 opacity-100"
               : "-translate-y-full opacity-0"

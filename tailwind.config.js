@@ -13,11 +13,13 @@ export default {
       },
       boxShadow: {
         custom: "0 0 10px 0 rgba(0, 0, 0, 0.1)",
-        red: "0 4px 12px rgba(255, 0, 0, 0.4)"
+        red: "0 4px 12px rgba(255, 0, 0, 0.4)",
       },
       animation: {
         outer: "outerGrowShrink 1.1s infinite ease-in-out",
         inner: "innerGrowShrink 1.1s infinite ease-in-out",
+        rightScroll: "rightScroll 40s linear infinite",
+        leftScroll: "leftScroll 45s linear infinite",
       },
       keyframes: {
         innerGrowShrink: {
@@ -30,10 +32,20 @@ export default {
           "75%": { transform: "scale(1.5)" },
           "100%": { transform: "scale(1.5)" }, // Shrinks back to its original size
         },
+        rightScroll: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
+        leftScroll: {
+          "0%": { transform: "translateX(-50%)" },
+          "100%": { transform: "translateX(0)" },
+        },
       },
       screens: {
-        "lgg": "1160px",
-        
+        lgg: "1160px",
+        "custom-range": { min: "1024px", max: "1217px" },
+        xxs: '420px', 
+        xs: '520px', 
       },
     },
   },

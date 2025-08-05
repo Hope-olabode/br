@@ -33,8 +33,10 @@ import down from '../assets/Images/downloadables.svg';
 import i from '../assets/Images/file.svg';
 import Subscribe from '../Components/subscribe';
 import Accordion from '../Components/Accordion';
+import Scroll from "../Components/smoothScrool.jsx";
 
 export default function Education() {
+  const { smoothScrollTo } = Scroll();
   return(
     <div className="mt-[96px]">
       <div className="pt-[120px] pb-6 lg:pb-[98px] text-center px-4 md:px-[40px] lg:px-[60px] xl:px-[80px] 2xl:px-[120px]">
@@ -57,7 +59,7 @@ export default function Education() {
         <div className="flex max-w-[705px] flex-col items-center">
           <h3 className="font-nexa-bold text-[24px] leading-[35px] lg:text-[48px] lg:leading-[64px] mb-4">Welcome to Brandit's Education and Training Hub</h3>
           <p className="font-poopins text-[14px] leading-[22px] lg:text-[24px] lg:leading-[38px]">At Brandit, we believe in the power of knowledge and creativity. Our Education and Training page is your gateway to discovering the latest trends in fashion, gaining new skills, and connecting with industry experts. Whether you're a budding fashion entrepreneur or a seasoned professional, our events are designed to inspire and empower you to take your brand to new heights.</p>
-          <button className="mt-6 h-12 flex items-center font-nexa-bold text-[14px] leading-[22px] lg:text-[16px] lg:leading-[26px] rounded-full text-black bg-white pl-4 pr-2 border-2 border-white hover:border-[#DDDD]  gap-3">Explore Upcoming Events<img src={eventbut} alt="" /></button>
+          <button onClick={() => smoothScrollTo(1700, 1000)} className="mt-6 h-12 flex items-center font-nexa-bold text-[14px] leading-[22px] lg:text-[16px] lg:leading-[26px] rounded-full text-black bg-white pl-4 pr-2 border-2 border-white hover:border-[#DDDD]  gap-3">Explore Upcoming Events<img src={eventbut} alt="" /></button>
         </div>
       </div>
 

@@ -11,20 +11,18 @@
 
 @font-face {
   font-family: 'Nexa-bold';
-  src: url('./fonts/Web_Dark_Fonts/NexaTextDemo-Bold.eot'); 
-  src: 
-       url('./fonts/Web_Dark_Fonts/NexaTextDemo-Bold.woff2') format('woff2'), /* Modern Browsers */
-       url('./fonts/Web_Dark_Fonts/NexaTextDemo-Bold.woff') format('woff'); /* Modern Browsers */
+
+  src: url('./fonts/Web_Dark_Fonts/NexaTextBold.otf') format('opentype'); /* Modern Browsers */
+
   /* Add other font properties */
+      
+
 }
 
 @font-face {
   font-family: 'Nexa-light';
-  src: url('./fonts/Web_Light_Fonts/NexaTextDemo-Light.eot'); /* IE9 Compat Modes */
-  src: 
-       url('./fonts/Web_Light_Fonts/NexaTextDemo-Light.woff2') format('woff2'), /* Modern Browsers */
-       url('./fonts/Web_Light_Fonts/NexaTextDemo-Light.woff') format('woff'); /* Modern Browsers */
-  /* Add other font properties */
+ 
+  src: url('./fonts/Web_Light_Fonts/NexaTextLight.otf') format('opentype');
 }
 
 .App {
@@ -171,13 +169,25 @@ p {
 
 .ww { grid-area: ww; }
 
-#email:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0px 1000px rgb(0, 0, 0) inset ;
-  box-shadow: 0 0 0px 1000px rgb(0, 0, 0) inset;
-  -webkit-text-fill-color: white !important;
-  border: black;
-  border: 0px;
+#Email:-webkit-autofill {
+  box-shadow: 0 0 0px 1000px white inset ;
+  -webkit-box-shadow: 0 0 0px 1000px white inset ;
+  -webkit-text-fill-color: inherit ;
+  transition: background-color 5000s ease-in-out 0s; /* hack to delay autofill bg */
 }
+
+#Email:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px black inset !important;
+  box-shadow: 0 0 0 1000px black inset !important;
+  -webkit-text-fill-color: white !important;
+  color: white !important;
+  caret-color: white;
+  border: 2px solid black ;
+}
+
+
+
+
 #name:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px rgb(0, 0, 0) inset ;
   box-shadow: 0 0 0px 1000px rgb(0, 0, 0) inset;
@@ -190,6 +200,21 @@ p {
   -webkit-text-fill-color: white !important;
   border: black;
 }
+#Password:-webkit-autofill {
+  box-shadow: 0 0 0px 1000px white inset ;
+  -webkit-box-shadow: 0 0 0px 1000px white inset ;
+  -webkit-text-fill-color: inherit ;
+  transition: background-color 5000s ease-in-out 0s; /* hack to delay autofill bg */
+}
+
+#Password:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px black inset !important;
+  box-shadow: 0 0 0 1000px black inset !important;
+  -webkit-text-fill-color: white !important;
+  color: white !important;
+  caret-color: white;
+  border: 2px solid black ;
+}
 
 
 
@@ -198,3 +223,20 @@ p {
   gap: 106px; /* Adjust to the desired gap */
   background-color: green;
 }
+
+
+#Password:-webkit-autofill {
+  animation-name: autofill-start;
+  animation-duration: 0.01s;
+  animation-iteration-count: 1;
+}
+
+@keyframes autofill-start {
+  from {}
+  to {}
+}
+
+
+
+
+

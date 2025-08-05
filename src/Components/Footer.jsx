@@ -27,10 +27,10 @@ import sub4 from '../assets/Images/sub2.svg';
 export default function Footer() {
   const [isFocused, setIsFocused] = useState(false);
   return(
-    <footer className="px-4 py-[72px] relative flex flex-col items-center lg:items-start md:px-[40px] lg:px-[60px] xl:px-[120px]">
+    <footer className="px-4 py-[72px] overflow-hidden relative flex flex-col items-center lg:items-start md:px-[40px] lg:px-[60px] xl:px-[120px]">
       <img className="block lg:hidden absolute left-20% top-0" src={hold1} alt="" />
-      <img className="hidden lg:block absolute right-[50%] translate-x-[50%] top-0" src={hold2} alt="" />
-      <img src={logo} alt="logo" className="w-36 pb-[72px]"/>
+      <img className="hidden lg:block absolute right-[60%] translate-x-[50%] top-[-15%]" src={hold2} alt="" />
+      
       <div className="grid lg:flex gap-[72px]">
         <div className="order-2 lg:pt-4  md:order-1 md:mt-0">
           <div className=" flex flex-col gap-[24px]  md:font-medium">
@@ -44,27 +44,24 @@ export default function Footer() {
             </div>
             <div className="flex content-center items-center gap-2">
               <img src={location} alt="" />
-              <p className="font-poopins text-[14px] leading-[22px] md:text-[16px] md:leading-[26px]">Lagos, Nigeria.</p>
+              <p className="font-poopins text-[14px] leading-[22px] md:text-[16px] md:leading-[26px]">32, western avenue ojuelegba, Lagos, Nigeria.</p>
             </div>
           </div>
-          <div className="mt-[72px] lg:mt-[110px]">
-            <div className="lg:mb-[46px] mb-6">
+          <div className="mt-[72px] lg:mt-[110px] lg:block flex flex-col  items-center">
+            <div className="lg:mb-[46px] mb-2">
               <p className="font-medium font-poopins text-[14px] leading-[22px] lg:font-nexa-bold lg:text-[20px] lg:leading-[32px]">Connect with Us</p>
               <div className="flex xl:gap-3">
-                <img className="" src={x} alt="" />
-                <img className="" src={ln} alt="" />
+                {/* <img className="" src={x} alt="" />
+                <img className="" src={ln} alt="" /> */}
                 <img className="" src={tic} alt="" />
-                <img className="" src={face} alt="" />
+                {/* <img className="" src={face} alt="" /> */}
                 <img className="" src={insta} alt="" />
-                <img className="" src={you} alt="" />
+                {/* <img className="" src={you} alt="" /> */}
               </div>
             </div>
-            <div className="payments">
-              <p className="font-medium font-poopins text-[14px] leading-[22px] lg:font-nexa-bold lg:text-[20px] lg:leading-[32px]">Accepted Payments</p>
-              <div className="options">
-                <img className="h-[45px]" src={visa} alt="" />
-                
-              </div>
+            <div className="payments flex flex-col align-bottom  lg:flex-row lg:mt-20 lg:gap-5">
+              <img src={logo} alt="logo" className="w-36"/>
+              <p className="text-gray-300 mt-4 lg:mt-[35px] font-poopins text-[12px] leading-[18px] text-nowrap">© 2025. All rights reserved</p>
             </div>
           </div>
           
@@ -93,21 +90,21 @@ export default function Footer() {
           <div className="grid grid-cols-2 lg:mt-16 lg:flex  ">
             <div className="flex lg:w-[200px] xl:w-[231px] flex-col gap-4">
               <p className="text-[#E2063A] font-poopins font-medium text-[16px] leading-[26px] lg:font-nexa-bold lg:text-[20px] lg:leading-[32px]">Navigation</p>
-              <NavLink className={({isActive})=> isActive ? "text-[#E2063A] font-nexa-bold font-bold text-[16px] leading-[22px]" : "font-nexa-bold font-bold text-[16px] leading-[22px]  active:text-[#E2063A] focus:text-[#E2063A]"} to='/About'>About Us</NavLink>
-              <NavLink className={({isActive})=> isActive ? "text-[#E2063A] font-nexa-bold font-bold text-[16px] leading-[22px]" : "font-nexa-bold font-bold text-[16px] leading-[22px]  active:text-[#E2063A] focus:text-[#E2063A]"} to='/Become a reseller'>Become a Reseller</NavLink>
-              <NavLink className={({isActive})=> isActive ? "text-[#E2063A] font-nexa-bold font-bold text-[16px] leading-[22px]" : "font-nexa-bold font-bold text-[16px] leading-[22px]  active:text-[#E2063A] focus:text-[#E2063A]"} to='/Store'>Store</NavLink>
-              <NavLink className={({isActive})=> isActive ? "text-[#E2063A] font-nexa-bold font-bold text-[16px] leading-[22px]" : "font-nexa-bold font-bold text-[16px] leading-[22px]  active:text-[#E2063A] focus:text-[#E2063A]"} to='/Launchpad'>Launchpad</NavLink> 
+              <NavLink className="font-nexa-bold font-bold text-[16px] leading-[22px]" to='/About'>About Us</NavLink>
+              <NavLink className="font-nexa-bold font-bold text-[16px] leading-[22px]" to='/Become a reseller'>Become a Reseller</NavLink>
+              <NavLink className="font-nexa-bold font-bold text-[16px] leading-[22px]" to='/Store'>Store</NavLink>
+               
             </div>
             <div className="flex lg:w-[220px] xl:w-[231px] flex-col gap-4">
               <p className="text-[#E2063A] font-poopins font-medium text-[16px] leading-[26px] lg:font-nexa-bold lg:text-[20px] lg:leading-[32px]">Legal</p>
-              <NavLink className={({isActive})=> isActive ? "text-[#E2063A] font-nexa-bold font-bold text-[16px] leading-[22px]" : "font-nexa-bold font-bold text-[16px] leading-[22px]  active:text-[#E2063A] focus:text-[#E2063A]"} to='/Privacy Policy'>Privacy Policy</NavLink>
-              <NavLink className={({isActive})=> isActive ? "text-[#E2063A] font-nexa-bold font-bold text-[16px] leading-[22px]" : "font-nexa-bold font-bold text-[16px] leading-[22px]  active:text-[#E2063A] focus:text-[#E2063A]"} to='/Terms and Conditions'>Terms and Conditions</NavLink>
+              <NavLink className="font-nexa-bold font-bold text-[16px] leading-[22px]" to='/Privacy Policy'>Privacy Policy</NavLink>
+              <NavLink className="font-nexa-bold font-bold text-[16px] leading-[22px]" to='/Terms and Conditions'>Terms and Conditions</NavLink>
             </div>
             <div className="flex  xl:w-[231px] flex-col gap-4 mt-[48px] lg:mt-0">
-              <p className="text-[#E2063A] font-poopins font-medium text-[16px] leading-[26px] lg:font-nexa-bold lg:text-[20px] lg:leading-[32px]">Assist Centre</p>
-              <a className="font-nexa-bold font-bold text-[16px] leading-[22px]" href="#">FAQ</a>
-              <a className="font-nexa-bold font-bold text-[16px] leading-[22px]" href="#">Brandit Hub</a>
-              
+              <p className="text-[#E2063A] font-poopins font-medium text-[16px] leading-[26px] lg:font-nexa-bold lg:text-[20px] lg:leading-[32px]">Help</p>
+              <NavLink className="font-nexa-bold font-bold text-[16px] leading-[22px]" to='/Assist Centre'>Assist Centre</NavLink>
+              <NavLink className="font-nexa-bold font-bold text-[16px] leading-[22px]" to='/Brandit Hub'>Brandit Hub</NavLink>
+              <NavLink className="font-nexa-bold font-bold text-[16px] leading-[22px]" to='/Launchpad'>Launchpad</NavLink>
             </div>
           </div>
         </div>

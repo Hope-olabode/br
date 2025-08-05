@@ -61,40 +61,8 @@ export default function Store({
     "Cap",
     "Jersey",
     "Female-Wears",
-    "Tank-tops"
+    "Tank-tops",
   ];
-
-  // const likeProduct = async (productId) => {
-  //   try {
-  //     const response = await axios.post(
-  //       "    ${import.meta.env.VITE_BACKEND_URL}/api/products/like",
-  //       { productId },
-  //       { withCredentials: true }
-  //     );
-
-  //     // Update the liked products state if the request is successful
-  //     setLikedProducts((prev) => [...prev, productId]);
-  //   } catch (error) {
-  //     console.error("Error liking product:", error);
-  //     const message = error.response?.data?.message || "An error occurred";
-  //     // displayMsg(message);
-  //   }
-  // };
-
-  
-
-  // const unlikeProduct = (productId) => {
-  //   axios
-  //     .post(
-  //       "    ${import.meta.env.VITE_BACKEND_URL}/api/products/unlike",
-  //       { productId },
-  //       { withCredentials: true }
-  //     )
-  //     .then(() => {
-  //       setLikedProducts((prev) => prev.filter((id) => id !== productId));
-  //     })
-  //     .catch((error) => console.error(error));
-  // };
 
   const navigate = useNavigate();
   const handleProductClick = (id) => {
@@ -102,101 +70,7 @@ export default function Store({
     console.log(id);
   };
 
-  // const handleAddToCart = async (productId) => {
-  //   try {
-  //     console.log(cart);
-  //     const existingProduct =
-  //       cart.length > 0 && cart.some((item) => item._id === productId);
-  //     console.log(existingProduct);
-  //     if (existingProduct) {
-  //       const product = products.find((p) => p._id === productId);
-  //       const newCart = { ...product, quantity: 1 };
-  //       const updatedCart = cart.map((item) =>
-  //         item._id === productId
-  //           ? { ...item, quantity: item.quantity + 1 }
-  //           : item
-  //       );
-  //       /* console.log(updatedCart) */
-  //       await axios.post(`    ${import.meta.env.VITE_BACKEND_URL}/cart/`, newCart, {
-  //         withCredentials: true,
-  //       }); // Added credentials
-  //       setCart(updatedCart);
-
-  //       displayMsg()
-
-  //       sessionStorage.setItem("cart", JSON.stringify(updatedCart));
-  //       } else {
-  //         const product = products.find((p) => p._id === productId);
-  //         const newCart1 = { ...product, quantity: 20 };
-  //         const newCart = [...cart, { ...product, quantity: 20 }];
-  //         console.log(newCart)
-  //         await axios.post("    ${import.meta.env.VITE_BACKEND_URL}/cart", newCart1, { withCredentials: true }); // Added credentials
-  //         setCart(newCart);
-
-  //         sessionStorage.setItem("cart", JSON.stringify(newCart));
-  //         toast.success("Product added to cart");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error adding to cart:", error);
-  //     const message = error.response?.data?.message || "An error occurred";
-  //     // displayMsg(message);
-  //   }
-  // };
-
-  // const handleQuantityChange = async (productId, newQuantity) => {
-  //   setCart((prevCart) =>
-  //     prevCart.map((item) =>
-  //       item._id === productId ? { ...item, quantity: newQuantity } : item
-  //     )
-  //   );
-
-  //   if (newQuantity < 20) return;
-  //   try {
-  //     const updatedCart = cart.map((item) =>
-  //       item._id === productId ? { ...item, quantity: newQuantity } : item
-  //     );
-  //     console.log(updatedCart)
-  //     await axios.put(`    ${import.meta.env.VITE_BACKEND_URL}/cart/${productId}`, { quantity: newQuantity }, {
-  //       withCredentials: true,
-  //     }); // Added credentials
-  //     sessionStorage.setItem("cart", JSON.stringify(updatedCart));
-  //   } catch (error) {
-  //     console.error("Error updating quantity:", error);
-  //   }
-  // };
-
-  // const handleRemoveFromCart = async (productId) => {
-  //   try {
-  //     const updatedCart = cart.filter((item) => item._id !== productId);
-  //     await axios.delete(`    ${import.meta.env.VITE_BACKEND_URL}/cart/${productId}`, {
-  //       withCredentials: true,
-  //     }); // Added credentials
-  //     setCart(updatedCart);
-  //     sessionStorage.setItem("cart", JSON.stringify(updatedCart));
-  //   } catch (error) {
-  //     console.error("Error removing from cart:", error);
-  //   }
-  // };
-
-  // const handleDecreaseQuantity = async (productId) => {
-  //   try {
-  //     const product = products.find((p) => p._id === productId);
-  //     const newCart = { ...product, quantity: -1 };
-  //     const updatedCart = cart.map((item) =>
-  //       item._id === productId ? { ...item, quantity: item.quantity - 1 } : item
-  //     );
-  //     /* console.log(updatedCart) */
-  //     await axios.post(`    ${import.meta.env.VITE_BACKEND_URL}/cart/`, newCart, {
-  //       withCredentials: true,
-  //     }); // Added credentials
-  //     setCart(updatedCart);
-  //     sessionStorage.setItem("cart", JSON.stringify(updatedCart));
-  //   } catch (error) {
-  //     console.error("Error decreasing quantity:", error);
-  //   }
-  // };
-
-  const Stop = (e, ) => {
+  const Stop = (e) => {
     e.stopPropagation(); // Prevent navigation
   };
 
@@ -266,7 +140,7 @@ export default function Store({
 
   return (
     <div
-      className="px-4 md:px-[40px] lg:px-[60px] xl:px-[80px] 2xl:px-[120px] pt-[56px] bg-cover bg-center"
+      className="px-4 md:px-[40px] lg:px-[60px] xl:px-[80px] 2xl:px-[90px] pt-[56px] bg-cover bg-center"
       style={{ backgroundImage: `url(${Back})` }}
     >
       {/* <ToastContainer
@@ -295,28 +169,11 @@ export default function Store({
         </div>
       </div>
       <div className="flex gap-2 h-fit">
-        <div className="p-4 hidden lg:block bg-white rounded-lg shadow-lg w-[400px]">
+        <div className="p-4 hidden lg:block bg-white rounded-lg shadow-custom w-[400px]">
           {/* Header */}
-          <div className="flex justify-between gap-2 items-center mb-4">
-            <button
-              onClick={() => {
-                SetFilterSort(true);
-              }}
-              className={`w-[50%] font-nexa-bold text-[16px] leading-[26px] rounded-full h-[72px] ${
-                filterSort ? "border-2 border-black" : ""
-              }`}
-            >
+          <div className="flex  gap-2 justify-center items-center mb-4">
+            <button className="w-[50%] font-nexa-bold text-[16px] leading-[26px] rounded-full h-[72px]">
               Filter
-            </button>
-            <button
-              onClick={() => {
-                SetFilterSort(false);
-              }}
-              className={`w-[50%] font-nexa-bold text-[16px] leading-[26px] rounded-full h-[72px] ${
-                filterSort ? "" : "border-2 border-black"
-              }`}
-            >
-              Sort
             </button>
           </div>
 
@@ -457,146 +314,7 @@ export default function Store({
           </div>
           <div className="h-[1px] bg-[#DDDDDD] mx-4 my-4"></div>
         </div>
-        {/* <div className="lg:grid flex flex-row flex-wrap items-center lg:items-start justify-center grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 p-4">
-          {paginatedProducts.map((product) => (
-            <div key={product._id} className="mx-auto w-[250px] lg:w-auto">
-              <div
-                className={`border-8 bg-white border-white hover:border-[#E6E6E6] rounded-t-full rounded-b-[900px]  ${
-                  cart.some((item) => item._id === product._id)
-                    ? "shadow-custom"
-                    : ""
-                }`}
-                onClick={() => handleProductClick(product._id)}
-              >
-                <img
-                  className="rounded-full ma"
-                  src={product.img1 || Cap}
-                  alt=""
-                />
-                <div className="pt-[16px] rounded-full pb-[11.6px] px-[8px] relative">
-                  <p className="font-poopins  text-[12px] leading-[18px] md:text-[20px] md:leading-[32px]">
-                    {product.name}
-                  </p>
-                  <div onClick={(e) => Stop(e)} className="div">
-                    <div
-                      onClick={() => {
-                        if (likedProducts.includes(product._id)) {
-                          unlikeProduct(product._id);
-                        } else {
-                          likeProduct(product._id);
-                        }
-                      }}
-                      className="lg:w-[72px] w-[48px] h-[48px] lg:h-[72px] rounded-full flex items-center justify-center absolute bg-white lg:top-[-60px] top-[-35px] md:top-[-70px]   right-[16px] "
-                    >
-                      <img
-                        className=" bg-white"
-                        src={
-                          likedProducts.includes(product._id) ? Heart2 : Heart
-                        }
-                        alt=""
-                      />
-                    </div>
-                  </div>
 
-                  <div className="md:flex items-center md:mt-[20px]">
-                    <div
-                      className={`flex flex-row justify-between items-center mt-[20px] md:mt-0 w-full ${
-                        cart.some((item) => item._id === product._id)
-                          ? "md:w-[50%]"
-                          : ""
-                      } `}
-                    >
-                      <div className="price">
-                        <p className="font-nexa-bold text-[16px] leading-[26px] font-bold md:text-[24px] md:leading-[38px]">
-                          ${product.price}
-                        </p>
-                        <p className="font-poopins text-[10px] leading-[16px] md:text-[16px] md:leading-[26px]">
-                          Out of stock
-                        </p>
-                      </div>
-                      {cart.some((item) => item._id === product._id) ? (
-                        ""
-                      ) : (
-                        <div className="div" onClick={(e) => Stop(e)}>
-                          <img
-                            src={plus}
-                            alt=""
-                            onClick={() => handleAddToCart(product._id)}
-                          />
-                        </div>
-                      )}
-                    </div>
-                    <div
-                      className={`flex items-center mt-[12px] justify-center space-x-2 ${
-                        cart.some((item) => item._id === product._id)
-                          ? "md:w-[50%]"
-                          : ""
-                      } md:mt-0`}
-                      onClick={(e) => Stop(e)}
-                    >
-                      {cart.find((item) => item._id === product._id) ? (
-                        <button
-                          onClick={() =>
-                            cart.find((item) => item._id === product._id)
-                              .quantity > 20
-                              ? handleDecreaseQuantity(product._id)
-                              : handleRemoveFromCart(product._id)
-                          }
-                        >
-                          {cart.find((item) => item._id === product._id)
-                            .quantity > 20 ? (
-                            <img src={minus} className="" />
-                          ) : (
-                            <img src={dust} className="" />
-                          )}
-                        </button>
-                      ) : (
-                        ""
-                      )}
-
-                      {cart.find((item) => item._id === product._id) ? (
-                        <input
-                          min={20}
-                          type="number"
-                          value={
-                            cart.find((item) => item._id === product._id)
-                              .quantity
-                          }
-                          onChange={(e) => {
-                            const newValue = Number(e.target.value);
-                            if (newValue >= 20) {
-                              handleQuantityChange(product._id, newValue);
-                            }
-                          }}
-                          onBlur={(e) => {
-                            const newValue = Number(e.target.value);
-                            if (newValue < 20) {
-                              handleQuantityChange(product._id, 20); 
-                            }
-                          }}
-                          className=" p-1 rounded w-16 text-center"
-                        />
-                      ) : (
-                        ""
-                      )}
-
-                      {cart.find((item) => item._id === product._id) ? (
-                        <button
-                          onClick={() => handleAddToCart(product._id)}
-                          className=" text-white  rounded"
-                        >
-                          <img src={plus2} className="" />
-                        </button>
-                      ) : (
-                        ""
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div> */}
         <div className="grid w-full lg:w-[80%] grid-cols-1 sm:grid-cols-2 md:grid-cols-2 2xl:grid-cols-3 gap-4 p-4">
           {paginatedProducts.map((product) => (
             <div

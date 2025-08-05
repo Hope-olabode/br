@@ -56,7 +56,6 @@ export default function Login() {
         }
       );
 
-     
       customToast({
         color: "#000000",
         message: response.data.message,
@@ -86,14 +85,6 @@ export default function Login() {
 
   const Email = watch("Email"); // watch input value
   const Password = watch("Password"); // watch input value
-
-  useEffect(() => {
-    setIsFocused2(Email && Email.trim().length > 0);
-  }, [Email]);
-
-  useEffect(() => {
-    setIsFocused(Password && Password.trim().length > 0);
-  }, [Password]);
 
   useEffect(() => {
     if (Object.keys(errors).length > 0) {
@@ -132,44 +123,46 @@ export default function Login() {
         <form className="mt-10 lg:mt-14" onSubmit={handleSubmit(onSubmit)}>
           {/* register your input into the hook by invoking the "register" function */}
           <input
-            name="Email"
+            name="Fake-Email"
+            autoComplete="off"
             className={`w-full h-12 border-2 border-[#DDDDDD] rounded-full active:border-none focus:outline-none pl-6 pr-2 font-poopins text-[14px] leading-[22px] lg:h-[72px] lg:text-[16px] lg:leading-[26px] ${
               isFocused2
                 ? "bg-black text-white placeholder:text-white border-black border-2"
                 : ""
             }`}
             {...register("Email")}
+            onFocus={() => setIsFocused2(true)}
+            onBlur={() => setIsFocused2(false)}
             placeholder="Email Address"
             type="string"
-            id="email"
-            autoComplete="off"
+            id="Email"
           />
           {/* include validation with required or other standard HTML validation rules */}
-          <div
-            className={`flex items-center content-center h-12 border-2 border-[#DDDDDD] rounded-full mt-4  pr-2 font-poopins text-[14px] leading-[22px] lg:h-[72px] lg:text-[16px] lg:leading-[26px] ${
-              isFocused ? "bg-black text-white border-black border-2" : ""
-            }`}
-          >
+          <div className="relative  rounded-full mt-4">
             <input
-              name="Password"
-              className={`w-full pl-6 email rounded-l-full h-full active:border-none focus:outline-none ${
-                isFocused ? "bg-black text-white placeholder:text-white" : ""
+              className={`w-full h-12 border-2 border-[#DDDDDD] rounded-full  focus:outline-none pl-6 pr-2 font-poopins text-[14px] leading-[22px] lg:h-[72px] lg:text-[16px] lg:leading-[26px] ${
+                isFocused
+                  ? "bg-black text-white placeholder:text-white border-black border-2"
+                  : ""
               }`}
+              id="Password"
               {...register("Password")}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
               placeholder="Password"
               type={hidden ? "password" : "text"}
               autoComplete="off"
             />
             {hidden ? (
               <img
-                className="w-12"
+                className="w-12 absolute right-4 top-0 h-full cursor-pointer"
                 onClick={() => setHidden(!hidden)}
                 src={isFocused ? hpas2 : hpas}
                 alt=""
               />
             ) : (
               <img
-                className="w-12"
+                className="w-12 absolute right-4 top-0 h-full cursor-pointer"
                 onClick={() => setHidden(!hidden)}
                 src={isFocused ? hpas4 : hpas3}
                 alt=""

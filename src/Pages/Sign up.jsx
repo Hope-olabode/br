@@ -97,7 +97,6 @@ export default function Signup() {
 
   const Email = watch("Email"); // watch input value
   const Password = watch("Password"); // watch input value
-  const confirmPassword = watch("confirmPassword"); // watch input value
 
   function customToast(toastProps) {
     return sonnerToast.custom(() => (
@@ -106,25 +105,13 @@ export default function Signup() {
   }
 
   useEffect(() => {
-    setIsFocused2(Email && Email.trim().length > 0);
-  }, [Email]);
-
-  useEffect(() => {
-    setIsFocused(Password && Password.trim().length > 0);
-  }, [Password]);
-
-  useEffect(() => {
-    setIsFocused5(confirmPassword && confirmPassword.trim().length > 0);
-  }, [confirmPassword]);
-
-  useEffect(() => {
     if (Object.keys(errors).length > 0) {
       Object.values(errors).forEach((error) => {
         console.log(error.message);
         customToast({
-        color: "#E2063A",
-        message: error.message,
-      });
+          color: "#E2063A",
+          message: error.message,
+        });
       });
     }
   }, [errors]);
@@ -150,12 +137,14 @@ export default function Signup() {
           <form className="mt-10 lg:mt-14" onSubmit={handleSubmit(onSubmit)}>
             {/* register your input into the hook by invoking the "register" function */}
             <input
-              className={`w-full mt-4 h-12 border-2 border-[#DDDDDD] rounded-full active:border-none focus:outline-none pl-6 pr-2 font-poopins text-[14px] leading-[22px] lg:h-[72px] lg:text-[16px] lg:leading-[26px] ${
+              className={`w-full mt-4 h-12 border-2 border-[#DDDDDD] rounded-full  focus:outline-none pl-6 pr-2 font-poopins text-[14px] leading-[22px] lg:h-[72px] lg:text-[16px] lg:leading-[26px] ${
                 isFocused2
                   ? "bg-black text-white placeholder:text-white border-black border-2"
                   : ""
               }`}
               {...register("Email")}
+              onFocus={() => setIsFocused2(true)}
+              onBlur={() => setIsFocused2(false)}
               placeholder="Email Address"
               type="string"
               id="Email"
@@ -163,65 +152,34 @@ export default function Signup() {
             />
             {/* include validation with required or other standard HTML validation rules */}
             <div
-              className={`flex items-center justify-center h-12 border-2 border-[#DDDDDD] rounded-full mt-4  pr-2 font-poopins text-[14px] leading-[22px] lg:h-[72px] lg:text-[16px] lg:leading-[26px] ${
-                isFocused ? "bg-black text-white border-black" : ""
-              }`}
+              className="relative  rounded-full mt-4"
             >
               <input
-                className={`w-full bac h-11 ml-[0.01px] active:border-none pl-6 rounded-full focus:outline-none lg:h-[68px] ${
-                  isFocused ? "bg-black  text-white placeholder:text-white" : ""
+                className={`w-full h-12 border-2 border-[#DDDDDD] rounded-full  focus:outline-none pl-6 pr-2 font-poopins text-[14px] leading-[22px] lg:h-[72px] lg:text-[16px] lg:leading-[26px] ${
+                  isFocused
+                    ? "bg-black text-white placeholder:text-white border-black border-2"
+                    : ""
                 }`}
-                id="email"
+                id="Password"
                 {...register("Password")}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
                 placeholder="Password"
                 type={hidden ? "password" : "text"}
                 autoComplete="off"
               />
               {hidden ? (
                 <img
-                  className="w-12"
+                  className="w-12 absolute right-4 top-0 h-full cursor-pointer"
                   onClick={() => setHidden(!hidden)}
                   src={isFocused ? hpas2 : hpas}
                   alt=""
                 />
               ) : (
                 <img
-                  className="w-12"
+                  className="w-12 absolute right-4 top-0 h-full cursor-pointer"
                   onClick={() => setHidden(!hidden)}
                   src={isFocused ? hpas4 : hpas3}
-                  alt=""
-                />
-              )}
-            </div>
-
-            <div
-              className={`flex items-center justify-center h-12 border-2 border-[#DDDDDD] rounded-full mt-4  pr-2 font-poopins text-[14px] leading-[22px] lg:h-[72px] lg:text-[16px] lg:leading-[26px] ${
-                isFocused5 ? "bg-black text-white  border-black" : ""
-              }`}
-            >
-              <input
-                className={`w-full bac h-11 active:border-none pl-6 rounded-full focus:outline-none lg:h-[68px] ${
-                  isFocused5
-                    ? "bg-black  text-white placeholder:text-white"
-                    : ""
-                }`}
-                {...register("confirmPassword")}
-                placeholder="Confirm Password"
-                type={hidden2 ? "password" : "text"}
-                autoComplete="off"
-              />
-              {hidden2 ? (
-                <img
-                  className="w-12"
-                  onClick={() => setHidden2(!hidden2)}
-                  src={isFocused5 ? hpas2 : hpas}
-                  alt=""
-                />
-              ) : (
-                <img
-                  className="w-12"
-                  onClick={() => setHidden2(!hidden2)}
-                  src={isFocused5 ? hpas4 : hpas3}
                   alt=""
                 />
               )}
@@ -238,9 +196,7 @@ export default function Signup() {
               type="submit"
               className="bg-[#E2063A] my-4 text-white  rounded-full relative overflow-hidden group lg:h-[72px] lg:w-full  w-[100%]"
               disabled={
-                Password?.trim()?.length === 0 ||
-                Email?.trim()?.length === 0 ||
-                confirmPassword?.trim()?.length === 0
+                Password?.trim()?.length === 0 || Email?.trim()?.length === 0
               }
             >
               <div
@@ -251,8 +207,7 @@ export default function Signup() {
                 <div
                   className={`${
                     Password?.trim()?.length === 0 ||
-                    Email?.trim()?.length === 0 ||
-                    confirmPassword?.trim()?.length === 0
+                    Email?.trim()?.length === 0
                       ? "inset-0 bg-[#ffffffd0] z-10 absolute w-100%"
                       : ""
                   } relative  px-4 py-[13px] lg:py-[23px] lg:px-0  `}
@@ -267,8 +222,7 @@ export default function Signup() {
                       src={wc}
                       className={`${
                         Password?.trim()?.length === 0 ||
-                        Email?.trim()?.length === 0 ||
-                        confirmPassword?.trim()?.length === 0
+                        Email?.trim()?.length === 0
                           ? "hi"
                           : "hidden"
                       } lg:h-10`}
@@ -277,8 +231,7 @@ export default function Signup() {
                       src={ba}
                       className={`${
                         Password?.trim()?.length === 0 ||
-                        Email?.trim()?.length === 0 ||
-                        confirmPassword?.trim()?.length === 0
+                        Email?.trim()?.length === 0
                           ? "hidden"
                           : "block"
                       } lg:h-10`}

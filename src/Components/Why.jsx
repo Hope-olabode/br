@@ -5,7 +5,7 @@ import expertise from '../assets/Images/expertise.svg'
 
 export default function Why() {
   return(
-    <div className="px-4 py-[72px] text-center md:py-[9rem] md:px-40">
+    <div className="px-4 py-[72px] text-center items-center md:py-[9rem] md:px-40">
       <div className="grid grid-cols-2 px-4 gap-3 md:flex md:px-0">
         <div className="circle w-100%">
           <img src={quality} alt="" />
